@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import ActiveUsersList from '../components/ActiveUsersList';
 
 export default function LandingPage() {
-  const [petsList, setPetsList] = useState([]);
+
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
