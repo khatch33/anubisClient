@@ -25,11 +25,7 @@ import FriendsModalForm from '../Modal/FriendsModalForm';
 const Navbar = () => {
   //navbar page states based on if user is logged in
   const pagesIfLoggedIn = [, 'Ranking', <Link href='/'>Logout</Link>];
-  const pagesIfNotLoggedIn = [
-    ,
-    <StyledButton>Sign Up</StyledButton>,
-    <StyledButton>Login</StyledButton>,
-  ];
+  const pagesIfNotLoggedIn = [, <p>Sign Up</p>, <p>Login</p>];
   //handles hamburger menu
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
