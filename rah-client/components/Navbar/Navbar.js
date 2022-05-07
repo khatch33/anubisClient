@@ -23,9 +23,16 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import FriendsModalForm from '../Modal/FriendsModalForm';
 const Navbar = () => {
+  const loginClicked = () => {};
+
+  const signupClicked = () => {};
   //navbar page states based on if user is logged in
   const pagesIfLoggedIn = [, 'Ranking', <Link href='/'>Logout</Link>];
-  const pagesIfNotLoggedIn = [, <p>Sign Up</p>, <p>Login</p>];
+  const pagesIfNotLoggedIn = [
+    ,
+    <p onClick={signupClicked}>Sign Up</p>,
+    <p onClick={loginClicked}>Login</p>,
+  ];
   //handles hamburger menu
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -37,7 +44,7 @@ const Navbar = () => {
   //handling friends states
   //green dot does not appear if invisible is true
   const [invisible, setInvisible] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [friendLoggedIn, setFriendLoggedIn] = useState(false);
   const [state, setState] = useState({
     left: false,
