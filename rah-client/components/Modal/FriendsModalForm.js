@@ -41,9 +41,10 @@ export default function FriendsModalForm() {
           HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HERE
         </List>
         <Form onSubmit={onSubmitForm}>
-          <TextareaAutosize
+          <input
+            type='text'
             onChange={onChangeForm}
-            style={{ width: '100%', borderRadius: '7px' }}
+            style={{ width: '100%', height: '50px', borderRadius: '7px' }}
             placeholder='Message friend name here'
           />
           <input hidden type='submit' />
