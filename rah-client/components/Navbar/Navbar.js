@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Badge from '@mui/material/Badge';
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
+
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import FriendsModalForm from '../Modal/FriendsModalForm';
@@ -43,12 +44,49 @@ const Navbar = () => {
   const [invisible, setInvisible] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [friendLoggedIn, setFriendLoggedIn] = useState(false);
+
+const Navbar = () => {
+  //most likely gonna have to change
+  const pagesIfLoggedIn = [, 'Ranking', <Link href='/'>Logout</Link>];
+  const pagesIfNotLoggedIn = [, 'Sign Up', 'Login'];
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  //handling friends
+  //invisible IF not logged in
+  const [invisible, setInvisible] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [friendLoggedIn, setFriendLoggedIn] = useState(true);
+
   const [state, setState] = useState({
     left: false,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
+  };
+
+
+  const friendsClicked = () => {
+    handleCloseNavMenu();
+    toggleDrawer('right', true)();
+  };
+
+  //make it so modal appears to either send message or delete friend
+  const avatarClick = (e) => {
+    e.stopPropagation();
   };
 
   const list = (anchor) => (
@@ -64,6 +102,10 @@ const Navbar = () => {
           'Tony',
           'David',
           'Lauren',
+          'Kyle',
+          'Kyle',
+          'Kyle',
+          'Kyle',
           'Kyle',
           'Kyle',
           'Kyle',
@@ -279,6 +321,8 @@ const Navbar = () => {
 };
 export default Navbar;
 
+
 const StyledButton = styled(MenuItem)`
   color: white;
 `;
+
