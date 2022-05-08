@@ -22,7 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import FriendsModalForm from '../Modal/FriendsModalForm';
-
+import Skeleton from '@mui/material/Skeleton';
 const Navbar = () => {
   const loginClicked = () => {
     handleLoginModal();
@@ -69,11 +69,13 @@ const Navbar = () => {
   //handling friends states
   //green dot does not appear if invisible is true
   const [invisible, setInvisible] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [friendLoggedIn, setFriendLoggedIn] = useState(false);
   const [state, setState] = useState({
     left: false,
   });
+  //toggle skeleton
+  const [loading, setLoading] = useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
@@ -84,48 +86,75 @@ const Navbar = () => {
       role='presentation'
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}>
-      <List>
-        {/* array of friends for specific user */}
-        {[
-          'Josh',
-          'Cihad',
-          'Tony',
-          'David',
-          'Lauren',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-          'Kyle',
-        ].map((text, index) => (
-          <div key={uuidv4()}>
-            <ListItem>
-              <ListItemIcon>
-                {/* if user.loggedIn is true, show green, else show invisible */}
-                {friendLoggedIn ? (
-                  <Badge overlap='circular' variant='dot' color='success'>
+      {/* //toggle skeleton */}
+      {loading && (
+        <List>
+          {[...Array(20)].map((text) => {
+            return (
+              <div key={uuidv4()}>
+                <ListItem>
+                  <ListItemIcon>
+                    <Skeleton animation='wave' height={40} width={40} variant='circular' />
+                    <Skeleton
+                      style={{ marginLeft: '15px', marginTop: '12px' }}
+                      animation='wave'
+                      width={40}
+                      height={20}
+                      variant='rectangular'
+                    />
+                  </ListItemIcon>
+                </ListItem>
+                <Divider light />
+              </div>
+            );
+          })}
+        </List>
+      )}
+
+      {!loading && (
+        <List>
+          {/* array of friends for specific user */}
+          {[
+            'Josh',
+            'Cihad',
+            'Tony',
+            'David',
+            'Lauren',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+            'Kyle',
+          ].map((text, index) => (
+            <div key={uuidv4()}>
+              <ListItem>
+                <ListItemIcon>
+                  {/* if user.loggedIn is true, show green, else show invisible */}
+                  {friendLoggedIn ? (
+                    <Badge overlap='circular' variant='dot' color='success'>
+                      <IconButton size='small' onClick={avatarClick}>
+                        <Avatar />
+                      </IconButton>
+                    </Badge>
+                  ) : (
                     <IconButton size='small' onClick={avatarClick}>
                       <Avatar />
                     </IconButton>
-                  </Badge>
-                ) : (
-                  <IconButton size='small' onClick={avatarClick}>
-                    <Avatar />
-                  </IconButton>
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-            <Divider light />
-          </div>
-        ))}
-      </List>
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+              <Divider light />
+            </div>
+          ))}
+        </List>
+      )}
     </Box>
   );
 
@@ -175,7 +204,6 @@ const Navbar = () => {
                 WEREWOLF
               </Typography>
             </Link>
-
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'

@@ -28,12 +28,21 @@ export default function FriendsModalForm() {
   const onSubmitForm = (e) => {
     e.preventDefault();
     console.log(message);
+
+    setMessage('');
   };
   return (
     <>
       <Box sx={style}>
         <FriendName>FRIEND NAME HERE</FriendName>
-        <List style={{ marginTop: '1em', maxHeight: '200px', overflow: 'auto' }}>
+        <List
+          style={{
+            border: '1px solid black',
+            marginTop: '1em',
+            maxHeight: '200px',
+            overflow: 'auto',
+            padding: '7px',
+          }}>
           DO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE
           CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO
           HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE
@@ -42,6 +51,7 @@ export default function FriendsModalForm() {
         </List>
         <Form onSubmit={onSubmitForm}>
           <input
+            value={message}
             type='text'
             onChange={onChangeForm}
             style={{ width: '100%', height: '50px', borderRadius: '7px' }}
