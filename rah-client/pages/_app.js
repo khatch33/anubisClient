@@ -3,14 +3,18 @@ import '../styles/globals.css'
 import CssBaseline from '@mui/material/CssBaseline';
 import {SocketContext, socket } from '../socket/socket.js'
 function MyApp({ Component, pageProps }) {
+
+//console.log(socket, SocketContext)
+{/* <SocketContext.provider></SocketContext.provider>
+</SocketContext.provider> */}
   return (
     <>
 
       <RecoilRoot>
-        <SocketContext.provider value={socket}>
+
           <CssBaseline />
           <Component {...pageProps} />
-        </SocketContext.provider>
+
       </RecoilRoot>
     </>
   )
