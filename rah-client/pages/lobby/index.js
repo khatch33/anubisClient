@@ -23,6 +23,7 @@ export default function Lobby() {
   })
   const arr = [1,2,3,4,5,6,7,8,9,10]
   const game = {
+      id: "12345",
       owner: 'creator',
       gameName: "somKindaGameName",
       playerAllowed: 20,
