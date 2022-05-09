@@ -3,10 +3,13 @@ import LandingPage from '../components/LandingPage';
 import Container from "@mui/material/Container";
 import Navbar from '../components/Navbar/Navbar';
 import React, { useState, useEffect } from "react";
-import { activeUsers } from '../pages/_sampleData/activeUsers';
 import ActiveUsersList from '../components/ActiveUsersList';
+import axios from 'axios';
+
+const basePath = 'http://localhost:4030/blueocean/api/v1';
 
 export default function Home() {
+
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -14,13 +17,15 @@ export default function Home() {
 
   useEffect(() => {
     let mounted = true;
-    if (activeUsers) {
+    if (mounted) {
       setIsLoaded(true);
-      setActiveList(activeUsers);
+      axios.get(`${basePath}/users`)
+        .then((res) => setActiveList(res.data.users))
+        .catch((err) => {
+          setIsloaded(true);
+          setError(err);
+        });
     }
-    // catch block for API call
-    // setIsLoaded(true);
-    // setError(error);
   }, []);
 
   if (error) {
@@ -32,7 +37,7 @@ export default function Home() {
       <>
         <Navbar />
         <Container maxWidth={false} id="app-container">
-          <ActiveUsersList users={activeUsers} />
+          <ActiveUsersList users={activeList} />
 
           <Container maxWidth={false}>
             <Container maxWidth={false} id="video-container">
