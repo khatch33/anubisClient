@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
 import Navbar from '../../components/Navbar/Navbar';
@@ -11,9 +11,20 @@ import GameRow from '../../components/GameRow.js';
 import LobbyDisplay from '../../components/lobby-gameDisplay/LobbyDisplay';
 import LobbyChatRoom from '../../components/lobby-chatRoom/LobbyChatRoom';
 import { activeUsers } from '../_sampleData/activeUsers.js';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
 //import SocketContext from '../../socket/socket.js';
 import { socket } from '../../socket/socket.js';
+import CreateGame from '../../components/lobby-createGame/CreateGame';
 export default function Lobby() {
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    console.log(newValue);
+    setValue(newValue);
+  };
   //const socket = useContext(SocketContext)
   useEffect(() => {
     socket.on('connect', () => {
@@ -37,25 +48,21 @@ export default function Lobby() {
         <OnlineTitle>Online</OnlineTitle>
         <LobbyDisplay />
       </Container>
+      <TabsContainer value={value} onChange={handleChange} aria-label='basic tabs example'>
+        <Tab label='Lobby' />
+        <Tab label='Create' />
+      </TabsContainer>
       <Box sx={{ display: 'inline-block', float: 'right', width: '80%' }}>
         <Container maxWidth={false} id='gameDisplay-container'>
-          {arr.map((num) => {
-            return <GameRow game={game} />;
-          })}
-          {/* <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p> */}
+          {value === 0 ? (
+            arr.map((num) => {
+              return <GameRow game={game} />;
+            })
+          ) : (
+            <CreateGame />
+          )}
         </Container>
+
         <Container maxWidth={false} id='lobbyChat-container'>
           <p>Chat box</p>
           <LobbyChatRoom />
@@ -68,4 +75,10 @@ export default function Lobby() {
 
 const OnlineTitle = styled.p`
   text-align: center;
+`;
+
+const TabsContainer = styled(Tabs)`
+  position: absolute;
+  margin-left: 22%;
+  margin-top: 10px;
 `;
