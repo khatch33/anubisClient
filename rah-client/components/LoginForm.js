@@ -1,38 +1,31 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
-import styled from 'styled-components';
-
-// const Button = styled.button`
-//   width: 200px;
-//   height: 100px;
-//   padding: 3px;
-//   margin: 5px;
-// `;
+import Button from '@mui/material/Button';
 
 export default function LoginForm() {
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit, formState: { errors }} = useForm();
 
-  const handleSubmit = (e) => {
-    // axios({
-    //   method: 'post',
-    //   url: '/authentication',
-    //   data: {username: username, password: password, jwtToken: ''}
-    // })
-    //   .then((res) => res)
-    //   .catch((err) => err);
-    console.log('username: ', username);
-    console.log('password: ', password);
+  const onSubmit = (data) => {
+    axios({
+      method: 'post',
+      url: '/',
+      data: {username: username, password: password, jwtToken: ''}
+    })
+      .then((res) => res)
+      .catch((err) => err);
   }
 
   return (
-      <Container maxWidth="sm" id="login-container">
-        <TextField label="Username" variant="standard" name="username" onChange={(e) => setUsername(e.target.value)} />
-        <TextField label="Password" name="password" variant="standard" onChange={(e) => setPassword(e.target.value)}/>
-        <button onClick={(e) => handleSubmit(e)}>Login</button>
-      </Container>
+      <form onSubmit={handleSubmit(onSubmit)} maxWidth="sm" id="login-container">
+        <TextField placeholder="Username" {...register("username", { required: true })} />
+        {errors.username && <span style={{color: 'red'}}>Enter a valid username</span>}
+        <TextField placeholder="Password" {...register("password", { required: true })} />
+        {errors.password && <span style={{color: 'red'}}>Enter a valid password</span>}
+        <Button type="submit" sx={{ color: '#413C39' }} size="medium">Login</Button>
+      </form>
   )
 }
