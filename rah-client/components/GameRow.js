@@ -5,14 +5,13 @@ export default function GameRow (props) {
   let game = props.game
   let creator = game.owner
   let gameName = game.gameName
-  console.log(typeof game.players)
   let players = 'players: ' + game.players.length.toString() + '/' + game.playerAllowed
-  let gameRoomUrl = '/play/' + game.id + "/" + playerId
+  let gameRoomUrl = '/play/' + game.id + '/' + '3333'
   // const choseGame = (game) => {
 
   // }
   return (
-    <Grid onClick={() => choseGame(game)} container columnSpacing={5}>
+    <Grid container columnSpacing={5}>
         <Grid item>
           <p>{creator}</p>
         </Grid>
