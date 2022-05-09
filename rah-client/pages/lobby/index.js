@@ -4,18 +4,19 @@ import styled from 'styled-components';
 import Navbar from '../../components/Navbar/Navbar';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid'
+import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ChatForm from '../../components/lobby-chatForm/ChatForm';
 import GameRow from '../../components/GameRow.js'
 import LobbyDisplay from '../../components/lobby-gameDisplay/LobbyDisplay';
+import {activeUsers} from '../_sampleData/activeUsers.js'
 //import SocketContext from '../../socket/socket.js';
-
+import {socket} from '../../socket/socket.js'
 export default function Lobby() {
-  const socket = useContext(SocketContext)
+  //const socket = useContext(SocketContext)
   useEffect(() => {
     socket.on('connect', (() => {
-      socket.emit('join-lobby', )
+      socket.emit('gg', 'sting')
     }))
 
 
@@ -39,15 +40,12 @@ export default function Lobby() {
       </Container>
       <Box sx={{ display: 'inline-block', float: 'right', width: '80%' }}>
         <Container maxWidth={false} id='gameDisplay-container'>
-        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={12}>
             {arr.map((num) => {
               return (
                 <GameRow game={game}/>
               )
             })}
-          </Grid>
-        </Grid>
+          {/* <p>Game Display Remove Me</p>
           <p>Game Display Remove Me</p>
           <p>Game Display Remove Me</p>
           <p>Game Display Remove Me</p>
@@ -59,8 +57,7 @@ export default function Lobby() {
           <p>Game Display Remove Me</p>
           <p>Game Display Remove Me</p>
           <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
-          <p>Game Display Remove Me</p>
+          <p>Game Display Remove Me</p> */}
         </Container>
         <Container maxWidth={false} id='lobbyChat-container'>
           <p>Chat box</p>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SocketContext from '../../socket/socket.js'
 export default function ChatForm() {
 
-  const socket = useContext(SocketContext)
+  //const socket = useContext(SocketContext)
   const [chatBoxInput, setChatBoxInput] = useState('');
 
   const chatBoxOnChange = (e) => {
@@ -14,7 +14,7 @@ export default function ChatForm() {
     e.preventDefault();
     console.log(chatBoxInput);
     //sends message, second argument is use object, message is message to be sent
-    //socket.emit('send-message', user, message)
+    socket.emit('send-message', user, message)
     setChatBoxInput('');
   };
 

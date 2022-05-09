@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid'
-export default function (props) {
+export default function GameRow (props) {
   let game = props.game
   let creator = game.owner
   let gameName = game.gameName
   //let players = game.players.length.toString() + '/' + game.player.allowed
-
   return (
-    <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={2}>{creator}
+    <Grid container columnSpacing={2}>
+        <Grid item>
+          <p>{creator}</p>
         </Grid>
-        <Grid item xs={2}>{gameName}
+        <Grid item><p>{gameName}</p>
         </Grid>
-        <Grid item xs={2}>players>
+        <Grid item><p>players</p>
         </Grid>
     </Grid>
   )
