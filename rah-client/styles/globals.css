@@ -103,4 +103,9 @@ a {
   width: 150px;
 }
 
+#login-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 35%;
+}
 

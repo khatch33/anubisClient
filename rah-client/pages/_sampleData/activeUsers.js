@@ -25,12 +25,17 @@ exports.activeUsers = [
     friends: ["Cihad", "Lauren", "Tony", "Josh", "Dave"],
   },
   {
-    name: "Kyle",
+    name: "Lauren",
     rank: 2,
     friends: ["Cihad", "Kyle", "Tony", "Lauren", "Dave"],
   },
   {
     name: "Josh",
+    rank: 2,
+    friends: ["Lauren", "Kyle", "Tony", "Hi", "Dave"],
+  },
+  {
+    name: "Kyle",
     rank: 2,
     friends: ["Lauren", "Kyle", "Tony", "Hi", "Dave"],
   }
