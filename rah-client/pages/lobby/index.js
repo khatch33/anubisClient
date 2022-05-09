@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ChatForm from '../../components/lobby-chatForm/ChatForm';
 import LobbyDisplay from '../../components/lobby-gameDisplay/LobbyDisplay';
+import LobbyChatRoom from '../../components/lobby-chatRoom/LobbyChatRoom';
 export default function Lobby() {
   return (
     <>
@@ -33,10 +34,7 @@ export default function Lobby() {
         </Container>
         <Container maxWidth={false} id='lobbyChat-container'>
           <p>Chat box</p>
-          <StyledChatBox>
-            INSIDE HERE IS THE CHAT... INSIDE HERE IS THE CHAT... INSIDE HERE IS THE CHAT... INSIDE
-            HERE IS THE CHAT... INSIDE HERE IS THE CHAT... INSIDE HERE IS THE CHAT...
-          </StyledChatBox>
+          <LobbyChatRoom />
           <ChatForm />
         </Container>
       </Box>
@@ -46,13 +44,4 @@ export default function Lobby() {
 
 const OnlineTitle = styled.p`
   text-align: center;
-`;
-
-const StyledChatBox = styled(List)`
-  border: 1px solid black;
-  margin-top: 1em;
-  min-width: 100%;
-  min-height: 60%;
-  overflow: auto;
-  padding: 7px;
 `;
