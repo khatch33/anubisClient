@@ -26,5 +26,5 @@ export default function GameRow (props) {
           </Link>
         </Grid>
     </Grid>
-  )
+  );
 }
