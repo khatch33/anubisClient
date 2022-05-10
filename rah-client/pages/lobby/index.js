@@ -26,13 +26,17 @@ export default function Lobby() {
     setValue(newValue);
   };
   //const socket = useContext(SocketContext)
+
   const [games, setGames] = useState([sampleGame]);
+
   useEffect(() => {
     // socket.on('connect', (() => {
     //   socket.emit('gg', 'sting')
     // }))
+
   }, []);
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 
   return (
     <>
@@ -47,6 +51,7 @@ export default function Lobby() {
       </TabsContainer>
       <Box sx={{ display: 'inline-block', float: 'right', width: '80%' }}>
         <Container maxWidth={false} id='gameDisplay-container'>
+
           {value === 0 && games ? (
             arr.map((num, ind) => {
               var playerView = games[0].players[ind].player;
@@ -55,10 +60,10 @@ export default function Lobby() {
           ) : (
             <CreateGame />
           )}
+
         </Container>
 
         <Container maxWidth={false} id='lobbyChat-container'>
-          <p>Chat box</p>
           <LobbyChatRoom />
           <ChatForm />
         </Container>
