@@ -26,11 +26,11 @@ export default function Lobby() {
     setValue(newValue);
   };
   //const socket = useContext(SocketContext)
-  useEffect(() => {
-    socket.on('connect', () => {
-      socket.emit('gg', 'sting');
-    });
-  });
+  // useEffect(() => {
+  //   socket.on('connect', () => {
+  //     socket.emit('gg', 'sting');
+  //   });
+  // });
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const game = {
     owner: 'creator',

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 export default function CreateGame() {
+  // /blueocean/api/v1/games
+
   const [playerName, setPlayerName] = useState('');
   const [players, setPlayers] = useState(0);
   const [gameName, setGameName] = useState('');
@@ -24,8 +26,6 @@ export default function CreateGame() {
 
   return (
     <Form onSubmit={onSubmitHandler}>
-      <label>What is your name?</label>
-      <FormInput onChange={nameChange} type='text' />
       <label>How many people are playing?</label>
       <FormInput onChange={numPlayers} type='number' />
       <label>What will the game name be?</label>
