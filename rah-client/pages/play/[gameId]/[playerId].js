@@ -8,9 +8,13 @@ import TableRow from '@mui/material/TableRow';
 import Grid from '@mui/material/Grid';
 import Navbar from '../../../components/Navbar/Navbar';
 import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios'
+import {getGameInfo} from './funcs.js'
+import { useRouter } from 'next/router'
+import GameInfo from '../../../components/GameInfo.js'
 import PlayChat from '../../../components/play-chatForm/PlayChat';
 import PlayerCard from '../../../components/playerCard.js';
 import {sampleGame} from '../../../pages/_sampleData/sampleGame.js'
@@ -22,11 +26,28 @@ export default function Game() {
   const [role, setRole] = useState('wolf')
   const [phase, setPhase] = useState('night')
   const [card, setCard] = useState(0)
-  //websocket connection to game, url will be gameID
-  const moveRight = () => {
-    let current = card
-    setCard(current + 5)
+  const [open, setOpen] = useState(false)
+  const [game, setGame] = useState(sampleGame)
+
+  const router = useRouter()
+  const {gameId, playerId} = router.query
+  const closeDrawer = () => {
+    setOpen(false)
   }
+  const switchPhase = () => {
+    phase === 'night' ? setPhase('day') : setPhase('night')
+  }
+  const moveRight = () => {
+    if (card < game.players.length - 5) {
+      let current = card
+      setCard(current + 5)
+    } else {
+      let current = card
+      setCard(players.length - 5)
+    }
+
+  }
+  const gameInfo = getGameInfo(game, playerId)
   const moveLeft = () => {
     if (Card > 5) {
       let current = card
@@ -38,12 +59,14 @@ export default function Game() {
 
   }
   useEffect(() => {
-    axios.get(`${basePath}/users`)
-      .then((res) => {
-        setPlayers(res.data.users.slice(0, 10))
-        setOwner(players[0])
-        sampleGame.players = players
-      })
+    //websocket connection to game, url will be gameID
+    // axios.get(`${basePath}/users`)
+    //   .then((res) => {
+    //     setPlayers(res.data.users.slice(0, 10))
+    //     setOwner(players[0])
+    //     sampleGame.players = players
+    //     setGame(sampleGame)
+    //   })
   },[])
 
   useEffect(() => {
@@ -85,30 +108,33 @@ export default function Game() {
       </Container>
       <Box sx={{ display: 'inline-block', float: 'right', width: '75%' }}>
         <Container maxWidth={false} id='gameBoard-container'>
-          {owner ? <p>{owner.userName}</p> : <p>nope</p>}
-          {players ? <p>{role}</p> : <p>no players</p>}
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
-          <p>Game Board Remove me</p>
+          <button onClick={() => setOpen(!open)}>Game Info</button>
+        <Drawer
+          open={open}
+          className='gameInfoDrawer'
+          variant="persistent"
+          anchor="top"
+        >
+          <div><GameInfo close={closeDrawer} info={gameInfo} game={game}/></div>
+        </Drawer>
+          <h3>game owner: {game.owner.userName}</h3>
+          <h3>your role: {gameInfo.role}</h3>
+          <h3>{phase}</h3>
+          <button onClick={switchPhase}>switch phase</button>
+
         </Container>
         <Container maxWidth={false} id='playerCards-container'>
           <button onClick={moveLeft}>left</button>
 
-          <div class="viewport">
+          <div className="viewport">
 
-            <div class="playerCardContainer">
+            <div className="playerCardContainer">
               <Stack direction='row' spacing={0}>
-              {players ? players.map((player) => {
-              return <PlayerCard key ={player.userName} phase={phase} role={role} player={player}/>
+              {game.players ? game.players.map((player) => {
+                if (player.player._id !== playerId) {
+                  return <PlayerCard key ={player.player.userName} phase={phase} role={gameInfo.role} player={player}/>
+                }
+
             }) : <p>lloading</p>}
               </Stack>
             </div>

@@ -119,11 +119,30 @@ a {
   margin-top: 1em;
   margin-bottom: 1em;
 }
-
+.gameInfoDrawer {
+  position: "relative";
+  transition: "none !important";
+}
 .playerCard {
   text-align: center;
   height: 200px;
   width: 150px;
+  border: 1px solid black;
+}
+.playerCardContainer {
+  list-style: none;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.viewport {
+  height: 200px;
+  display: flex;
+  width: 750px;
+  overflow: hidden;
+  padding-left: 13px;
 }
 
 #login-container {
