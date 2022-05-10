@@ -25,7 +25,12 @@ import FriendsModalForm from '../Modal/FriendsModalForm';
 import Skeleton from '@mui/material/Skeleton';
 import LoginForm from '../LoginForm';
 import SignupForm from '../SignupForm';
+
 const Navbar = () => {
+  // useEffect(() => {
+
+  // }, [token])
+
   const loginClicked = () => {
     handleLoginModal();
   };
