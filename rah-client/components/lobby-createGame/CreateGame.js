@@ -44,7 +44,7 @@ const Form = styled.form`
   text-align: center;
   border: 1px solid black;
   margin-left: 10%;
-  top: 45%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;

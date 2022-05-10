@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import List from '@mui/material/List';
 import styled from 'styled-components';
-import { socket } from '../../socket/socket';
-
+import { SocketContext } from '../../socket/socket';
 export default function LobbyChatRoom() {
   const [chats, setChats] = useState([]);
 
+  const socket = useContext(SocketContext);
+
+  //put where online players are.
   useEffect(() => {
     socket.on('connect', () => {
       socket.emit('join-lobby', { username: 'josh' });
     });
     socket.on('joined-lobby', (user) => {
-      console.log(user);
+      console.log('user', user);
     });
   });
+
+  //building up message to display
+  // useEffect(() => {
+  //   socket.on('receive-message', (user, msg) => {
+  //     const copyChat = [...chats]
+  //     copyChat.push({user, msg})
+  //     setChats(copyChat)
+  //   })
+  // })
 
   return (
     <StyledChatBox>

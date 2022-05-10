@@ -17,8 +17,6 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-//import SocketContext from '../../socket/socket.js';
-import { socket } from '../../socket/socket.js';
 import CreateGame from '../../components/lobby-createGame/CreateGame';
 export default function Lobby() {
   const [value, setValue] = useState(0);
@@ -49,12 +47,14 @@ export default function Lobby() {
       </TabsContainer>
       <Box sx={{ display: 'inline-block', float: 'right', width: '80%' }}>
         <Container maxWidth={false} id='gameDisplay-container'>
-          {games
-            ? arr.map((num, ind) => {
-                var playerView = games[0].players[ind].player;
-                return <GameRow key={ind} player={playerView} game={games[0]} />;
-              })
-            : null}
+          {value === 0 && games ? (
+            arr.map((num, ind) => {
+              var playerView = games[0].players[ind].player;
+              return <GameRow key={ind} player={playerView} game={games[0]} />;
+            })
+          ) : (
+            <CreateGame />
+          )}
         </Container>
 
         <Container maxWidth={false} id='lobbyChat-container'>
@@ -73,6 +73,6 @@ const OnlineTitle = styled.p`
 
 const TabsContainer = styled(Tabs)`
   position: absolute;
-  margin-left: 22%;
+  margin-left: 22.1%;
   margin-top: 10px;
 `;
