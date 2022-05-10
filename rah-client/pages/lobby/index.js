@@ -9,7 +9,6 @@ import List from '@mui/material/List';
 import ChatForm from '../../components/lobby-chatForm/ChatForm';
 import GameRow from '../../components/GameRow.js';
 import LobbyDisplay from '../../components/lobby-gameDisplay/LobbyDisplay';
-import {activeUsers} from '../_sampleData/activeUsers.js'
 import {sampleGame} from '../_sampleData/sampleGame.js'
 import axios from 'axios'
 import LobbyChatRoom from '../../components/lobby-chatRoom/LobbyChatRoom';
