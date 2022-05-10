@@ -9,16 +9,14 @@ import List from '@mui/material/List';
 import ChatForm from '../../components/lobby-chatForm/ChatForm';
 import GameRow from '../../components/GameRow.js';
 import LobbyDisplay from '../../components/lobby-gameDisplay/LobbyDisplay';
-import {sampleGame} from '../_sampleData/sampleGame.js'
-import axios from 'axios'
+import { sampleGame } from '../_sampleData/sampleGame.js';
+import axios from 'axios';
 import LobbyChatRoom from '../../components/lobby-chatRoom/LobbyChatRoom';
 import { activeUsers } from '../_sampleData/activeUsers.js';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-//import SocketContext from '../../socket/socket.js';
-import { socket } from '../../socket/socket.js';
 import CreateGame from '../../components/lobby-createGame/CreateGame';
 export default function Lobby() {
   const [value, setValue] = useState(0);
@@ -28,13 +26,22 @@ export default function Lobby() {
     setValue(newValue);
   };
   //const socket = useContext(SocketContext)
+<<<<<<< HEAD
   const [games, setGames] = useState([sampleGame])
+=======
+  const [games, setGames] = useState([sampleGame]);
+>>>>>>> main
   useEffect(() => {
     // socket.on('connect', (() => {
     //   socket.emit('gg', 'sting')
     // }))
+<<<<<<< HEAD
   }, [])
   const arr = [1,2,3,4,5,6,7,8,9,10]
+=======
+  }, []);
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+>>>>>>> main
 
   return (
     <>
@@ -49,16 +56,26 @@ export default function Lobby() {
       </TabsContainer>
       <Box sx={{ display: 'inline-block', float: 'right', width: '80%' }}>
         <Container maxWidth={false} id='gameDisplay-container'>
+<<<<<<< HEAD
             {games ? arr.map((num, ind) => {
               var playerView = games[0].players[ind].player
               return (
                 <GameRow key={ind} player={playerView} game={games[0]}/>
               )
             }) : null}
+=======
+          {value === 0 && games ? (
+            arr.map((num, ind) => {
+              var playerView = games[0].players[ind].player;
+              return <GameRow key={ind} player={playerView} game={games[0]} />;
+            })
+          ) : (
+            <CreateGame />
+          )}
+>>>>>>> main
         </Container>
 
         <Container maxWidth={false} id='lobbyChat-container'>
-          <p>Chat box</p>
           <LobbyChatRoom />
           <ChatForm />
         </Container>
@@ -73,6 +90,6 @@ const OnlineTitle = styled.p`
 
 const TabsContainer = styled(Tabs)`
   position: absolute;
-  margin-left: 22%;
+  margin-left: 22.1%;
   margin-top: 10px;
 `;
