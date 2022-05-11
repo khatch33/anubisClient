@@ -14,16 +14,16 @@ export default function ActiveUsersList() {
   const userData = useRecoilValue(userState);
   const [usersList, setUsersList] = useState([]);
 
-  // useEffect(() => {
-  //   socket.emit('join-room', {userName: uuid()}, 'lobby');
-  //   socket.on('receive-lobby', (users) => {
-  //     setUsersList(users);
-  //     console.log(usersList, 'usersList');
-  //   })
-  //   socket.on('error', (err) => {
-  //     console.error(err);
-  //   })
-  // }, [])
+  useEffect(() => {
+    socket.emit('join-room', userData.userName, 'lobby');
+    socket.on('receive-lobby', (users) => {
+      setUsersList(users);
+      console.log(usersList, 'usersList');
+    })
+    socket.on('error', (err) => {
+      console.error(err);
+    })
+  }, [])
 
   return (
     <Container disableGutters={true} maxWidth={false} id="activeUsers-container">

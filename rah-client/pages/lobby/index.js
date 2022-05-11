@@ -74,7 +74,6 @@ export default function Lobby() {
           </Container>
 
           <Container maxWidth={false} id="lobbyChat-container">
-            <p>Chat box</p>
             <LobbyChatRoom />
             <ChatForm />
           </Container>

@@ -196,9 +196,9 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar maxWidth={false} disableGutters={true} position='static'>
+      <AppBar position='static'>
         <Container maxWidth='xl'>
-          <Toolbar disableGutters={true}>
+          <Toolbar>
             <Link href='/'>
               <Typography
                 variant='h6'
