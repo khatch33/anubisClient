@@ -11,15 +11,13 @@ export default function LobbyChatRoom() {
 
   //put where online players are.
   useEffect(() => {
-    socket.on('connect', () => {
-      //socket.emit('join-lobby', { username: 'josh' });
-    });
+
     // socket.on('joined-lobby', (user) => {
     //   console.log('user', user);
     // });
 
-    socket.on('recieved-message-lobby', (message) => {
-      console.log('lobby', message)
+    socket.on('receive-message-lobby', (user, message) => {
+      console.log(user)
       // message = {user:}
       setMessages([...messages, message]);
     })
@@ -37,7 +35,8 @@ export default function LobbyChatRoom() {
   return (
     <StyledChatBox>
       {messages.map((message) => {
-        return <p>{message.user}: {message.text}</p>
+        console.log(message)
+        return <p>{message.username}: {message.text}</p>
       })}
     </StyledChatBox>
   );

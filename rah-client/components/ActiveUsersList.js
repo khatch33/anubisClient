@@ -30,7 +30,7 @@ export default function ActiveUsersList() {
         <div style={{textAlign: 'center', marginRight: '30px'}}><h3>Online Players</h3></div>
         {/* {!usersList.length ? <div>No active users</div> : usersList.map((user) => ( */}
         {activeUsers.map((user) => (
-          <div key={JSON.stringify(user)} maxWidth={false} className="activeUser-item">
+          <div key={JSON.stringify(user)} className="activeUser-item">
 
             <div id="activeUsersList-container">
               <div className="activeUsers-username">
