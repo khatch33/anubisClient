@@ -1,21 +1,46 @@
 import Container from '@mui/material/Container';
+import { useContext, useEffect, useState } from 'react';
+import { SocketContext } from '../socket/socket';
+import uuid from 'react-uuid';
+import { userState } from '../_states/tokenState';
+import { useRecoilValue } from 'recoil';
+// remove
+import activeUsers from '../pages/_sampleData/activeUsers';
 
-export default function ActiveUsersList(props) {
+// !! TO DO -> switch from props to users list
+export default function ActiveUsersList() {
+
+  const socket = useContext(SocketContext);
+  const userData = useRecoilValue(userState);
+  const [usersList, setUsersList] = useState([]);
+
+  // useEffect(() => {
+  //   socket.emit('join-room', {userName: uuid()}, 'lobby');
+  //   socket.on('receive-lobby', (users) => {
+  //     setUsersList(users);
+  //     console.log(usersList, 'usersList');
+  //   })
+  //   socket.on('error', (err) => {
+  //     console.error(err);
+  //   })
+  // }, [])
 
   return (
-    <Container maxWidth={false} id="activeUsers-container">
+    <Container disableGutters={true} maxWidth={false} id="activeUsers-container">
+        <div style={{textAlign: 'center', marginRight: '30px'}}><h3>Online Players</h3></div>
+        {/* {!usersList.length ? <div>No active users</div> : usersList.map((user) => ( */}
+        {activeUsers.map((user) => (
+          <div key={JSON.stringify(user)} maxWidth={false} className="activeUser-item">
 
-      <Container maxWidth="lg" id="activeUsersList-container">
-        <h3>Online Players</h3>
-        {props.users.map((user) => (
-          <Container key={JSON.stringify(user)} maxWidth={false} className="activeUser-item" style={{display: 'flex', justifyContent: 'space-between' }}>
-            <div className="activeUsers-username"> <img className="userAvatar" src={`${user.img}`} alt=""/> <span>{user.userName}</span> </div>
-
-            <div className="activeUsers-rank"> {user.score} </div>
-          </Container>
+            <div id="activeUsersList-container">
+              <div className="activeUsers-username">
+                <span className="userAvatar">{user.userName[0]}</span>
+                <span className="userName">{user.userName}</span>
+              </div>
+              <span className="activeUsers-rank"> {user.score} </span>
+            </div>
+          </div>
         ))}
       </Container>
-
-    </Container>
   )
 }
