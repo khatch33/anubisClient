@@ -217,7 +217,6 @@ const Navbar = () => {
                 WEREWOLF
               </Typography>
             </Link>
-
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'

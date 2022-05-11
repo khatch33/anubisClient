@@ -4,7 +4,8 @@ import Navbar from '../components/Navbar/Navbar';
 import React, { useState, useEffect } from 'react';
 import ActiveUsersList from '../components/ActiveUsersList';
 import axios from 'axios';
-import activeUsers from './_sampleData/activeUsers';
+import activeUsers from '../pages/_sampleData/activeUsers';
+
 const basePath = 'http://localhost:4030/blueocean/api/v1';
 
 export default function Home() {
