@@ -11,7 +11,7 @@ export default function GameInfo (props) {
       <h4>Wolf's Left: {info.wolfsLeft}</h4>
       <h4>Doctor's Left: {info.doctorsLeft}</h4>
       <h4>Seer's Left: {info.seersLeft}</h4>
-      <h4>Night: </h4>
+      <h4>Night: {game.phase}</h4>
     </div>
   )
 }
