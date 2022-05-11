@@ -18,7 +18,7 @@ export default function ActiveUsersList() {
     socket.emit('join-room', userData.userName, 'lobby');
     socket.on('receive-lobby', (users) => {
       setUsersList(users);
-      console.log(usersList, 'usersList');
+      // console.log(users, 'users');
     })
     socket.on('error', (err) => {
       console.error(err);
@@ -28,7 +28,7 @@ export default function ActiveUsersList() {
   return (
     <Container disableGutters={true} maxWidth={false} id="activeUsers-container">
         {/* {!usersList.length ? <div>No active users</div> : usersList.map((user) => ( */}
-        {activeUsers.map((user) => (
+          {activeUsers.map((user) => (
           <div key={JSON.stringify(user)} className="activeUser-item">
 
             <div id="activeUsersList-container">
