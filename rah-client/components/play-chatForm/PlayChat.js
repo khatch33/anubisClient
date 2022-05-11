@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
+import {useRecoilState} from 'recoil';
+import { userState } from '../../_states/tokenState';
+import { useRouter } from 'next/router'
+import { SocketContext } from '../../socket/socket';
 export default function PlayChat() {
   const [chat, setChat] = useState('');
-
+  const [user, setUser] = useRecoilState(userState);
+  const socket = useContext(SocketContext);
   const chatHandler = (e) => {
     setChat(e.target.value);
   };
+  const router = useRouter()
+  const {gameId, playerId} = router.query
 
   const onSubmitHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    let message = {
+      text: chat,
+      time: Date.now(),
+      username: user.userName
+    }
+    socket.emit('send-message', user, message, gameId);
+    console.log('tetisang');
     console.log(chat);
     setChat('');
   };
