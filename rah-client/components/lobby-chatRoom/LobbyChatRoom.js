@@ -39,6 +39,7 @@ export default function LobbyChatRoom() {
   //     setChats(copyChat)
   //   })
   // })
+<<<<<<< HEAD
   const alignMessage = (message) => {
     if (message.username === userData.userName) {
       return "chatMessage-right";
@@ -46,6 +47,8 @@ export default function LobbyChatRoom() {
       return "chatMessage-left";
     }
   };
+=======
+>>>>>>> 85f90f7d79be119c3384d7062338b219793591b8
 
   return (
     // <StyledChatBox id="chatMessages-container">
