@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ChatForm from '../../components/lobby-chatForm/ChatForm';
 import GameRow from '../../components/GameRow.js';
+import GamesList from '../../components/GamesList.js';
 import LobbyDisplay from '../../components/lobby-gameDisplay/LobbyDisplay';
 import { sampleGame } from '../_sampleData/sampleGame.js';
 import axios from 'axios';
@@ -32,16 +33,26 @@ export default function Lobby() {
   };
   const socket = useContext(SocketContext);
 
-  const [games, setGames] = useState([sampleGame]);
+  const [games, setGames] = useState([]);
 
-  // useEffect(() => {
-  //    return () => {
-  //      socket.emit('join-room', user, 'lobby')
-  //    }
+  useEffect(() => {
+    socket.emit('get-games', (games) => {
+      console.log('game data is here')
+       //setGames(games)
+    })
+     return () => {
 
-  // }, [socket]);
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+       socket.on('receive-games', (games) => {
+         console.log('game data is here', games)
+          setGames(games)
+       })
+     }
 
+  }, []);
+
+//map gameRows out here-v
+              //rows = games
+console.log(games)
   return (
     <Container maxWidth={false} disableGutters={true}>
       <Navbar />
@@ -56,14 +67,7 @@ export default function Lobby() {
 
         <Box sx={{ display: 'inline-block', float: 'right', width: '80%' }}>
           <Container maxWidth={false} id='gameDisplay-container'>
-            {value === 0 && games ? (
-              arr.map((num, ind) => {
-                var playerView = games[0].players[ind].player;
-                return <GameRow key={ind} player={num} game={games[0]} />;
-              })
-            ) : (
-              <CreateGame />
-            )}
+            {value === 0 ? <GamesList games = {games}/> : <CreateGame />}
           </Container>
 
           <Container maxWidth={false} id='lobbyChat-container'>
