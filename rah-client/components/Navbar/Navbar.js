@@ -27,7 +27,7 @@ import LoginForm from '../LoginForm';
 import SignupForm from '../SignupForm';
 import { userState } from '../../_states/tokenState';
 import { useRecoilValue } from 'recoil';
-import icon from '../../public/anubis-gold.png';
+//import icon from '../../public/anubis-gold.png';
 import Image from 'next/image';
 
 const Navbar = () => {
@@ -219,7 +219,7 @@ const Navbar = () => {
                 WEREWOLF
               </Typography>
             </Link>
-            <Image height="65" width="65" src={icon} alt='logo'/>
+            {/* <Image height="65" width="65" alt='logo'/> */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'

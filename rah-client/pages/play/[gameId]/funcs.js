@@ -4,6 +4,7 @@ exports.getGameInfo = (game, userId) => {
     wolfsLeft: 0,
     doctorsLeft: 0,
     seersLeft : 0,
+    phase: game.phase
   }
   for (let i = 0; i < game.players.length; i++) {
     let dets = game.players[i]
@@ -11,7 +12,7 @@ exports.getGameInfo = (game, userId) => {
       gameInfo.playersLeft += 1;
       dets.role === 'wolf' ? gameInfo.wolfsLeft += 1  : dets.role === 'doctor' ? gameInfo.doctorsLeft += 1 : dets.role === 'seer' ? gameInfo.seersLeft += 1 : null
     }
-    if (dets.player._id === userId) {
+    if (dets.player.userID === userId) {
       gameInfo.role = dets.role
     }
   }

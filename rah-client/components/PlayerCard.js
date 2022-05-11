@@ -5,11 +5,14 @@ import Typography from '@mui/material/Typography'
 import React from 'react'
 
 export default function PlayerCard(props) {
-  const player = props.player.player
-  const username = player.userName
+  const player = props.player
+  const username = player.player.userName
+  const alive = player.status
   const phase = props.phase
   const role = props.role
+
   const renderActionButton = () => {
+
     if (phase === 'night') {
       if (role === 'villager') {
         return
@@ -20,16 +23,17 @@ export default function PlayerCard(props) {
       } else if (role === 'seer') {
         return <button>Check if Wolf</button>
       }
-    } else if (phase === 'day') {
+    } else if (phase === 'day2' || phase === 'day3') {
       return <button>accuse</button>
     }
   }
   return (
-    <Card key={'pc' + username} className='playerCard'>
+    <Card key={'pc' + username} className={`playerCard alive-${alive}`}>
       <h5 key={'pc' + username}>{username}</h5>
       <img className="userAvatar" src={`${player.img}`} alt=""/>
+      {alive? null : <h3>Killed Off</h3>}
       <div>
-        {renderActionButton()}
+        {alive ? renderActionButton() : null}
       </div>
 
     </Card>
