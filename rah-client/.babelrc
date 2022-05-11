@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
   "presets": ["next/babel"],
   "plugins": [["styled-components", { "ssr": true }]]
 }
+=======
+  "presets": ["next/babel"]
+}
+>>>>>>> 785d4be519e0c3c968206ae7bf58a7b4f720b517
