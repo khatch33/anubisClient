@@ -6,8 +6,8 @@ export default function GameRow (props) {
   let creator = game.owner
   let gameName = game.gameName
   let players = 'players: ' + game.players.length.toString() + '/' + game.playerAllowed
-  let gameRoomUrl = '/play/' + creator._id + '/' + props.player._id
-  let linkStr = 'view from: ' + props.player.userName
+  let gameRoomUrl = '/play/333/' + props.player
+  let linkStr = 'start game as player: ' + props.player
   // const choseGame = (game) => {
 
   // }

@@ -65,7 +65,7 @@ export default function Lobby() {
               arr.map((num, ind) => {
                 var playerView = games[0].players[ind].player;
                 return (
-                  <GameRow key={ind} player={playerView} game={games[0]} />
+                  <GameRow key={ind} player={num} game={games[0]} />
                 );
               })
             ) : (

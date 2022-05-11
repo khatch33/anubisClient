@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -12,8 +12,10 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios'
+import { SocketContext } from '../../../socket/socket';
 import {getGameInfo} from './funcs.js'
 import { useRouter } from 'next/router'
+import Alert from '@mui/material/Alert'
 import GameInfo from '../../../components/GameInfo.js'
 import PlayChat from '../../../components/play-chatForm/PlayChat';
 import PlayerCard from '../../../components/playerCard.js';
@@ -23,16 +25,22 @@ const basePath = 'http://localhost:4030/blueocean/api/v1';
 export default function Game() {
   const [players, setPlayers] =  useState([])
   const [owner, setOwner] = useState()
+  const [announcement, setAnnouncement] = useState('somegr greauig yu ireuygr iuo')
   const [role, setRole] = useState('wolf')
   const [phase, setPhase] = useState('night')
   const [card, setCard] = useState(0)
   const [open, setOpen] = useState(false)
-  const [game, setGame] = useState(sampleGame)
-
+  const [game, setGame] = useState()
+  const [gameInfo, setGameInfo] = useState()
+  const socket = useContext(SocketContext);
   const router = useRouter()
   const {gameId, playerId} = router.query
+  var started = false
   const closeDrawer = () => {
     setOpen(false)
+  }
+  const startGame = () => {
+
   }
   const switchPhase = () => {
     phase === 'night' ? setPhase('day') : setPhase('night')
@@ -47,7 +55,6 @@ export default function Game() {
     }
 
   }
-  const gameInfo = getGameInfo(game, playerId)
   const moveLeft = () => {
     if (Card > 5) {
       let current = card
@@ -58,22 +65,39 @@ export default function Game() {
     }
 
   }
+
   useEffect(() => {
-    //websocket connection to game, url will be gameID
-    // axios.get(`${basePath}/users`)
-    //   .then((res) => {
-    //     setPlayers(res.data.users.slice(0, 10))
-    //     setOwner(players[0])
-    //     sampleGame.players = players
-    //     setGame(sampleGame)
-    //   })
+    return () => {
+    socket.on(`receive-message-${gameId}`, (user, message) => {
+      if (user.userName === 'announcement') {
+        setAnnouncement(message)
+      }
+      console.log(user, message)
+    })
+      socket.on('game-send', (gameData) => {
+        setGame(gameData)
+        setGameInfo(getGameInfo(gameData, playerId))
+    })
+      if (started === false) {
+        socket.emit('join-room', playerId, '333')
+        socket.emit('start-test', playerId, gameId, 5000)
+        started = true
+      }
+    }
   },[])
 
   useEffect(() => {
     const container = document.querySelector('.playerCardContainer')
-    container.style.transitionDuration =  '.8s'
-    container.style.transform = `translate( -${card * 150}px)`
+    if (game) {
+      const container = document.querySelector('.playerCardContainer')
+      container.style.transitionDuration =  '.8s'
+      container.style.transform = `translate( -${card * 150}px)`
+    }
+
   }, [card])
+  useEffect(() => {
+    console.log(game)
+  }, [game])
 
 
 
@@ -106,8 +130,10 @@ export default function Game() {
         </StyledPlayChat>
         <PlayChat />
       </Container>
+      {game ?
       <Box sx={{ display: 'inline-block', float: 'right', width: '75%' }}>
         <Container maxWidth={false} id='gameBoard-container'>
+          {announcement ? <Alert>{announcement}</Alert> : null}
           <button onClick={() => setOpen(!open)}>Game Info</button>
         <Drawer
           open={open}
@@ -117,10 +143,10 @@ export default function Game() {
         >
           <div><GameInfo close={closeDrawer} info={gameInfo} game={game}/></div>
         </Drawer>
-          <h3>game owner: {game.owner.userName}</h3>
+          {game ? game.owner._id === playerId ? <button onclick={startGame}>Start Game</button>  : null : null}
+          <h3>game owner: {game.owner}</h3>
           <h3>your role: {gameInfo.role}</h3>
-          <h3>{phase}</h3>
-          <button onClick={switchPhase}>switch phase</button>
+          <h3>{game.phase}</h3>
 
         </Container>
         <Container maxWidth={false} id='playerCards-container'>
@@ -131,8 +157,8 @@ export default function Game() {
             <div className="playerCardContainer">
               <Stack direction='row' spacing={0}>
               {game.players ? game.players.map((player) => {
-                if (player.player._id !== playerId) {
-                  return <PlayerCard key ={player.player.userName} phase={phase} role={gameInfo.role} player={player}/>
+                if (player.player.userID !== playerId) {
+                  return <PlayerCard key ={player.player.userName} phase={game.phase} role={gameInfo.role} player={player}/>
                 }
 
             }) : <p>lloading</p>}
@@ -141,7 +167,7 @@ export default function Game() {
           </div>
           <button onClick={moveRight}>right</button>
         </Container>
-      </Box>
+      </Box> : <h2>no game</h2>}
     </>
   );
 }
