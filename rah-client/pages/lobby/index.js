@@ -47,7 +47,7 @@ export default function Lobby() {
     <Container maxWidth={false} disableGutters={true}>
       <Navbar />
 
-      <Container style={{ display: "flex" }}>
+      <Container maxWidth={false} disableGutters={true} style={{ display: "flex", margin: '2%' }}>
         <ActiveUsersList />
 
         <TabsContainer
@@ -74,7 +74,6 @@ export default function Lobby() {
           </Container>
 
           <Container maxWidth={false} id="lobbyChat-container">
-            <p>Chat box</p>
             <LobbyChatRoom />
             <ChatForm />
           </Container>

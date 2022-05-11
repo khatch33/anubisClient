@@ -27,8 +27,6 @@ import LoginForm from '../LoginForm';
 import SignupForm from '../SignupForm';
 import { userState } from '../../_states/tokenState';
 import { useRecoilValue } from 'recoil';
-//import icon from '../../public/anubis-gold.png';
-import Image from 'next/image';
 
 const Navbar = () => {
   const userData = useRecoilValue(userState);
@@ -200,7 +198,7 @@ const Navbar = () => {
     <>
       <AppBar position='static'>
         <Container maxWidth='xl'>
-          <Toolbar disableGutters>
+          <Toolbar>
             <Link href='/'>
               <Typography
                 variant='h6'
@@ -219,7 +217,7 @@ const Navbar = () => {
                 WEREWOLF
               </Typography>
             </Link>
-            {/* <Image height="65" width="65" alt='logo'/> */}
+
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'

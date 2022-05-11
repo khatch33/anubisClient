@@ -97,13 +97,51 @@ a {
 }
 
 #lobbyChat-container {
-  border: 1px solid black;
   height: 40vh;
-  width: 75vw;
+  width: 70vw;
   margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 75px;
 }
 
+/* LobbyChatRoom.js */
+
+#chatList-outerContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-container {
+  margin: 7px;
+}
+
+.chatUser {
+  font-size: 0.65em;
+}
+
+.chatMessage {
+  background-color: #9a824991;
+  margin: 3px;
+  width: fit-content;
+  border-radius: 100px;
+  padding: 5px;
+  font-size: 0.9em;
+}
+
+.chatMessage-right {
+  float: right;
+  clear: both;
+}
+
+.chatMessage-left {
+  justify-content: left;
+  clear: both;
+}
+#submitChat-button:hover {
+  background-color: transparent;
+  box-shadow: none;
+  transform: scale(1.2);
+  transition: all ease 250ms;
+}
 /* play/index.js */
 #gameRoom-container {
   display: flex;
@@ -168,6 +206,7 @@ a {
   flex-direction: column;
 }
 
+
 #signup-container {
   display: flex;
   flex-direction: column;
@@ -179,3 +218,10 @@ a {
   font-size: 0.75em;
   text-align: left;
 }
+
+#login-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 35%;
+}
+

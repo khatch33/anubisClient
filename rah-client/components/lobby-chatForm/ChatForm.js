@@ -2,7 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { SocketContext } from '../../socket/socket';
 import {useRecoilState} from 'recoil';
-import { userState } from '../../_states/tokenState'
+import { userState } from '../../_states/tokenState';
+import Input from '@mui/material/Input';
+import { shadows } from '@mui/system';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import SendIcon from '@mui/icons-material/Send';
+
 export default function ChatForm() {
   //VARIABLES TO MAKE SOCKET WORK
   const socket = useContext(SocketContext);
@@ -21,10 +27,10 @@ export default function ChatForm() {
   const onFormSubmit = (e) => {
     e.preventDefault();
     let message = {
-    text: chatBoxInput,
-    time: Date.now(),
-    username: user.userName
-  }
+      text: chatBoxInput,
+      time: Date.now(),
+      username: user.userName
+    }
   //
     socket.emit('send-message', user, message, "lobby");
     //sends message, second argument is use object, message is message to be sent
@@ -42,21 +48,39 @@ export default function ChatForm() {
     <Form onSubmit={onFormSubmit}>
       <ChatInput
         type='text'
-        placeholder='type to players'
+        placeholder='Send Message'
         onChange={chatBoxOnChange}
         value={chatBoxInput}
+        id="chat-input"
       />
-      <input hidden type='submit' />
+      <StyledButton variant="contained" id="submitChat-button" endIcon={<SendIcon />} type='submit' />
     </Form>
   );
 }
 
 const Form = styled.form`
-  margin-top: 1em;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
 `;
 
 const ChatInput = styled.input`
-  height: 35px;
-  border-radius: 7px;
-  width: 100%;
+  border: none;
+  border-radius: 30px;
+  background-color: rgba(128, 128, 128, 0.112);
+  width: 85%;
+  margin: 0;
+  padding: 13px;
+  height: 45px;
+`;
+
+const StyledButton = styled(Button)`
+  height: 45px;
+  width: 5%;
+  background-color: transparent;
+  color: #9a824991;
+  box-shadow: none;
+
 `;
