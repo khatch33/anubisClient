@@ -11,6 +11,7 @@ export default function CreateGame() {
   const [players, setPlayers] = useState(0);
   const [gameName, setGameName] = useState('');
   const creator = useRecoilValue(userState);
+  console.log(creator);
   const nameChange = (e) => {
     setPlayerName(e.target.value);
   };
@@ -25,17 +26,20 @@ export default function CreateGame() {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    const url = '/blueocean/api/v1/games';
+    const url = 'http://localhost:4030/blueocean/api/v1/games';
     console.log(players, gameName);
-    axios.post(
-      url,
-      { players, gameName },
-      {
-        headers: {
-          Authorization: `Bearer ${creator.token}`,
-        },
-      }
-    );
+    axios
+      .post(
+        url,
+        { players, gameName },
+        {
+          headers: {
+            Authorization: `Bearer ${creator.userToken}`,
+          },
+        }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
