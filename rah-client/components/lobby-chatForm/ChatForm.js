@@ -22,10 +22,11 @@ export default function ChatForm() {
     e.preventDefault();
     let message = {
     text: chatBoxInput,
-    time: Date.now()
+    time: Date.now(),
+    username: user.userName
   }
   //
-    socket.emit('send-message', user, 'lobby', message);
+    socket.emit('send-message', user, message, "lobby");
     //sends message, second argument is use object, message is message to be sent
     // socket.emit('send-message', user, message);
     setChatBoxInput('');

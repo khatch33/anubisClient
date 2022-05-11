@@ -19,24 +19,27 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import CreateGame from "../../components/lobby-createGame/CreateGame";
 import ActiveUsersList from "../../components/ActiveUsersList";
-
+import { userState } from '../../_states/tokenState';
+import { useRecoilState } from 'recoil';
+import {SocketContext} from '../../socket/socket';
 export default function Lobby() {
   const [value, setValue] = useState(0);
+  const [user, setUser] = useRecoilState(userState);
 
   const handleChange = (event, newValue) => {
     console.log(newValue);
     setValue(newValue);
   };
-  //const socket = useContext(SocketContext)
+  const socket = useContext(SocketContext)
 
   const [games, setGames] = useState([sampleGame]);
 
-  useEffect(() => {
-    // socket.on('connect', (() => {
-    //   socket.emit('gg', 'sting')
-    // }))
+  // useEffect(() => {
+  //    return () => {
+  //      socket.emit('join-room', user, 'lobby')
+  //    }
 
-  }, []);
+  // }, [socket]);
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 
