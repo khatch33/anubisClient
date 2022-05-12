@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { SocketContext } from "../socket/socket";
 import uuid from "react-uuid";
@@ -24,6 +24,9 @@ export default function ActiveUsersList() {
     socket.on("error", (err) => {
       console.error(err);
     });
+    return () => {
+      socket.emit("join-room", userData.userName, "lobby");
+    }
   }, []);
 
   return (
