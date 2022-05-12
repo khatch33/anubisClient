@@ -35,10 +35,7 @@ export default function Lobby() {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    socket.emit("get-games", (games) => {
-      console.log("game data is here");
-      //setGames(games)
-    });
+    socket.emit("get-games", games);
     return () => {
       socket.on("receive-games", (games) => {
         console.log("game data is here", games);
@@ -49,7 +46,6 @@ export default function Lobby() {
 
   //map gameRows out here-v
   //rows = games
-  console.log(games);
   return (
     <>
       <Navbar />
