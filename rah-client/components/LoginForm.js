@@ -15,11 +15,11 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: "#F1F7ED",
+  border: "1px solid gray",
   boxShadow: 24,
   p: 4,
-  borderRadius: "7px",
+  borderRadius: "5px",
   textAlign: "center",
 };
 
@@ -53,7 +53,7 @@ export default function LoginForm() {
   return (
     <>
       <Box sx={style}>
-        <h3>Welcome back!</h3>
+        <h3 style={{color: '#9A8249'}}>WELCOME BACK!</h3>
         <form
           onSubmit={handleSubmit(onSubmit)}
           maxWidth="sm"
@@ -74,7 +74,7 @@ export default function LoginForm() {
           {errors.password && (
             <div className="formValidation-error">Enter a valid password</div>
           )}
-          <Button type="submit" sx={{ color: "#413C39" }} size="medium">
+          <Button type="submit" sx={{ color: "#9A8249", border: '1px solid #9A8249' }} size="medium">
             Login
           </Button>
         </form>

@@ -36,16 +36,19 @@ a {
   margin: 0;
   padding: 0;
   margin-top: 10px;
-  background-color: #F1F7ED;
+
   border-radius: 5px;
   margin-left: 2%;
 }
 
 #activeUsers-container {
+  background-color: #F1F7ED;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  flex-shrink: 1;
   border: 1px solid gray;
   border-radius: 0 0 5px 5px;
   width: fit-content;
-  height: 100vh;
+  height: 85vh;
   overflow-y: scroll;
   margin: 0;
   /* hides the scrollbar in IE, Firefox */
@@ -102,13 +105,55 @@ a {
 }
 
 #video-container {
+  width: 65%;
+  border-radius: 5px;
+  background-color: #F1F7ED;
   text-align: center;
+  margin-bottom: 25px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+#video-header {
+  height: 35px;
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+  background-color: #9A8249;
+  margin-bottom: 5px;
+}
+
+#video-element {
+  width: 90% !important;
+  height: auto !important;
+  min-height: 300px;
+  border-radius: 5px;
 }
 
 #instructions-container {
-  text-align: center;
+  width: 65%;
+  background-color: #F1F7ED;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 0;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
+#instructions-header, #video-header {
+  background-color: #9A8249;
+  width: 100%;
+  height: 35px;
+  text-align: center;
+  font-family:"Roboto","Helvetica","Arial",sans-serif;
+  font-weight: 400;
+  color: #F1F7ED;
+  font-size: 1em;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  padding-top: 7px;
+}
+
+#instructions-text {
+  padding: 15px;
+}
 /* lobby/index.js */
 #lobbyRoom-container {
   max-width: 100%;
@@ -116,7 +161,7 @@ a {
 }
 
 #gameDisplay-container {
-  min-width: 70vw;
+  min-width: 65vw;
   height: fit-content;
   /* margin-top: 3.5em; */
   /* overflow: auto; */
@@ -124,11 +169,12 @@ a {
 
 #lobbyChat-container {
   height: 40vh;
-  width: 66vw;
+  width: 61vw;
   margin-top: 1em;
   background-color: #F1F7ED;
   padding: 0;
   border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 /* LobbyChatRoom.js */
@@ -270,6 +316,7 @@ a {
 .MuiDataGrid-root {
   border: none;
   border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .MuiDataGrid-main {

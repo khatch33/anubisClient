@@ -69,22 +69,26 @@ const Form = styled.form`
   position: absolute;
   text-align: center;
   border: 1px solid gray;
-  top: 20%;
-  left: 50%;
+  top: 12%;
+  left: 45%;
   width: 300px;
   height: 250px;
   padding: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 `;
 
 const FormInput = styled.input`
   border-radius: 5px;
-  border-color: lightgray;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  border: none;
   background-color: rgba(211, 211, 211, 0.435);
   margin: auto;
   width: 50%;
+  padding: 3px;
 `;
 
 const StyledContainer = styled(Container)`
   height: 350px;
   justify-content: center;
+
 `;

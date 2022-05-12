@@ -59,6 +59,7 @@ const onRowClick = (event) => {
   return (
     <div style={{ height: 350, width: '100%' }}>
       <DataGrid
+        sx={{border: 'none'}}
         density="compact"
         rows={rows}
         columns={columns}
