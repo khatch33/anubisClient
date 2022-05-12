@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import {useRecoilValue} from 'recoil'
 import {userState} from '../_states/tokenState'
 import {useRouter} from 'next/router'
