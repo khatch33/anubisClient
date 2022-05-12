@@ -18,10 +18,11 @@ import { useRouter } from "next/router";
 import Alert from "@mui/material/Alert";
 import GameInfo from "../../../components/GameInfo.js";
 import PlayChat from "../../../components/GameRoom/PlayChatForm";
-import PlayChatRoom from '../../../components/GameRoom/PlayChatRoom'
+import PlayChatRoom from "../../../components/GameRoom/PlayChatRoom";
 import PlayerCard from "../../../components/PlayerCard.js";
 import { sampleGame } from "../../../pages/_sampleData/sampleGame.js";
-import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
+import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/solid";
+import GameBoard from "../../../components/GameRoom/GameBoard";
 const basePath = "http://localhost:4030/blueocean/api/v1";
 
 export default function Game() {
@@ -45,7 +46,7 @@ export default function Game() {
     setOpen(false);
   };
   const startGame = () => {
-    socket.emit('start-test', playerId, gameId, 10000)
+    socket.emit("start-test", playerId, gameId, 10000);
   };
   const switchPhase = () => {
     phase === "night" ? setPhase("day") : setPhase("night");
@@ -68,23 +69,25 @@ export default function Game() {
       setCard(0);
     }
   };
+
+
   socket.on(`receive-message-${gameId}`, (user, message) => {
-        if (user.userName === "announcement") {
-          setAnnouncement(message);
-        } else {
-          setMessages([...messages, message])
-        }
+    if (user.userName === "announcement") {
+      setAnnouncement(message);
+    } else {
+      setMessages([...messages, message]);
+    }
   });
   useEffect(() => {
-      socket.on("game-send", (gameData) => {
+    socket.on("game-send", (gameData) => {
       setGame(gameData);
       setGameInfo(getGameInfo(gameData, playerId));
-      });
-      if (started === false) {
-        socket.emit("join-room", playerId, gameId);
-        // socket.emit("start-test", playerId, gameId, 5000);
-        started = true;
-      }
+    });
+    if (started === false) {
+      socket.emit("join-room", playerId, gameId);
+      // socket.emit("start-test", playerId, gameId, 5000);
+      started = true;
+    }
   }, []);
 
   useEffect(() => {
@@ -95,31 +98,29 @@ export default function Game() {
     }
   }, [card]);
 
-
   useEffect(() => {
-    socket.emit('get-game', gameId)
-      return () => {
-       socket.on(`game-send-${gameId}`, (game) => {
-          setGame(game)
-          setGameInfo(getGameInfo(game, playerId))
-       })
-     }
-
+    socket.emit("get-game", gameId);
+    return () => {
+      socket.on(`game-send-${gameId}`, (game) => {
+        setGame(game);
+        setGameInfo(getGameInfo(game, playerId));
+      });
+    };
   }, []);
-
 
   return (
     <>
       <Navbar />
       <Container sx={{ float: "left", width: "25%" }}>
-        <PlayChatRoom messages={messages}/>
+        <PlayChatRoom messages={messages} />
         <PlayChat />
       </Container>
       {game ? (
         <Box sx={{ display: "inline-block", float: "right", width: "75%" }}>
           <Container maxWidth={false} id="gameBoard-container">
-            {announcement ? <Alert>{announcement}</Alert> : null}
-            <button onClick={() => setOpen(!open)}>Game Info</button>
+            {/* {announcement ? (
+              <Alert severity="info">{announcement}</Alert>
+            ) : null} */}
             <Drawer
               open={open}
               className="gameInfoDrawer"
@@ -130,17 +131,23 @@ export default function Game() {
                 <GameInfo close={closeDrawer} info={gameInfo} game={game} />
               </div>
             </Drawer>
-            {game ? (
-              game.owner === playerId ? (
-                <button onClick={startGame}>Start Game</button>
-              ) : null
-            ) : null}
-            <h3>game owner: {game.ownerName}</h3>
-            <h3>your role: {gameInfo.role}</h3>
-            <h3>{game.phase}</h3>
+
+            <GameBoard
+              announcement={announcement}
+              info={gameInfo}
+              setOpen={setOpen}
+              open={open}
+              startGame={startGame}
+              playerId={playerId}
+              game={game}
+              announcement={announcement}
+            />
+
           </Container>
           <Container maxWidth={false} id="playerCards-container">
-            <StyledButton onClick={moveLeft}><ChevronLeftIcon height="25"/></StyledButton>
+            <StyledButton onClick={moveLeft}>
+              <ChevronLeftIcon stroke="#F1F7ED" fill="#F1F7ED" height="30" />
+            </StyledButton>
 
             <div className="viewport">
               <div
@@ -169,12 +176,12 @@ export default function Game() {
               </div>
             </div>
             <StyledButton onClick={moveRight}>
-              <ChevronRightIcon height="25"/>
+              <ChevronRightIcon stroke="#F1F7ED" fill="#F1F7ED" height="30" />
             </StyledButton>
           </Container>
         </Box>
       ) : (
-        <h2>no game</h2>
+        <h2>Error: No games found. Try again.</h2>
       )}
     </>
   );
@@ -195,4 +202,11 @@ const StyledButton = styled.button`
   height: 20px;
   width: 20px;
   margin-left: 10px;
+`;
+
+const StyledAlert = styled(Alert)`
+  width: fit-content;
+  background-color: #9a8249;
+  color: #f1f7ed;
+  display: inline;
 `;
