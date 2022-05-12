@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import Alert from "@mui/material/Alert";
 import GameInfo from "../../../components/GameInfo.js";
 import PlayChat from "../../../components/GameRoom/PlayChatForm";
+import PlayChatRoom from '../../../components/GameRoom/PlayChatRoom'
 import PlayerCard from "../../../components/PlayerCard.js";
 import { sampleGame } from "../../../pages/_sampleData/sampleGame.js";
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
@@ -35,6 +36,7 @@ export default function Game() {
   const [open, setOpen] = useState(false);
   const [game, setGame] = useState();
   const [gameInfo, setGameInfo] = useState();
+  const [messages, setMessages] = useState([]);
   const socket = useContext(SocketContext);
   const router = useRouter();
   const { gameId, playerId } = router.query;
@@ -67,15 +69,19 @@ export default function Game() {
     }
   };
 
-  useEffect(() => {
-      socket.on(`receive-message-${gameId}`, (user, message) => {
+
+  socket.on(`receive-message-${gameId}`, (user, message) => {
         if (user.userName === "announcement") {
           setAnnouncement(message);
+        } else {
+          setMessages([...messages, message])
         }
-      });
+
+  });
+  useEffect(() => {
       socket.on("game-send", (gameData) => {
-        setGame(gameData);
-        setGameInfo(getGameInfo(gameData, playerId));
+      setGame(gameData);
+      setGameInfo(getGameInfo(gameData, playerId));
       });
       if (started === false) {
         socket.emit("join-room", playerId, gameId);
@@ -92,6 +98,7 @@ export default function Game() {
     }
   }, [card]);
 
+
   useEffect(() => {
     socket.emit('get-game', gameId)
       return () => {
@@ -103,11 +110,12 @@ export default function Game() {
 
   }, []);
 
+
   return (
     <>
       <Navbar />
       <Container sx={{ float: "left", width: "25%" }}>
-        <StyledPlayChat></StyledPlayChat>
+        <PlayChatRoom messages={messages}/>
         <PlayChat />
       </Container>
       {game ? (
