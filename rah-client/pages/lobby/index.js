@@ -64,10 +64,8 @@ export default function Lobby() {
             aria-label="basic tabs example"
           >
             <StyledTab label="Lobby"
-              TabIndicatorProps={{style: {color: '#F1F7ED', backgroundColor: '#9A8249'}}}
             />
             <StyledTab label="Create"
-              TabIndicatorProps={{style: {color: '#F1F7ED', backgroundColor: '#9A8249'}}}
             />
           </TabsContainer>
 

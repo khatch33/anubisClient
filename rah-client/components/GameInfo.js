@@ -10,16 +10,6 @@ export default function GameInfo (props) {
   const info = props.info
   return (
     <StyledContainer maxWidth={false}>
-      <br/>
-      <GameInfoCard>
-        <h3>About your Game</h3>
-        <div><b>Your Role:</b> {info.role}</div>
-        <div><b>Players Remaining:</b> {info.playersLeft}</div>
-        <div><b>Anubis Remaining:</b> {info.wolfsLeft}</div>
-        <div><b>Doctors Remaining:</b> {info.doctorsLeft}</div>
-        <div><b>Seers Remaining:</b> {info.seersLeft}</div>
-        <div><b>Day:</b> {game.phase}</div>
-      </GameInfoCard>
       <StyledCard>
         <h3>Instructions</h3>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
@@ -35,15 +25,15 @@ export default function GameInfo (props) {
             sapiente officiis modi at sunt excepturi expedita sint? Sed
             quibusdam recusandae alias error harum maxime adipisci amet
             laborum.</p>
+        <Button onClick={props.close}>X</Button>
       </StyledCard>
-      <Button onClick={props.close}>X</Button>
     </StyledContainer>
   )
 }
 
 const StyledContainer = styled(Container)`
   align-items: center;
-  background-color: rgba(128, 128, 128, 0.112);
+  background-color: rgba(255, 255, 255, 0);
   display: flex;
   height: min-content;
   justify-content: center;
@@ -51,12 +41,14 @@ const StyledContainer = styled(Container)`
 `;
 
 const StyledCard = styled(Card)`
+  background-color: #F1F7ED;
   margin: 5px;
   padding: 5px;
-  width: 350px;
+  width: 500px;
 `;
 
 const GameInfoCard = styled(Card)`
+
   height: fit-content;
   margin: 5px;
   padding: 5px;
@@ -65,7 +57,7 @@ const GameInfoCard = styled(Card)`
 
 const Button = styled.button`
   align-self: flex-start;
-  background-color: gray;
+  background-color: #9a824991;
   border-radius: 5px;
   border: none;
   cursor: pointer;
