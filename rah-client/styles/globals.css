@@ -1,5 +1,6 @@
 html,
 body {
+  background-image: url('../public/background.jpg');
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
@@ -35,7 +36,11 @@ a {
   margin: 0;
   padding: 0;
   margin-top: 10px;
+  background-color: #F1F7ED;
+  border-radius: 5px;
+  margin-left: 2%;
 }
+
 #activeUsers-container {
   border: 1px solid gray;
   border-radius: 0 0 5px 5px;
@@ -55,10 +60,11 @@ a {
 #activeUsers-header {
   border-radius: 5px 5px 0 0;
   background-color: #9A8249;
-  color: white;
+  color: #F1F7ED;
   width: 100%;
   height: 35px;
 }
+
 #activeUsersList-container {
   border-radius: 25px;
   border: 1px solid #9A8249;
@@ -118,9 +124,11 @@ a {
 
 #lobbyChat-container {
   height: 40vh;
-  width: 70vw;
+  width: 66vw;
   margin-top: 1em;
-  /* margin-bottom: 30px; */
+  background-color: #F1F7ED;
+  padding: 0;
+  border-radius: 5px;
 }
 
 /* LobbyChatRoom.js */
@@ -167,11 +175,11 @@ a {
 /* CreateGame.js */
 
 #createGame-button {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   color: #9A8249;
   width: 30%;
   margin: auto;
   border: 1px solid #9a824991;
-  color: #9A8249;
 }
 
 #createGame-button:hover {
@@ -258,13 +266,21 @@ a {
   font-size: 0.75em;
   text-align: left;
 }
+
+.MuiDataGrid-root {
+  border: none;
+  border-radius: 5px;
+}
+
 .MuiDataGrid-main {
   border: 1px solid gray;
   border-radius: 5px 5px 0 0;
+  background-color: #F1F7ED;
 }
 
 .MuiDataGrid-footerContainer {
   border: 1px solid gray;
+  background-color: #F1F7ED;
   border-radius: 0 0 5px 5px;
   border-top: none;
 }
@@ -272,13 +288,13 @@ a {
 .MuiDataGrid-columnHeaders {
   display: flex;
   background-color: #9A8249;
-  color: white;
+  color: #F1F7ED;
   font-family: monospace;
   font-weight: 700;
 }
 
 .MuiTab-root[aria-selected="true"], .MuiButtonBase-root[aria-selected="true"] {
-  color: #9A8249;
+  color: #F1F7ED;
   background-color: #9a824918;
 }
 

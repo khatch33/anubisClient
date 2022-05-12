@@ -62,6 +62,7 @@ export default function ChatForm() {
 }
 
 const Form = styled.form`
+  background-color: #F1F7ED;
   border: 1px solid gray;
   border-radius: 0 0 5px 5px;
   display: flex;

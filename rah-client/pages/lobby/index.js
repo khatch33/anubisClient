@@ -58,7 +58,7 @@ export default function Lobby() {
         <Container maxWidth={false} disableGutters={true} style={{ display: "flex", flexDirection: "column", width: "fit-content", }} >
 
           <TabsContainer
-            TabIndicatorProps={{style: {backgroundColor: '#9A8249'}}}
+            TabIndicatorProps={{style: {backgroundColor: '#9A8249', color: '#F1F7ED'}}}
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"

@@ -214,7 +214,7 @@ const Navbar = () => {
                   fontFamily: 'monospace',
                   fontWeight: 700,
                   letterSpacing: '.2rem',
-                  color: 'inherit',
+                  color: '#F1F7ED',
                   textDecoration: 'none',
                 }}>
                 WRATH OF ANUBIS
@@ -279,7 +279,7 @@ const Navbar = () => {
                   fontFamily: 'monospace',
                   fontWeight: 700,
                   letterSpacing: '.3rem',
-                  color: 'inherit',
+                  color: '#F1F7ED',
                   textDecoration: 'none',
                 }}>
                 WRATH OF ANUBIS
@@ -293,7 +293,7 @@ const Navbar = () => {
                 display: { xs: 'none', md: 'flex' },
               }}>
               {loggedIn && (
-                <MenuItem onClick={friendsClicked} sx={{ color: 'white' }} key='friends'>
+                <MenuItem onClick={friendsClicked} sx={{ color: '#F1F7ED' }} key='friends'>
                   Friends
                 </MenuItem>
               )}

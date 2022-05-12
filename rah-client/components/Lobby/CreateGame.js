@@ -47,7 +47,7 @@ export default function CreateGame() {
   };
 
   return (
-    <StyledContainer maxWidth={false} disableGutters={true} >
+    <StyledContainer maxWidth={false} disableGutters={true}>
       <Form onSubmit={onSubmitHandler}>
         <label>How many people are playing?</label>
         <FormInput onChange={numPlayers} type="number" />
@@ -62,6 +62,7 @@ export default function CreateGame() {
 }
 
 const Form = styled.form`
+  background-color: #F1F7ED;
   display: flex;
   border-radius: 5px;
   flex-direction: column;
@@ -76,6 +77,9 @@ const Form = styled.form`
 `;
 
 const FormInput = styled.input`
+  border-radius: 5px;
+  border-color: lightgray;
+  background-color: rgba(211, 211, 211, 0.435);
   margin: auto;
   width: 50%;
 `;
