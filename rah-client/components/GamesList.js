@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+import React, {useState} from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import {useRecoilValue} from 'recoil'
 import {userState} from '../_states/tokenState'
@@ -43,16 +44,26 @@ const columns = [
 export default function GamesList({games}) {
 const router = useRouter()
   const user = useRecoilValue(userState)
-
+  const [showForm, setShowForm] = useState(false)
+  var gameIdd;
   const rows = games.map((game) => {
     let players = 'players: ' + game.players.length.toString() + '/' + game.playerAllowed
-    return {id: game._id, creatorName: game.owner, gameName: game.gameName, playersNum: players, createdAt: new Date(game.createdAt).toString()}
+    return {id: game._id, creatorName: game.ownerName, gameName: game.gameName, playersNum: players, createdAt: new Date(game.createdAt).toString()}
   });
 
+const yesClick = () => {
+  router.push(`/play/${gameIdd}/${user.userId}`)
+}
+
+const noClick = () => {
+  setShowForm(false)
+}
+
 const onRowClick = (event) => {
+  gameIdd = event.id
   console.log(event.id)
   router.push(`/play/${event.id}/${user.userId}`)
-  // 'play/gameId/PlayerId
+  //setShowForm(true)
 }
 
 
@@ -63,13 +74,10 @@ const onRowClick = (event) => {
         density="compact"
         rows={rows}
         columns={columns}
-        disableColumnMenu={true}
-        disableColumnFilter={true}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
         onRowClick={onRowClick}
-        disableSelectionOnClick
+        hideFooter={true}
       />
+    {showForm && <><button onClick={yesClick}>Go!</button><button onClick={noClick}>No!</button></>}
     </div>
   );
 }

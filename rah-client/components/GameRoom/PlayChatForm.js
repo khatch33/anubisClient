@@ -23,6 +23,7 @@ export default function PlayChat() {
 
   const onFormSubmit = (e) => {
     e.preventDefault()
+    console.log(user)
     let message = {
       text: chat,
       time: Date.now(),
