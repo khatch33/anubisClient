@@ -8,7 +8,7 @@ import { shadows } from '@mui/system';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 export default function PlayChat() {
   const [chat, setChat] = useState('');
@@ -53,13 +53,16 @@ export default function PlayChat() {
   );
 }
 
+
 const Form = styled.form`
+  background-color: #F1F7ED;
   border: 1px solid gray;
   border-radius: 0 0 5px 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 20%;
+  margin-bottom: 10px;
 `;
 
 const ChatInput = styled.input`
@@ -69,7 +72,8 @@ const ChatInput = styled.input`
   width: 85%;
   margin: 0;
   padding: 13px;
-  height: 45px;
+  height: 35px;
+  margin-left: 5px;
 `;
 
 const StyledButton = styled(Button)`
