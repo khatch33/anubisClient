@@ -66,6 +66,7 @@ export default function PlayChatRoom({messages}) {
 const StyledChatBox = styled(Container)`
   border: 1px solid gray;
   border-bottom: none;
+  background-color: #F1F7ED;
   height: 85vh;
   overflow-y: scroll;
   width: 100%;

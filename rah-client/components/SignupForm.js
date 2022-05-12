@@ -8,6 +8,7 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import { userState } from "../_states/tokenState";
 import { useRouter } from "next/router";
+import styled from 'styled-components';
 
 const style = {
   position: "absolute",
@@ -15,11 +16,11 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: '#F1F7ED',
+  border: "1px solid gray",
   boxShadow: 24,
   p: 4,
-  borderRadius: "7px",
+  borderRadius: "5px",
   textAlign: "center",
 };
 
@@ -61,7 +62,7 @@ export default function SignupForm(props) {
   return (
     <>
       <Box sx={style}>
-        <h3>Sign Up</h3>
+        <h3 style={{color: "#9A8249"}}>SIGN UP</h3>
         <form id="signup-container" onSubmit={handleSubmit(onSubmit)}>
           <TextField
             placeholder="Username"
@@ -96,7 +97,7 @@ export default function SignupForm(props) {
             <div className="formValidation-error">Enter a valid email</div>
           )}
 
-          <Button type="submit" size="medium" sx={{ color: "#413C39" }}>
+          <Button type="submit" size="medium" sx={{ color: "#9A8249", border: '1px solid #9a824991' }}>
             Create Account
           </Button>
         </form>
@@ -105,3 +106,4 @@ export default function SignupForm(props) {
   );
 
 }
+

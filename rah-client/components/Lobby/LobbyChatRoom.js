@@ -45,11 +45,14 @@ export default function LobbyChatRoom() {
           noWrap
           component="p"
           sx={{
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
+            fontFamily: "Roboto",
+            fontWeight: 400,
+            letterSpacing: "0.00938em",
+            lineHeight: 1.5,
+            fontSize: "1em",
             color: "inherit",
             textDecoration: "none",
+            paddingTop: "5px"
           }}
         >
           CHAT

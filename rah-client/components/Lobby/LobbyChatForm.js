@@ -31,16 +31,9 @@ export default function ChatForm() {
       time: Date.now(),
       username: user.userName,
     };
-    //
     socket.emit('send-message', user, message, 'lobby');
-    //sends message, second argument is use object, message is message to be sent
-    // socket.emit('send-message', user, message);
     setChatBoxInput('');
   };
-  //sending message
-  // useEffect(() => {
-  //   socket.on('send-message', 'sup', {name: 'josh'}, chatboxInput)
-  // })
 
   return (
     <Form onSubmit={onFormSubmit}>
@@ -62,12 +55,14 @@ export default function ChatForm() {
 }
 
 const Form = styled.form`
+  background-color: #F1F7ED;
   border: 1px solid gray;
   border-radius: 0 0 5px 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20%;
+  height: 55px;
+  margin-bottom: 15px;
 `;
 
 const ChatInput = styled.input`
@@ -77,7 +72,7 @@ const ChatInput = styled.input`
   width: 85%;
   margin: 0;
   padding: 13px;
-  height: 45px;
+  height: 40px;
 `;
 
 const StyledButton = styled(Button)`

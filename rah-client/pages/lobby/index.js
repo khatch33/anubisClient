@@ -50,18 +50,25 @@ export default function Lobby() {
   return (
     <>
       <Navbar />
-      <Container maxWidth={false} disableGutters={true} style={{ display: "flex", margin: "2%"}} >
-        <ActiveUsersList />
+      <Container maxWidth={false} disableGutters={true} style={{ display: "flex", margin: "2%", position: 'relative', top: '-18px'}} >
+        <div style={{position: 'relative', top: '45px', left: '33px', width: '215px'}}>
+          <ActiveUsersList/>
+        </div>
+
         <Container maxWidth={false} disableGutters={true} style={{ display: "flex", flexDirection: "column", width: "fit-content", }} >
 
           <TabsContainer
-            TabIndicatorProps={{style: {backgroundColor: '#9A8249'}}}
+            TabIndicatorProps={{style: {backgroundColor: '#9A8249', color: '#F1F7ED'}}}
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <StyledTab label="Lobby" />
-            <StyledTab label="Create" />
+            <StyledTab label="Lobby"
+              TabIndicatorProps={{style: {color: '#F1F7ED', backgroundColor: '#9A8249'}}}
+            />
+            <StyledTab label="Create"
+              TabIndicatorProps={{style: {color: '#F1F7ED', backgroundColor: '#9A8249'}}}
+            />
           </TabsContainer>
 
           <Container

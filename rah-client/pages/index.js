@@ -36,11 +36,11 @@ export default function Home() {
         <Container maxWidth={false} id='app-container'>
           <ActiveUsersList users={activeUsers} />
 
-          <Container maxWidth={false}>
-            <Container maxWidth={false} id='video-container'>
+          <Container maxWidth={false} disableGutters={true} id="video-instructions-container">
+            <Container maxWidth={false} disableGutters={true} id='video-container'>
+              <div id="video-header">WELCOME TO WRATH OF ANUBIS</div>
               <iframe
-                width='560'
-                height='315'
+                id="video-element"
                 src='https://www.youtube.com/embed/OysJ4nL4jS8'
                 title='YouTube video player'
                 frameBorder='0'
@@ -49,8 +49,8 @@ export default function Home() {
             </Container>
 
             <Container maxWidth={false} id='instructions-container'>
-              <h1>Instructions</h1>
-              <p>
+              <div id="instructions-header">HOW TO PLAY</div>
+              <div id="instructions-text">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae
                 quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis
                 harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!
@@ -60,7 +60,7 @@ export default function Home() {
                 quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga? Ipsa laudantium
                 molestias eos sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
                 recusandae alias error harum maxime adipisci amet laborum.
-              </p>
+              </div>
             </Container>
           </Container>
         </Container>
