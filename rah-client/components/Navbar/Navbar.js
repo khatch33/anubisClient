@@ -55,8 +55,13 @@ const Navbar = () => {
     setUserData({userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}`})
     router.push('/')
   }
+
+  const backToLobby = () => {
+    router.push('/lobby')
+  }
+
   //navbar page states based on if user is logged in
-  const pagesIfLoggedIn = [, 'Ranking', <div onClick={logoutFunc}>Logout</div>];
+  const pagesIfLoggedIn = [, 'Ranking', <div onClick={backToLobby}>Lobby</div>, <div onClick={logoutFunc}>Logout</div>];
   //const pagesIfLoggedIn = [, 'Ranking', <Link href='/'>Logout</Link>];
   const pagesIfNotLoggedIn = [
     ,
@@ -211,7 +216,6 @@ const Navbar = () => {
         <Container maxWidth='xl' style={{backgroundColor: 'black'}}>
           <Toolbar style={{backgroundColor: 'black'}}>
             <Image height="60" width="65" src={LogoIcon} alt="" />
-            <Link href='/'>
               <Typography
                 variant='h6'
                 noWrap
@@ -227,7 +231,6 @@ const Navbar = () => {
                 }}>
                 WRATH OF ANUBIS
               </Typography>
-            </Link>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'
@@ -274,7 +277,6 @@ const Navbar = () => {
                     ))}
               </Menu>
             </Box>
-            <Link href='/'>
               <Typography
                 variant='h5'
                 noWrap
@@ -292,7 +294,6 @@ const Navbar = () => {
                 }}>
                 WRATH OF ANUBIS
               </Typography>
-            </Link>
             <Box
               sx={{
                 marginRight: '2em',

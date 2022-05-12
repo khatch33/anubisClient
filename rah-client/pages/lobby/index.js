@@ -75,8 +75,10 @@ const router = useRouter();
             aria-label="basic tabs example"
           >
             <StyledTab label="Lobby"
+              tabindicatorprops={{style: {color: '#F1F7ED', backgroundColor: '#9A8249'}}}
             />
             <StyledTab label="Create"
+              tabindicatorprops={{style: {color: '#F1F7ED', backgroundColor: '#9A8249'}}}
             />
           </TabsContainer>
 
