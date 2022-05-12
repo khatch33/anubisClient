@@ -24,6 +24,9 @@ import {SocketContext} from '../../socket/socket';
 import GamesList from '../../components/GamesList.js';
 
 export default function Lobby() {
+
+
+
   const [value, setValue] = useState(0);
   const [user, setUser] = useRecoilState(userState);
 
@@ -36,10 +39,7 @@ export default function Lobby() {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    socket.emit('get-games', (games) => {
-      console.log('game data is here')
-       //setGames(games)
-    })
+    socket.emit('get-games',games)
      return () => {
 
        socket.on('receive-games', (games) => {
@@ -50,9 +50,6 @@ export default function Lobby() {
 
   }, []);
 
-//map gameRows out here-v
-              //rows = games
-console.log(games)
   return (
     <Container maxWidth={false} disableGutters={true}>
       <Navbar />
