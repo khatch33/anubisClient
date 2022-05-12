@@ -44,7 +44,9 @@ export default function Game() {
   const closeDrawer = () => {
     setOpen(false);
   };
-  const startGame = () => {};
+  const startGame = () => {
+    socket.emit('start-test', playerId, gameId, 10000)
+  };
   const switchPhase = () => {
     phase === "night" ? setPhase("day") : setPhase("night");
   };
@@ -67,28 +69,46 @@ export default function Game() {
     }
   };
 
+
   socket.on(`receive-message-${gameId}`, (user, message) => {
         if (user.userName === "announcement") {
           setAnnouncement(message);
         } else {
           setMessages([...messages, message])
         }
+
   });
   useEffect(() => {
       socket.on("game-send", (gameData) => {
       setGame(gameData);
       setGameInfo(getGameInfo(gameData, playerId));
       });
+      if (started === false) {
+        socket.emit("join-room", playerId, gameId);
+        // socket.emit("start-test", playerId, gameId, 5000);
+        started = true;
+      }
   }, []);
 
   useEffect(() => {
-    const container = document.querySelector(".playerCardContainer");
     if (game) {
       const container = document.querySelector(".playerCardContainer");
       container.style.transitionDuration = ".8s";
       container.style.transform = `translate( -${card * 150}px)`;
     }
   }, [card]);
+
+
+  useEffect(() => {
+    socket.emit('get-game', gameId)
+      return () => {
+       socket.on(`game-send-${gameId}`, (game) => {
+          setGame(game)
+          setGameInfo(getGameInfo(game, playerId))
+       })
+     }
+
+  }, []);
 
 
   return (
@@ -114,11 +134,11 @@ export default function Game() {
               </div>
             </Drawer>
             {game ? (
-              game.owner._id === playerId ? (
-                <button onclick={startGame}>Start Game</button>
+              game.owner === playerId ? (
+                <button onClick={startGame}>Start Game</button>
               ) : null
             ) : null}
-            <h3>game owner: {game.owner}</h3>
+            <h3>game owner: {game.ownerName}</h3>
             <h3>your role: {gameInfo.role}</h3>
             <h3>{game.phase}</h3>
           </Container>

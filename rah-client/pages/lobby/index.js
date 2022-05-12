@@ -24,6 +24,9 @@ import { SocketContext } from "../../socket/socket";
 import GamesList from "../../components/GamesList.js";
 
 export default function Lobby() {
+
+
+
   const [value, setValue] = useState(0);
   const [user, setUser] = useRecoilState(userState);
 
@@ -44,8 +47,6 @@ export default function Lobby() {
     };
   }, []);
 
-  //map gameRows out here-v
-  //rows = games
   return (
     <>
       <Navbar />
