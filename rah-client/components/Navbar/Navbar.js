@@ -49,7 +49,6 @@ const Navbar = () => {
   const signupClicked = () => {
     handleSignupModal();
   };
-
   const logoutFunc = () => {
     localStorage.removeItem('userToken')
     setLoggedIn(false)

@@ -32,7 +32,7 @@ export default function PlayerCard(props) {
     }
   }
   return (
-    <Card key={'pc' + username} className={`playerCard alive-${alive}`} sx={{ boxShadow: 3}}>
+    <Card key={'pc' + username} className={`playerCard alive-${alive}`} id="player-card" sx={{ boxShadow: 3}}>
       <UserDiv>
         <img className="userAvatar" src={`${player.img}`} alt=""/>
         <UsernameSpan key={'pc' + username}>{username}</UsernameSpan>
