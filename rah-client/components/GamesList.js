@@ -39,13 +39,14 @@ export default function GamesList({games}) {
 const router = useRouter()
   const user = useRecoilValue(userState)
   const [showForm, setShowForm] = useState(false)
+  var gameIdd;
   const rows = games.map((game) => {
     let players = 'players: ' + game.players.length.toString() + '/' + game.playerAllowed
     return {id: game._id, creatorName: game.ownerName, gameName: game.gameName, playersNum: players, createdAt: new Date(game.createdAt).toString()}
   });
 
 const yesClick = () => {
-  router.push(`/play/${event.id}/${user.userId}`)
+  router.push(`/play/${gameIdd}/${user.userId}`)
 }
 
 const noClick = () => {
@@ -53,8 +54,10 @@ const noClick = () => {
 }
 
 const onRowClick = (event) => {
+  gameIdd = event.id
   console.log(event.id)
-  setShowForm(true)
+  router.push(`/play/${event.id}/${user.userId}`)
+  //setShowForm(true)
 }
 
 
