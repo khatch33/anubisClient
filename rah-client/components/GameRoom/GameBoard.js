@@ -4,6 +4,7 @@ import Image from 'next/Image';
 import {useEffect} from 'react'
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
+
 import Game from '../../pages/_sampleData/sampleGame.js'
 import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
 //import { useRecoilState } from 'recoil';
@@ -39,6 +40,7 @@ export default function GameBoard(props) {
   const handleClick = () => {
 
   }
+
   return (
     <OuterContainer maxWidth={false} disableGutters={true}>
       <Banner>
@@ -52,18 +54,22 @@ export default function GameBoard(props) {
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <ImgContainer maxWidth={false} disableGutters={true} id='gameboard-container'>
           <Img src={BoardImg} alt='' height='500' width='500' />
+
           {game ? renderItems(game) : null}
           {/* {Object.values(Arr).map((locale) => {
             //console.log(locale)
             return <Person left={locale.left} top={locale.top}></Person>
           } )} */}
           {/* <Person left={'460.00px'} top={'250.00px'}></Person>
+
           <Person left={'23.5%'} top={'40%'}></Person>
           <Person left={'47%'} top={'40%'}></Person>
           <Person left={'70.5%'} top={'40%'}></Person>
           <Person left={'94%'} top={'40%'}></Person>
           <Person left={'94%'} top={'40%'}></Person>
+
           <Person left={'94%'} top={'40%'}></Person> */}
+
         </ImgContainer>
 
         <InfoContainer maxWidth={false} disableGutters={true}>
@@ -73,6 +79,7 @@ export default function GameBoard(props) {
           </div>
 
           <div>Phase: {props.game.phase}</div>
+
         {props.info ?
           <div>
           <div>Your Role: {props.info.role}</div>
@@ -84,6 +91,7 @@ export default function GameBoard(props) {
 
           {game.owner ? (
             game.owner === props.playerId ? (
+
               <div>
                 <StartButton onClick={() => props.startGame()}>START GAME</StartButton>
               </div>
@@ -98,8 +106,10 @@ export default function GameBoard(props) {
 const Person = styled.span`
   position: absolute;
   border: 15px solid red;
+
   width: ${sprite.width};
   height: ${sprite.height};
+
   border-radius: 15px;
   left: ${(props) => props.left};
   top: ${(props) => props.top};

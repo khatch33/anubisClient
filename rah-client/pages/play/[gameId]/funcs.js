@@ -7,6 +7,7 @@ exports.getGameInfo = (game, userId) => {
     phase: game.phase,
   };
   for (let i = 0; i < game.players.length; i++) {
+
     var dets = game.players[i];
     if (dets.status) {
       gameInfo.playersLeft += 1;
@@ -16,8 +17,11 @@ exports.getGameInfo = (game, userId) => {
       if (dets.player.user_id === userId) {
         gameInfo.role = dets.role;
       }
+
     }
   //}
   }
+
   return gameInfo
+
 };

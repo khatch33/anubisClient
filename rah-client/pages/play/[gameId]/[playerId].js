@@ -12,7 +12,9 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios';
+
 //import TestGame from '../../../pages/_sampleData/sampleGame.js'
+
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
 import { useRouter } from 'next/router';
@@ -46,7 +48,9 @@ export default function Game() {
     setOpen(false);
   };
   const startGame = () => {
+
     console.log('gamestart')
+
     socket.emit('start-test', playerId, gameId, 10000);
   };
   const switchPhase = () => {
@@ -71,19 +75,23 @@ export default function Game() {
     }
   };
   socket.on(`receive-message-${gameId}`, (user, message) => {
+
     let messageObj = {userName: user.userName, text: message, 'user_id': user.user_id}
     if (user.user_id === 'announcement') {
+
       setAnnouncement(message);
     } else {
       setMessages([...messages, messageObj]);
     }
   });
   useEffect(() => {
+
     // socket.on('game-send', (gameData) => {
     //   console.log(gameData)
     //   setGame(gameData.game);
     //   setGameInfo(getGameInfo(gameData, playerId));
     // });
+
     if (started === false) {
       socket.emit('join-room', playerId, gameId);
       // socket.emit("start-test", playerId, gameId, 5000);
@@ -119,12 +127,14 @@ export default function Game() {
       setGame(data.game);
       //setGameInfo(getGameInfo(game, playerId));
     });
+
     //return () => {
       // socket.on(`game-send-${gameId}`, (game) => {
       //   setGame(game);
       //   //setGameInfo(getGameInfo(game, playerId));
       // });
     //};
+
   }, []);
 
   return (
