@@ -26,8 +26,9 @@ a {
   align-items: center;
   display: flex;
   /* justify-content: center; */
-  max-width: 100%;
+  width: 100%;
   max-height: 100%;
+  min-width: 1000px;
 }
 
 /* activeUsersList.js */
@@ -173,22 +174,26 @@ a {
 }
 
 #lobbyChat-container {
-  height: 40vh;
+  height: 35vh;
   width: 61vw;
-  margin-top: 1em;
+  margin-top: 3em;
   background-color: #F1F7ED;
   padding: 0;
   border-radius: 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  min-width: 500px;
+  max-width: 682px;
 }
 
 /* LobbyChatRoom.js */
-
 #chatList-outerContainer {
   display: flex;
   flex-direction: column;
 }
 
+#chatList-outerContainer::-webkit-scrollbar {
+  display: none;
+}
 .message-container {
   margin: 7px;
 }
@@ -298,7 +303,7 @@ a {
 }
 
 .viewport {
-  height: 350px;
+  height: 300px;
   border-radius: 5px;
   display: flex;
   width: 750px;

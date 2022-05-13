@@ -22,9 +22,9 @@ import { userState } from "../../_states/tokenState";
 import { useRecoilState } from "recoil";
 import { SocketContext } from "../../socket/socket";
 import GamesList from "../../components/GamesList.js";
-import {useRouter} from 'next/router';
+import { useRouter } from "next/router";
 export default function Lobby() {
-const router = useRouter();
+  const router = useRouter();
 
   const [value, setValue] = useState(0);
   const [user, setUser] = useRecoilState(userState);
@@ -34,20 +34,20 @@ const router = useRouter();
   };
 
   const gameCreated = () => {
-    setValue(0)
-  }
+    setValue(0);
+  };
 
   const socket = useContext(SocketContext);
 
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    const localUser = JSON.parse(localStorage.getItem('userToken'))
+    const localUser = JSON.parse(localStorage.getItem("userToken"));
     //gate-keep
     if (user.userToken.length < 1 && !localUser) {
-      router.push('/')
+      router.push("/");
     } else {
-        setUser(localUser)
+      setUser(localUser);
     }
     socket.emit("get-games", games);
     return () => {
@@ -61,54 +61,72 @@ const router = useRouter();
   return (
     <>
       <Navbar />
-      <Container maxWidth={false} disableGutters={true} style={{ display: "flex", margin: "2%", position: 'relative', top: '-18px'}} >
-        <div style={{position: 'relative', top: '45px', left: '33px', width: '215px'}}>
-          <ActiveUsersList/>
-        </div>
-
-        <Container maxWidth={false} disableGutters={true} style={{ display: "flex", flexDirection: "column", width: "fit-content", }} >
-
-          <TabsContainer
-            TabIndicatorProps={{style: {backgroundColor: '#9A8249', color: '#F1F7ED'}}}
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
+      <div style={{ minWidth: "900px", maxWidth: "1600px" }}>
+        <Container
+          maxWidth={false}
+          disableGutters={true}
+          style={{
+            display: "flex",
+            margin: "2%",
+            position: "relative",
+            top: "-20px",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              top: "25px",
+              left: "33px",
+              width: "215px",
+            }}
           >
-            <StyledTab label="Lobby"
-              tabindicatorprops={{style: {color: '#F1F7ED', backgroundColor: '#9A8249'}}}
-            />
-            <StyledTab label="Create"
-              tabindicatorprops={{style: {color: '#F1F7ED', backgroundColor: '#9A8249'}}}
-            />
-          </TabsContainer>
+            <ActiveUsersList />
+          </div>
 
           <Container
             maxWidth={false}
-            id="gameDisplay-container"
-            style={{ margin: "0" }}
+            disableGutters={true}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "fit-content",
+            }}
           >
-            {value === 0 ? <GamesList games={games} /> : <CreateGame handleChange={gameCreated} />}
-          </Container>
+            <Container
+              maxWidth={false}
+              id="gameDisplay-container"
+              style={{ margin: "0", marginBottom: '15px' }}
+            >
+              {value === 0 ? (
+                <GamesList
+                  games={games}
+                  value={value}
+                  handleChange={handleChange}
+                />
+              ) : (
+                <CreateGame handleChange={gameCreated} />
+              )}
+            </Container>
 
-          <Container maxWidth={false} id="lobbyChat-container">
-            <LobbyChatRoom />
-            <ChatForm />
+            <Container maxWidth={false} id="lobbyChat-container">
+              <LobbyChatRoom />
+              <ChatForm />
+            </Container>
           </Container>
         </Container>
-      </Container>
+      </div>
     </>
   );
 }
 
-const OnlineTitle = styled.p`
-  text-align: center;
-`;
+// const OnlineTitle = styled.p`
+//   text-align: center;
+// `;
 
-const TabsContainer = styled(Tabs)`
-  margin-left: 28px;
-`;
+// const TabsContainer = styled(Tabs)`
+//   margin-left: 28px;
+// `;
 
-const StyledTab = styled(Tab)`
-  color: #9A8249;
-`;
-
+// const StyledTab = styled(Tab)`
+//   color: #9A8249;
+// `;
