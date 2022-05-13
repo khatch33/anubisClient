@@ -6,22 +6,29 @@ import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
 import Game from '../../pages/_sampleData/sampleGame.js'
 import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
+//import { useRecoilState } from 'recoil';
+
+
 const sprite = {height: '60px', width: '30px'}
 export default function GameBoard(props) {
-  const players = Game.sampleGame.players
-  const game = Game
+  const players = props.game.players
+  const game = props.game
+  useEffect(() => {
+    console.log(game, players)
+  })
   // const [isShown, setIsShown] = useState(false);
   //const sprite = {height: 100, width: 30}
   //const [Middle, setArr] = useState()
-  var Arr;// = oneInMiddle(players, 60, 30, 500, 500, '627933882926bbcb74299ad1')
+  //var Arr;// = oneInMiddle(players, 60, 30, 500, 500, '627933882926bbcb74299ad1')
   //console.log(Arr)
-  const renderItems = (phase) => {
+  const renderItems = (game) => {
+    var phase = game.phase || 'night'
+    //console.log(game, players)
     var Arr;
-    phase = phase || 'night'
     if (phase === 'day2') {
       Arr = MapEmAcross(players, 60, 30, 500, 500)
     } else if (phase === 'day3') {
-      Arr = oneInMiddle(players, 60, 30, 500, 500, '627933882926bbcb74299ad1')
+      Arr = oneInMiddle(players, 60, 30, 500, 500, '627d86726902e534664e1b02')
     } else {
       Arr = MapEmCircle(players, 60, 30, 500, 500)
     }
@@ -45,7 +52,7 @@ export default function GameBoard(props) {
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <ImgContainer maxWidth={false} disableGutters={true} id='gameboard-container'>
           <Img src={BoardImg} alt='' height='500' width='500' />
-          {renderItems('day')}
+          {game ? renderItems(game) : null}
           {/* {Object.values(Arr).map((locale) => {
             //console.log(locale)
             return <Person left={locale.left} top={locale.top}></Person>
@@ -66,14 +73,17 @@ export default function GameBoard(props) {
           </div>
 
           <div>Phase: {props.game.phase}</div>
-          {/* <div>Your Role: {props.info.role}</div>
-        <div>Players Remaining: {props.info.playersLeft}</div>
-        <div>Anubis Remaining: {props.info.wolfsLeft}</div>
-        <div>Doctors Remaining: {props.info.doctorsLeft}</div>
-        <div>Seers Remaining: {props.info.seersLeft}</div> */}
+        {props.info ?
+          <div>
+          <div>Your Role: {props.info.role}</div>
+          <div>Players Remaining: {props.info.playersLeft}</div>
+          <div>Anubis Remaining: {props.info.wolfsLeft}</div>
+          <div>Doctors Remaining: {props.info.doctorsLeft}</div>
+          <div>Seers Remaining: {props.info.seersLeft}</div>
+          </div> : null}
 
-          {props.game ? (
-            props.game.owner === props.playerId ? (
+          {game.owner ? (
+            game.owner === props.playerId ? (
               <div>
                 <StartButton onClick={() => props.startGame()}>START GAME</StartButton>
               </div>

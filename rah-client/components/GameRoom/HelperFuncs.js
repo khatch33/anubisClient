@@ -18,7 +18,7 @@ exports.MapEmAcross = (playersArr, spH, spW, gbH, gbW, overRide) => {
     if (overRide) {
       map[i] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage}
     } else {
-      map[playersArr[i].player._id] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage}
+      map[playersArr[i].player.user_id] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage}
 
     }
   }
@@ -51,10 +51,10 @@ exports.MapEmCircle = function (playersArr, spH, spW, gbH, gbW, overRide) {
     let x = ((Math.cos(angle) * radius) + midpoint[0]).toFixed(2) + 'px'
     let y = ((Math.sin(angle) * radius) + midpoint[1]).toFixed(2) + 'px'
     //map[playersArr[i].player._id] = {left: x, top: y}
-    overRide ? map[i] = {left: x, top: y} : map[playersArr[i].player._id] = {left: x, top: y}
+    overRide ? map[i] = {left: x, top: y} : map[playersArr[i].player.user_id] = {left: x, top: y}
   }
   //console.log(midpoint, midpoint[0], midpoint[1], radius)
-  //console.log(radius)
+  //console.log(map)
   return map
 
 }
@@ -73,10 +73,10 @@ exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerId, overRide, overR
       map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, overRide)
       map[i] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
     } else if (playerId) {
-         if (playersArr[i].player._id) {
+         if (playersArr[i].player.user_id) {
           let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length))
           map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, overRide)
-          map[playersArr[i].player._id] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
+          map[playersArr[i].player.user_id] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
          }
     }
   }

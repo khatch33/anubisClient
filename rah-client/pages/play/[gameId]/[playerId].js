@@ -12,6 +12,7 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios';
+//import TestGame from '../../../pages/_sampleData/sampleGame.js'
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
 import { useRouter } from 'next/router';
@@ -40,10 +41,12 @@ export default function Game() {
   const router = useRouter();
   const { gameId, playerId } = router.query;
   var started = false;
+  //const TestGame = TestGame.sampleGame
   const closeDrawer = () => {
     setOpen(false);
   };
   const startGame = () => {
+    console.log('gamestart')
     socket.emit('start-test', playerId, gameId, 10000);
   };
   const switchPhase = () => {
@@ -68,17 +71,19 @@ export default function Game() {
     }
   };
   socket.on(`receive-message-${gameId}`, (user, message) => {
-    if (user.userName === 'announcement') {
+    let messageObj = {userName: user.userName, text: message, 'user_id': user.user_id}
+    if (user.user_id === 'announcement') {
       setAnnouncement(message);
     } else {
-      setMessages([...messages, message]);
+      setMessages([...messages, messageObj]);
     }
   });
   useEffect(() => {
-    socket.on('game-send', (gameData) => {
-      setGame(gameData);
-      setGameInfo(getGameInfo(gameData, playerId));
-    });
+    // socket.on('game-send', (gameData) => {
+    //   console.log(gameData)
+    //   setGame(gameData.game);
+    //   setGameInfo(getGameInfo(gameData, playerId));
+    // });
     if (started === false) {
       socket.emit('join-room', playerId, gameId);
       // socket.emit("start-test", playerId, gameId, 5000);
@@ -93,6 +98,11 @@ export default function Game() {
       container.style.transform = `translate( -${card * 150}px)`;
     }
   }, [card]);
+  socket.on(`game-send`, (game) => {
+    setGame(game);
+    console.log(game)
+    setGameInfo(getGameInfo(game, playerId));
+  })
 
   useEffect(() => {
     console.log(gameId);
@@ -109,12 +119,12 @@ export default function Game() {
       setGame(data.game);
       //setGameInfo(getGameInfo(game, playerId));
     });
-    return () => {
-      socket.on(`game-send-${gameId}`, (game) => {
-        setGame(game);
-        //setGameInfo(getGameInfo(game, playerId));
-      });
-    };
+    //return () => {
+      // socket.on(`game-send-${gameId}`, (game) => {
+      //   setGame(game);
+      //   //setGameInfo(getGameInfo(game, playerId));
+      // });
+    //};
   }, []);
 
   return (
@@ -142,7 +152,6 @@ export default function Game() {
                 startGame={startGame}
                 playerId={playerId}
                 game={game}
-                announcement={announcement}
               />
             </Container>
             <Container maxWidth={false} id='playerCards-container'>
@@ -155,11 +164,11 @@ export default function Game() {
                   <Stack direction='row' spacing={0}>
                     {game.players ? (
                       game.players.map((player) => {
-                        if (player.player.userID !== playerId) {
+                        if (player.player.user_id !== playerId) {
                           return (
                             <PlayerCard
                               key={player.player.userName}
-                              phase={game.phase}
+                              phase={gameInfo.phase}
                               role={gameInfo.role}
                               player={player}
                             />
