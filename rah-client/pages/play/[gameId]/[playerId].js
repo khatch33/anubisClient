@@ -1,38 +1,36 @@
-import Container from "@mui/material/Container";
-import React, { useState, useEffect, useContext } from "react";
-import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import Grid from "@mui/material/Grid";
-import Navbar from "../../../components/Navbar/Navbar";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import styled from "styled-components";
-import axios from "axios";
-import { SocketContext } from "../../../socket/socket";
-import { getGameInfo } from "./funcs.js";
-import { useRouter } from "next/router";
-import Alert from "@mui/material/Alert";
-import GameInfo from "../../../components/GameInfo.js";
-import PlayChat from "../../../components/GameRoom/PlayChatForm";
-import PlayChatRoom from "../../../components/GameRoom/PlayChatRoom";
-import PlayerCard from "../../../components/PlayerCard.js";
-import { sampleGame } from "../../../pages/_sampleData/sampleGame.js";
-import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/solid";
-import GameBoard from "../../../components/GameRoom/GameBoard";
-const basePath = "http://localhost:4030/blueocean/api/v1";
+import Container from '@mui/material/Container';
+import React, { useState, useEffect, useContext } from 'react';
+import Stack from '@mui/material/Stack';
+import Card from '@mui/material/Card';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Grid from '@mui/material/Grid';
+import Navbar from '../../../components/Navbar/Navbar';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import styled from 'styled-components';
+import axios from 'axios';
+import { SocketContext } from '../../../socket/socket';
+import { getGameInfo } from './funcs.js';
+import { useRouter } from 'next/router';
+import Alert from '@mui/material/Alert';
+import GameInfo from '../../../components/GameInfo.js';
+import PlayChat from '../../../components/GameRoom/PlayChatForm';
+import PlayChatRoom from '../../../components/GameRoom/PlayChatRoom';
+import PlayerCard from '../../../components/PlayerCard.js';
+import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
+import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
+import GameBoard from '../../../components/GameRoom/GameBoard';
+const basePath = 'http://localhost:4030/blueocean/api/v1';
 
 export default function Game() {
   const [players, setPlayers] = useState([]);
   const [owner, setOwner] = useState();
-  const [announcement, setAnnouncement] = useState(
-    "somegr greauig yu ireuygr iuo"
-  );
-  const [role, setRole] = useState("wolf");
-  const [phase, setPhase] = useState("night");
+  const [announcement, setAnnouncement] = useState('somegr greauig yu ireuygr iuo');
+  const [role, setRole] = useState('wolf');
+  const [phase, setPhase] = useState('night');
   const [card, setCard] = useState(0);
   const [open, setOpen] = useState(false);
   const [game, setGame] = useState();
@@ -46,10 +44,10 @@ export default function Game() {
     setOpen(false);
   };
   const startGame = () => {
-    socket.emit("start-test", playerId, gameId, 10000);
+    socket.emit('start-test', playerId, gameId, 10000);
   };
   const switchPhase = () => {
-    phase === "night" ? setPhase("day") : setPhase("night");
+    phase === 'night' ? setPhase('day') : setPhase('night');
   };
   const moveRight = () => {
     if (card < game.players.length - 5) {
@@ -70,19 +68,19 @@ export default function Game() {
     }
   };
   socket.on(`receive-message-${gameId}`, (user, message) => {
-    if (user.userName === "announcement") {
+    if (user.userName === 'announcement') {
       setAnnouncement(message);
     } else {
       setMessages([...messages, message]);
     }
   });
   useEffect(() => {
-    socket.on("game-send", (gameData) => {
+    socket.on('game-send', (gameData) => {
       setGame(gameData);
       setGameInfo(getGameInfo(gameData, playerId));
     });
     if (started === false) {
-      socket.emit("join-room", playerId, gameId);
+      socket.emit('join-room', playerId, gameId);
       // socket.emit("start-test", playerId, gameId, 5000);
       started = true;
     }
@@ -90,18 +88,31 @@ export default function Game() {
 
   useEffect(() => {
     if (game) {
-      const container = document.querySelector(".playerCardContainer");
-      container.style.transitionDuration = ".8s";
+      const container = document.querySelector('.playerCardContainer');
+      container.style.transitionDuration = '.8s';
       container.style.transform = `translate( -${card * 150}px)`;
     }
   }, [card]);
 
   useEffect(() => {
-    socket.emit("get-game", gameId);
+    console.log(gameId);
+    // axios
+    //   .get('http://localhost:4030/blueocean/api/v1/games/single', { gameId })
+    //   .then((res) => console.log(res));
+    axios({
+      method: 'get',
+      url: 'http://localhost:4030/blueocean/api/v1/games/single?',
+      params: { id: gameId },
+    }).then((res) => {
+      let data = res.data;
+      console.log(data);
+      setGame(data.game);
+      //setGameInfo(getGameInfo(game, playerId));
+    });
     return () => {
       socket.on(`game-send-${gameId}`, (game) => {
         setGame(game);
-        setGameInfo(getGameInfo(game, playerId));
+        //setGameInfo(getGameInfo(game, playerId));
       });
     };
   }, []);
@@ -109,20 +120,15 @@ export default function Game() {
   return (
     <>
       <Navbar />
-      <Container sx={{ minWidth: "1100px", maxWidth: "1500px" }}>
-        <Container sx={{ float: "left", width: "25%" }}>
+      <Container sx={{ minWidth: '1100px', maxWidth: '1500px' }}>
+        <Container sx={{ float: 'left', width: '25%' }}>
           <PlayChatRoom messages={messages} />
           <PlayChat />
         </Container>
         {game ? (
-          <Box sx={{ display: "inline-block", float: "right", width: "75%" }}>
-            <Container maxWidth={false} id="gameBoard-container">
-              <Drawer
-                open={open}
-                className="gameInfoDrawer"
-                variant="persistent"
-                anchor="top"
-              >
+          <Box sx={{ display: 'inline-block', float: 'right', width: '75%' }}>
+            <Container maxWidth={false} id='gameBoard-container'>
+              <Drawer open={open} className='gameInfoDrawer' variant='persistent' anchor='top'>
                 <div>
                   <GameInfo close={closeDrawer} info={gameInfo} game={game} />
                 </div>
@@ -139,18 +145,14 @@ export default function Game() {
                 announcement={announcement}
               />
             </Container>
-            <Container maxWidth={false} id="playerCards-container">
+            <Container maxWidth={false} id='playerCards-container'>
               <StyledButton onClick={moveLeft}>
-                <ChevronLeftIcon stroke="#F1F7ED" fill="#F1F7ED" height="30" />
+                <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
               </StyledButton>
 
-              <div className="viewport">
-                <div
-                  disableGutters={true}
-                  maxWidth={false}
-                  className="playerCardContainer"
-                >
-                  <Stack direction="row" spacing={0}>
+              <div className='viewport'>
+                <div disableGutters={true} maxWidth={false} className='playerCardContainer'>
+                  <Stack direction='row' spacing={0}>
                     {game.players ? (
                       game.players.map((player) => {
                         if (player.player.userID !== playerId) {
@@ -171,7 +173,7 @@ export default function Game() {
                 </div>
               </div>
               <StyledButton onClick={moveRight}>
-                <ChevronRightIcon stroke="#F1F7ED" fill="#F1F7ED" height="30" />
+                <ChevronRightIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
               </StyledButton>
             </Container>
           </Box>
