@@ -2,7 +2,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography'
-import React from 'react'
+import React, {useContext} from 'react'
 import Image from 'next/Image';
 import deadIcon from '../public/killed.png';
 import styled from "styled-components";
@@ -10,18 +10,21 @@ import { shadows } from "@mui/system";
 import { useRecoilState } from 'recoil';
 import {useRouter} from 'next/router'
 import { userState } from '../_states/tokenState';
+import { SocketContext } from '../socket/socket';
+
 export default function PlayerCard(props) {
   const player = props.player
   const username = player.player.userName
   const alive = player.status
   const phase = props.phase
   const role = props.role
-
+  const socket = useContext(SocketContext);
   const [user, setUser] = useRecoilState(userState);
   const router = useRouter();
   const { gameId, playerId } = router.query;
-  const vote = (user, candidate, room) => {
-    socket.emit('player-vote', user, player, room)
+  const vote = () => {
+    let user1 = {user_id: user.userId, userName: user.userName}
+    socket.emit('player-vote', user1, player, gameId)
   }
   const renderActionButton = () => {
 
@@ -29,14 +32,14 @@ export default function PlayerCard(props) {
       if (role === 'villager') {
         return
       } else if (role === 'doctor') {
-        return <Button onClick={vote}>SAVE</Button>
+        return <Button onClick={() => vote()}>SAVE</Button>
       } else if (role === 'wolf') {
-        return <Button onClick={vote}>SACRIFICE</Button>
+        return <Button onClick={() => vote()}>SACRIFICE</Button>
       } else if (role === 'seer') {
-        return <Button onClick={vote}>REVEAL</Button>
+        return <Button onClick={() => vote()}>REVEAL</Button>
       }
     } else if (phase === 'day2' || phase === 'day3') {
-      return <Button onClick={vote}>ACCUSE</Button>
+      return <Button onClick={() => vote()}>ACCUSE</Button>
     }
   }
   return (
