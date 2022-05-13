@@ -1,69 +1,81 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { shadows } from '@mui/system';
 import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
+import styled from 'styled-components';
 
-export default function GameInfo (props) {
-  const game = props.game
-  const info = props.info
+
+export default function GameInfo(props) {
   return (
-    <StyledContainer maxWidth={false}>
-      <StyledCard>
-        <h3>Instructions</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
-            mollitia, molestiae quas vel sint commodi repudiandae
-            consequuntur voluptatum laborum numquam blanditiis harum
-            quisquam eius sed odit fugiat iusto fuga praesentium optio,
-            eaque rerum! Provident similique accusantium nemo autem.
-            Veritatis obcaecati tenetur iure eius earum ut molestias
-            architecto voluptate aliquam nihil, eveniet aliquid culpa
-            officia aut! Impedit sit sunt quaerat, odit, tenetur error,
-            harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia.
-            Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
-            sapiente officiis modi at sunt excepturi expedita sint? Sed
-            quibusdam recusandae alias error harum maxime adipisci amet
-            laborum.</p>
-        <Button onClick={props.close}>X</Button>
-      </StyledCard>
-    </StyledContainer>
-  )
+    <InfoContainer maxWidth={false} disableGutters={true}>
+      <Header>GAME INFO</Header>
+      <div>
+        <StartButton onClick={() => props.setOpen(!props.open)}>
+          INSTRUCTIONS
+        </StartButton>
+      </div>
+
+      <div>Phase: {props.game.phase}</div>
+
+      {props.info ? (
+        <div>
+          <div>Your Role: {props.info.role}</div>
+          <div>Players Remaining: {props.info.playersLeft}</div>
+          <div>Anubis Remaining: {props.info.wolfsLeft}</div>
+          <div>Doctors Remaining: {props.info.doctorsLeft}</div>
+          <div>Seers Remaining: {props.info.seersLeft}</div>
+        </div>
+      ) : null}
+
+      {props.game.owner ? (
+        props.game.owner === props.playerId ? (
+          <div>
+            <StartButton onClick={() => props.startGame()}>
+              START GAME
+            </StartButton>
+          </div>
+        ) : null
+      ) : null}
+    </InfoContainer>
+  );
 }
 
-const StyledContainer = styled(Container)`
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0);
+const InfoContainer = styled(Container)`
+  width: 250px;
+  height: 300px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  margin-left: 15px;
+  font-size: 0.9em;
   display: flex;
-  height: min-content;
-  justify-content: center;
-  text-align: center;
-`;
-
-const StyledCard = styled(Card)`
+  flex-direction: column;
+  justify-content: space-evenly;
+  max-width: 200px;
   background-color: #F1F7ED;
-  margin: 5px;
-  padding: 5px;
-  width: 500px;
 `;
 
-const GameInfoCard = styled(Card)`
-
-  height: fit-content;
-  margin: 5px;
-  padding: 5px;
-  width: 350px;
+const Header = styled(Container)`
+  background-color: #9a8249;
+  border-radius: 5px 5px 0 0;
+  height: 35px;
+  font-family: 'Roboto';
+  text-align: center;
+  color: #f1f7ed;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  line-height: 1.6;
+  padding-top: 2px;
+  font-size: 1.25rem;
+  position: relative;
+  top: -5px;
+  width: 100%;
 `;
 
-const Button = styled.button`
-  align-self: flex-start;
+const StartButton = styled.button`
   background-color: #9a824991;
+  cursor: pointer;
   border-radius: 5px;
   border: none;
-  cursor: pointer;
-  float: right;
-  height: fit-content;
-  margin: 5px;
-  position: relative;
-  width: fit-content;
+  padding: 5px;
+  width: 110px;
+  height: 35px;
+  text-align: center;
+  margin: 3px;
 `;

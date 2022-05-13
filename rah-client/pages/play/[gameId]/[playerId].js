@@ -12,14 +12,17 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios';
+import GameInfo from '../../../components/GameInfo';
 
-//import TestGame from '../../../pages/_sampleData/sampleGame.js'
+
+import TestGame from '../../../pages/_sampleData/sampleGame.js';
+
 
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
 import { useRouter } from 'next/router';
 import Alert from '@mui/material/Alert';
-import GameInfo from '../../../components/GameInfo.js';
+import GameInstructions from '../../../components/GameInstructions.js';
 import PlayChat from '../../../components/GameRoom/PlayChatForm';
 import PlayChatRoom from '../../../components/GameRoom/PlayChatRoom';
 import PlayerCard from '../../../components/PlayerCard.js';
@@ -85,16 +88,8 @@ export default function Game() {
     }
   });
   useEffect(() => {
-
-    // socket.on('game-send', (gameData) => {
-    //   console.log(gameData)
-    //   setGame(gameData.game);
-    //   setGameInfo(getGameInfo(gameData, playerId));
-    // });
-
     if (started === false) {
       socket.emit('join-room', playerId, gameId);
-      // socket.emit("start-test", playerId, gameId, 5000);
       started = true;
     }
   }, []);
@@ -114,9 +109,6 @@ export default function Game() {
 
   useEffect(() => {
     console.log(gameId);
-    // axios
-    //   .get('http://localhost:4030/blueocean/api/v1/games/single', { gameId })
-    //   .then((res) => console.log(res));
     axios({
       method: 'get',
       url: 'http://localhost:4030/blueocean/api/v1/games/single?',
@@ -125,16 +117,7 @@ export default function Game() {
       let data = res.data;
       console.log(data);
       setGame(data.game);
-      //setGameInfo(getGameInfo(game, playerId));
-    });
-
-    //return () => {
-      // socket.on(`game-send-${gameId}`, (game) => {
-      //   setGame(game);
-      //   //setGameInfo(getGameInfo(game, playerId));
-      // });
-    //};
-
+    }).catch((err) => err);
   }, []);
 
   return (
@@ -150,7 +133,7 @@ export default function Game() {
             <Container maxWidth={false} id='gameBoard-container'>
               <Drawer open={open} className='gameInfoDrawer' variant='persistent' anchor='top'>
                 <div>
-                  <GameInfo close={closeDrawer} info={gameInfo} game={game} />
+                 <GameInstructions close={closeDrawer} info={gameInfo} game={game} />
                 </div>
               </Drawer>
 
@@ -165,11 +148,25 @@ export default function Game() {
               />
             </Container>
             <Container maxWidth={false} id='playerCards-container'>
+            <GameInfo
+                  announcement={announcement}
+                  info={gameInfo}
+                  setOpen={setOpen}
+                  open={open}
+                  startGame={startGame}
+                  playerId={playerId}
+                  game={game}
+                />
+
+
               <StyledButton onClick={moveLeft}>
                 <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
               </StyledButton>
 
+
+
               <div className='viewport'>
+
                 <div disableGutters={true} maxWidth={false} className='playerCardContainer'>
                   <Stack direction='row' spacing={0}>
                     {game.players ? (
