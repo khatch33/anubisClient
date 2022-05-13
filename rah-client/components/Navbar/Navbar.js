@@ -84,6 +84,7 @@ const Navbar = () => {
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
   const [friendsList, setFriendsList] = useState([]);
+
   const handleLoginModal = () => {
     setLoginModal(true);
   };
@@ -136,7 +137,7 @@ const Navbar = () => {
       .catch((err) => console.log('error friend response', err));
   }, []);
 
-  const filteredByOnline = (online, friends) => {
+  const filteredByOnline = (friends, online) => {
     let obj = {};
     for (let i = 0; i < friends.length; i++) {
       let friendName = friends[i].username;

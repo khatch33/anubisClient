@@ -12,11 +12,15 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios';
+import GameInfo from '../../../components/GameInfo';
+
+import TestGame from '../../../pages/_sampleData/sampleGame.js';
+
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
 import { useRouter } from 'next/router';
 import Alert from '@mui/material/Alert';
-import GameInfo from '../../../components/GameInfo.js';
+import GameInstructions from '../../../components/GameInstructions.js';
 import PlayChat from '../../../components/GameRoom/PlayChatForm';
 import PlayChatRoom from '../../../components/GameRoom/PlayChatRoom';
 import PlayerCard from '../../../components/PlayerCard.js';
@@ -41,6 +45,58 @@ export default function Game() {
   const { gameId, playerId } = router.query;
   var started = false;
   //const TestGame = TestGame.sampleGame
+
+  useEffect(() => {
+    return () => {
+      socket.emit('join-room', playerId, gameId);
+      // socket.emit("start-test", playerId, gameId, 5000);
+    };
+    // if (started === false) {
+    //    started = true;
+    // }
+  }, [socket]);
+  useEffect(() => {
+    if (game) {
+      const container = document.querySelector('.playerCardContainer');
+      container.style.transitionDuration = '.8s';
+      container.style.transform = `translate( -${card * 150}px)`;
+    }
+  }, [card]);
+  useEffect(() => {
+    socket.on(`game-send`, (game) => {
+      setGame(game);
+      console.log(game);
+      setGameInfo(getGameInfo(game, playerId));
+    });
+    socket.on(`receive-message-${gameId}`, (user, message) => {
+      let messageObj = { userName: user.userName, text: message, user_id: user.user_id };
+      if (user.user_id === 'announcement') {
+        setAnnouncement(message);
+      } else {
+        console.log(messageObj);
+        setMessages([...messages, messageObj]);
+      }
+    });
+  });
+  useEffect(() => {
+    console.log(gameId);
+    // axios
+    //   .get('http://localhost:4030/blueocean/api/v1/games/single', { gameId })
+    //   .then((res) => console.log(res));
+    axios({
+      method: 'get',
+      url: 'http://localhost:4030/blueocean/api/v1/games/single?',
+      params: { id: gameId },
+    })
+      .then((res) => {
+        let data = res.data;
+        console.log(data);
+        setGame(data.game);
+      })
+      .catch((err) => err);
+    //setGameInfo(getGameInfo(game, playerId));
+  }, []);
+
   const closeDrawer = () => {
     setOpen(false);
   };
@@ -68,54 +124,50 @@ export default function Game() {
       setCard(0);
     }
   };
-  socket.on(`receive-message-${gameId}`, (user, message) => {
-    let messageObj = { userName: user.userName, text: message, user_id: user.user_id };
-    if (user.user_id === 'announcement') {
-      setAnnouncement(message);
-    } else {
-      setMessages([...messages, messageObj]);
-    }
-  });
-  useEffect(() => {
-    if (started === false) {
-      socket.emit('join-room', playerId, gameId);
-      // socket.emit("start-test", playerId, gameId, 5000);
-      started = true;
-    }
-  }, []);
+  // socket.on(`receive-message-${gameId}`, (user, message) => {
 
-  useEffect(() => {
-    if (game) {
-      const container = document.querySelector('.playerCardContainer');
-      container.style.transitionDuration = '.8s';
-      container.style.transform = `translate( -${card * 150}px)`;
-    }
-  }, [card]);
-  socket.on(`game-send`, (game) => {
-    setGame(game);
-    console.log(game);
-    setGameInfo(getGameInfo(game, playerId));
-  });
+  //   let messageObj = {userName: user.userName, text: message, user_id: user.user_id}
+  //   if (user.user_id === 'announcement') {
 
-  useEffect(() => {
-    axios({
-      method: 'get',
-      url: 'http://localhost:4030/blueocean/api/v1/games/single',
-      params: { id: gameId },
-    }).then((res) => {
-      let data = res.data;
-      console.log(data);
-      setGame(data.game);
-      //setGameInfo(getGameInfo(game, playerId));
-    });
+  //     setAnnouncement(message);
+  //   } else {
+  //     console.log(messageObj)
+  //     setMessages([...messages, messageObj]);
+  //     console.log(messages)
+  //   }
+  // });
+  // useEffect(() => {
+  //   if (started === false) {
+  //     socket.emit('join-room', playerId, gameId);
+  //     started = true;
+  //   }
+  // }, []);
 
-    //return () => {
-    // socket.on(`game-send-${gameId}`, (game) => {
-    //   setGame(game);
-    //   //setGameInfo(getGameInfo(game, playerId));
-    // });
-    //};
-  }, []);
+  // useEffect(() => {
+  //   if (game) {
+  //     const container = document.querySelector('.playerCardContainer');
+  //     container.style.transitionDuration = '.8s';
+  //     container.style.transform = `translate( -${card * 150}px)`;
+  //   }
+  // }, [card]);
+  // socket.on(`game-send`, (game) => {
+  //   setGame(game);
+  //   console.log(game)
+  //   setGameInfo(getGameInfo(game, playerId));
+  // })
+
+  // useEffect(() => {
+  //   console.log(gameId);
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://localhost:4030/blueocean/api/v1/games/single?',
+  //     params: { id: gameId },
+  //   }).then((res) => {
+  //     let data = res.data;
+  //     console.log(data);
+  //     setGame(data.game);
+  //   }).catch((err) => err);
+  // }, []);
 
   return (
     <>
@@ -130,7 +182,7 @@ export default function Game() {
             <Container maxWidth={false} id='gameBoard-container'>
               <Drawer open={open} className='gameInfoDrawer' variant='persistent' anchor='top'>
                 <div>
-                  <GameInfo close={closeDrawer} info={gameInfo} game={game} />
+                  <GameInstructions close={closeDrawer} info={gameInfo} game={game} />
                 </div>
               </Drawer>
 
@@ -145,6 +197,16 @@ export default function Game() {
               />
             </Container>
             <Container maxWidth={false} id='playerCards-container'>
+              <GameInfo
+                announcement={announcement}
+                info={gameInfo}
+                setOpen={setOpen}
+                open={open}
+                startGame={startGame}
+                playerId={playerId}
+                game={game}
+              />
+
               <StyledButton onClick={moveLeft}>
                 <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
               </StyledButton>

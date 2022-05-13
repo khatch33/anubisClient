@@ -30,6 +30,16 @@ export default function ActiveUsersList() {
     };
   }, []);
 
+  const friendAdd = () => {
+    const url = '/togglefriends';
+    axios.put('http://localhost:4030/blueocean/api/v1/users/togglefriends', {
+      headers: {
+        Authorization: `Bearer ${userData.userToken}`,
+      },
+      user_id: userData.userId,
+    });
+  };
+
   return (
     <div id='activeUsers-outerContainer'>
       <Title id='activeUsers-header'>ONLINE PLAYERS</Title>

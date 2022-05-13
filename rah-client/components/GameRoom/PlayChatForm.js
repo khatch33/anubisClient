@@ -24,12 +24,9 @@ export default function PlayChat() {
   const onFormSubmit = (e) => {
     e.preventDefault()
     console.log(user)
-    let message = {
-      text: chat,
-      time: Date.now(),
-      username: user.userName
-    }
-    socket.emit('send-message', user, message, gameId);
+    let user1 = {user_id: user.userId, userName: user.userName}
+    let message = chat
+    socket.emit('send-message', user1, message, gameId);
     setChat('');
   };
 

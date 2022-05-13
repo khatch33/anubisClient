@@ -51,7 +51,8 @@ export default function PlayChatRoom({messages}) {
         <div id="chatList">
           {messages.map((message, index) => {
             return (
-              <div key={JSON.stringify(message)} className={`message-container ${alignMessage(message)}`} >
+
+              <div key={JSON.stringify(message)} className={`message-container ${alignMessage(message)}`}>
                   <span className="chatUser">{`${message.userName}: `}</span>
                   <span className="chatMessage">{message.text}</span>
               </div>
