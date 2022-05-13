@@ -25,6 +25,7 @@ export default function PlayChatRoom({messages}) {
   };
 
   return (
+    <div style={{minWidth: '250px', maxWidth: '300px'}}>
     <StyledChatBox
       disableGutters={true}
       maxWidth={false}
@@ -59,6 +60,7 @@ export default function PlayChatRoom({messages}) {
         </div>
       </div>
     </StyledChatBox>
+    </div>
   );
 }
 
@@ -67,11 +69,13 @@ const StyledChatBox = styled(Container)`
   border: 1px solid gray;
   border-bottom: none;
   background-color: #F1F7ED;
-  height: 85vh;
+  height: 80vh;
   overflow-y: scroll;
-  width: 100%;
   margin-top: 10px;
   border-radius: 5px 5px 0 0;
+    /* hides the scrollbar in IE, Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const StyledBox = styled(Box)`

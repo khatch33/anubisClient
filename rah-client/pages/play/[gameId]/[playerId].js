@@ -109,78 +109,76 @@ export default function Game() {
   return (
     <>
       <Navbar />
-      <Container sx={{ float: "left", width: "25%" }}>
-        <PlayChatRoom messages={messages} />
-        <PlayChat />
-      </Container>
-      {game ? (
-        <Box sx={{ display: "inline-block", float: "right", width: "75%" }}>
-          <Container maxWidth={false} id="gameBoard-container">
-            {/* {announcement ? (
-              <Alert severity="info">{announcement}</Alert>
-            ) : null} */}
-            <Drawer
-              open={open}
-              className="gameInfoDrawer"
-              variant="persistent"
-              anchor="top"
-            >
-              <div>
-                <GameInfo close={closeDrawer} info={gameInfo} game={game} />
-              </div>
-            </Drawer>
-
-            <GameBoard
-              announcement={announcement}
-              info={gameInfo}
-              setOpen={setOpen}
-              open={open}
-              startGame={startGame}
-              playerId={playerId}
-              game={game}
-              announcement={announcement}
-            />
-
-          </Container>
-          <Container maxWidth={false} id="playerCards-container">
-            <StyledButton onClick={moveLeft}>
-              <ChevronLeftIcon stroke="#F1F7ED" fill="#F1F7ED" height="30" />
-            </StyledButton>
-
-            <div className="viewport">
-              <div
-                disableGutters={true}
-                maxWidth={false}
-                className="playerCardContainer"
+      <Container sx={{ minWidth: "1100px", maxWidth: "1500px" }}>
+        <Container sx={{ float: "left", width: "25%" }}>
+          <PlayChatRoom messages={messages} />
+          <PlayChat />
+        </Container>
+        {game ? (
+          <Box sx={{ display: "inline-block", float: "right", width: "75%" }}>
+            <Container maxWidth={false} id="gameBoard-container">
+              <Drawer
+                open={open}
+                className="gameInfoDrawer"
+                variant="persistent"
+                anchor="top"
               >
-                <Stack direction="row" spacing={0}>
-                  {game.players ? (
-                    game.players.map((player) => {
-                      if (player.player.userID !== playerId) {
-                        return (
-                          <PlayerCard
-                            key={player.player.userName}
-                            phase={game.phase}
-                            role={gameInfo.role}
-                            player={player}
-                          />
-                        );
-                      }
-                    })
-                  ) : (
-                    <p>Loading</p>
-                  )}
-                </Stack>
+                <div>
+                  <GameInfo close={closeDrawer} info={gameInfo} game={game} />
+                </div>
+              </Drawer>
+
+              <GameBoard
+                announcement={announcement}
+                info={gameInfo}
+                setOpen={setOpen}
+                open={open}
+                startGame={startGame}
+                playerId={playerId}
+                game={game}
+                announcement={announcement}
+              />
+            </Container>
+            <Container maxWidth={false} id="playerCards-container">
+              <StyledButton onClick={moveLeft}>
+                <ChevronLeftIcon stroke="#F1F7ED" fill="#F1F7ED" height="30" />
+              </StyledButton>
+
+              <div className="viewport">
+                <div
+                  disableGutters={true}
+                  maxWidth={false}
+                  className="playerCardContainer"
+                >
+                  <Stack direction="row" spacing={0}>
+                    {game.players ? (
+                      game.players.map((player) => {
+                        if (player.player.userID !== playerId) {
+                          return (
+                            <PlayerCard
+                              key={player.player.userName}
+                              phase={game.phase}
+                              role={gameInfo.role}
+                              player={player}
+                            />
+                          );
+                        }
+                      })
+                    ) : (
+                      <p>Loading</p>
+                    )}
+                  </Stack>
+                </div>
               </div>
-            </div>
-            <StyledButton onClick={moveRight}>
-              <ChevronRightIcon stroke="#F1F7ED" fill="#F1F7ED" height="30" />
-            </StyledButton>
-          </Container>
-        </Box>
-      ) : (
-        <h2>Error: No games found. Try again.</h2>
-      )}
+              <StyledButton onClick={moveRight}>
+                <ChevronRightIcon stroke="#F1F7ED" fill="#F1F7ED" height="30" />
+              </StyledButton>
+            </Container>
+          </Box>
+        ) : (
+          <h2>Error: No games found. Try again.</h2>
+        )}
+      </Container>
     </>
   );
 }

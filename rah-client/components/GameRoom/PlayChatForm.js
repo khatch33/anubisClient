@@ -63,6 +63,8 @@ const Form = styled.form`
   align-items: center;
   height: 20%;
   margin-bottom: 10px;
+  min-width: 250px;
+  max-width: 300px;
 `;
 
 const ChatInput = styled.input`

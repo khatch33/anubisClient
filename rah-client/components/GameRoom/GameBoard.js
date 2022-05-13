@@ -27,13 +27,12 @@ export default function GameBoard(props) {
         <Header>GAME INFO</Header>
         <div><StartButton onClick={() => props.setOpen(!props.open)}>INSTRUCTIONS</StartButton></div>
 
-        <div>Game Owner: {props.game.owner}</div>
         <div>Phase: {props.game.phase}</div>
-        <div><b>Your Role:</b> {props.info.role}</div>
-        <div><b>Players Remaining:</b> {props.info.playersLeft}</div>
-        <div><b>Anubis Remaining:</b> {props.info.wolfsLeft}</div>
-        <div><b>Doctors Remaining:</b> {props.info.doctorsLeft}</div>
-        <div><b>Seers Remaining:</b> {props.info.seersLeft}</div>
+        <div>Your Role: {props.info.role}</div>
+        <div>Players Remaining: {props.info.playersLeft}</div>
+        <div>Anubis Remaining: {props.info.wolfsLeft}</div>
+        <div>Doctors Remaining: {props.info.doctorsLeft}</div>
+        <div>Seers Remaining: {props.info.seersLeft}</div>
 
         {props.game ? (
           props.game.owner === props.playerId ? (
@@ -43,8 +42,6 @@ export default function GameBoard(props) {
 
       </InfoContainer>
       </div>
-
-
     </OuterContainer>
   )
 }
@@ -53,7 +50,8 @@ const OuterContainer = styled(Container)`
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  width: 95%;
+  /* width: 95%; */
+  max-width: 800px;
   background-color: #F1F7ED;
   border-radius: 5px;
   height: 350px;
@@ -62,6 +60,7 @@ const OuterContainer = styled(Container)`
   height: 100%;
   margin-top: 20px;
   text-align: center;
+  min-width: 750px;
 `;
 
 const ImgContainer = styled(Container)`
@@ -81,21 +80,24 @@ const InfoContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  max-width: 200px;
 `;
 
 const Header = styled(Container)`
   background-color: #9A8249;
+  border-radius: 5px 5px 0 0;
   height: 35px;
   font-family: 'Roboto';
   text-align: center;
   color: #F1F7ED;
   font-weight: 700;
-  letter-spacing: 0.3rem;
+  letter-spacing: 0.2rem;
   line-height: 1.6;
   padding-top: 2px;
   font-size: 1.25rem;
   position: relative;
   top: -5px;
+  width: 100%;
 `;
 
 const StartButton = styled.button`
