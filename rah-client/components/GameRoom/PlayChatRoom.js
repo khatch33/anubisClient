@@ -17,7 +17,7 @@ export default function PlayChatRoom({messages}) {
   const userData = useRecoilValue(userState);
 
   const alignMessage = (message) => {
-    if (message.username === userData.userName) {
+    if (message.user_id === userData.userId) {
       return "chatMessage-right";
     } else {
       return "chatMessage-left";
@@ -49,10 +49,10 @@ export default function PlayChatRoom({messages}) {
       </StyledBox>
       <div id="chatList-outerContainer">
         <div id="chatList">
-          {messages.map((message) => {
+          {messages.map((message, index) => {
             return (
               <div key={JSON.stringify(message)} className={`message-container ${alignMessage(message)}`} >
-                  <span className="chatUser">{`${message.username}: `}</span>
+                  <span className="chatUser">{`${message.userName}: `}</span>
                   <span className="chatMessage">{message.text}</span>
               </div>
             );
