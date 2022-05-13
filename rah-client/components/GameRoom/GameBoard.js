@@ -1,10 +1,37 @@
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
 import Image from 'next/Image';
+import {useEffect} from 'react'
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
-
+import Game from '../../pages/_sampleData/sampleGame.js'
+import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
+const sprite = {height: '60px', width: '30px'}
 export default function GameBoard(props) {
+  const players = Game.sampleGame.players
+  const game = Game
+  // const [isShown, setIsShown] = useState(false);
+  //const sprite = {height: 100, width: 30}
+  //const [Middle, setArr] = useState()
+  var Arr;// = oneInMiddle(players, 60, 30, 500, 500, '627933882926bbcb74299ad1')
+  //console.log(Arr)
+  const renderItems = (phase) => {
+    var Arr;
+    phase = phase || 'night'
+    if (phase === 'day2') {
+      Arr = MapEmAcross(players, 60, 30, 500, 500)
+    } else if (phase === 'day3') {
+      Arr = oneInMiddle(players, 60, 30, 500, 500, '627933882926bbcb74299ad1')
+    } else {
+      Arr = MapEmCircle(players, 60, 30, 500, 500)
+    }
+    return Object.values(Arr).map((locale) => {
+      return <Person left={locale.left} top={locale.top}></Person>
+    } )
+  }
+  const handleClick = () => {
+
+  }
   return (
     <OuterContainer maxWidth={false} disableGutters={true}>
       <Banner>
@@ -18,13 +45,18 @@ export default function GameBoard(props) {
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <ImgContainer maxWidth={false} disableGutters={true} id='gameboard-container'>
           <Img src={BoardImg} alt='' height='500' width='500' />
-          <Person left={'0%'} top={'40%'}></Person>
+          {renderItems('day')}
+          {/* {Object.values(Arr).map((locale) => {
+            //console.log(locale)
+            return <Person left={locale.left} top={locale.top}></Person>
+          } )} */}
+          {/* <Person left={'460.00px'} top={'250.00px'}></Person>
           <Person left={'23.5%'} top={'40%'}></Person>
           <Person left={'47%'} top={'40%'}></Person>
           <Person left={'70.5%'} top={'40%'}></Person>
           <Person left={'94%'} top={'40%'}></Person>
           <Person left={'94%'} top={'40%'}></Person>
-          <Person left={'94%'} top={'40%'}></Person>
+          <Person left={'94%'} top={'40%'}></Person> */}
         </ImgContainer>
 
         <InfoContainer maxWidth={false} disableGutters={true}>
@@ -56,7 +88,8 @@ export default function GameBoard(props) {
 const Person = styled.span`
   position: absolute;
   border: 15px solid red;
-  height: 50px;
+  width: ${sprite.width};
+  height: ${sprite.height};
   border-radius: 15px;
   left: ${(props) => props.left};
   top: ${(props) => props.top};
