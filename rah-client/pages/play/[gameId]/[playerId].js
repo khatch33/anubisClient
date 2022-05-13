@@ -26,6 +26,7 @@ import PlayChatRoom from '../../../components/GameRoom/PlayChatRoom';
 import PlayerCard from '../../../components/PlayerCard.js';
 import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
+import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
 const basePath = 'http://localhost:4030/blueocean/api/v1';
 
@@ -47,10 +48,29 @@ export default function Game() {
   //const TestGame = TestGame.sampleGame
 
   useEffect(() => {
+    socket.on(`game-send`, (game) => {
+      setGame(game);
+
+      setGameInfo(getGameInfo(game, playerId));
+    });
+    socket.on(`receive-message-${gameId}`, (user, message) => {
+      let messageObj = { userName: user.userName, text: message, user_id: user.user_id };
+      if (user.user_id === 'announcement') {
+        setAnnouncement(message);
+      } else {
+        setMessages([...messages, messageObj]);
+      }
+    });
+  });
+
+  useEffect(() => {
     return () => {
       socket.emit('join-room', playerId, gameId);
-      // socket.emit("start-test", playerId, gameId, 5000);
+      //socket.disconnect()
     };
+
+    // socket.emit("start-test", playerId, gameId, 5000);
+
     // if (started === false) {
     //    started = true;
     // }
@@ -62,27 +82,8 @@ export default function Game() {
       container.style.transform = `translate( -${card * 150}px)`;
     }
   }, [card]);
+
   useEffect(() => {
-    socket.on(`game-send`, (game) => {
-      setGame(game);
-      console.log(game);
-      setGameInfo(getGameInfo(game, playerId));
-    });
-    socket.on(`receive-message-${gameId}`, (user, message) => {
-      let messageObj = { userName: user.userName, text: message, user_id: user.user_id };
-      if (user.user_id === 'announcement') {
-        setAnnouncement(message);
-      } else {
-        console.log(messageObj);
-        setMessages([...messages, messageObj]);
-      }
-    });
-  });
-  useEffect(() => {
-    console.log(gameId);
-    // axios
-    //   .get('http://localhost:4030/blueocean/api/v1/games/single', { gameId })
-    //   .then((res) => console.log(res));
     axios({
       method: 'get',
       url: 'http://localhost:4030/blueocean/api/v1/games/single?',
@@ -90,17 +91,17 @@ export default function Game() {
     })
       .then((res) => {
         let data = res.data;
-        console.log(data);
         setGame(data.game);
       })
       .catch((err) => err);
     //setGameInfo(getGameInfo(game, playerId));
-  }, []);
+  }, [gameId]);
 
   const closeDrawer = () => {
     setOpen(false);
   };
   const startGame = () => {
+    console.log('buitton', playerId, gameId);
     socket.emit('start-test', playerId, gameId, 10000);
   };
   const switchPhase = () => {
@@ -208,7 +209,7 @@ export default function Game() {
               />
 
               <StyledButton onClick={moveLeft}>
-                <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
+                <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='35' />
               </StyledButton>
 
               <div className='viewport'>
@@ -233,13 +234,16 @@ export default function Game() {
                   </Stack>
                 </div>
               </div>
+
               <StyledButton onClick={moveRight}>
-                <ChevronRightIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
+                <ChevronRightIcon stroke='#F1F7ED' fill='#F1F7ED' height='35' />
               </StyledButton>
             </Container>
           </Box>
         ) : (
-          <h2>Error: No games found. Try again.</h2>
+          <StyledContainer maxWidth='sm'>
+            <h2>Error: No games found. Try again.</h2>
+          </StyledContainer>
         )}
       </Container>
     </>
@@ -261,6 +265,8 @@ const StyledButton = styled.button`
   height: 20px;
   width: 20px;
   margin-left: 10px;
+  margin-right: 15px;
+  cursor: pointer;
 `;
 
 const StyledAlert = styled(Alert)`
@@ -268,4 +274,14 @@ const StyledAlert = styled(Alert)`
   background-color: #9a8249;
   color: #f1f7ed;
   display: inline;
+`;
+
+const StyledContainer = styled(Container)`
+  background-color: #f1f7ed;
+  width: fit-content;
+  height: 150px;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 40px;
+  margin-top: 40px;
 `;

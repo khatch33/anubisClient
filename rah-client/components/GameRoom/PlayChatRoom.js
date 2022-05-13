@@ -37,11 +37,13 @@ export default function PlayChatRoom({messages}) {
           noWrap
           component="p"
           sx={{
-            fontFamily: "monospace",
+            fontFamily: 'Josefin Slab',
             fontWeight: 700,
-            letterSpacing: ".3rem",
+            fontSize: '1.3em',
+            letterSpacing: ".2em",
             color: "inherit",
             textDecoration: "none",
+            paddingTop: '2px'
           }}
         >
           CHAT
@@ -70,7 +72,9 @@ const StyledChatBox = styled(Container)`
   border: 1px solid gray;
   border-bottom: none;
   background-color: #F1F7ED;
-  height: 80vh;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  height: 85vh;
+  max-height: 90vh;
   overflow-y: scroll;
   margin-top: 10px;
   border-radius: 5px 5px 0 0;

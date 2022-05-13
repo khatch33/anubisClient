@@ -46,11 +46,13 @@ export default function Lobby() {
       setUser(localUser);
     }
     socket.emit('get-games', games);
-
     socket.on('receive-games', (games) => {
       console.log('game data is here', games);
       setGames(games);
     });
+    return () => {
+      //socket.disconnect()
+    };
   }, []);
 
   return (
@@ -105,15 +107,3 @@ export default function Lobby() {
     </>
   );
 }
-
-// const OnlineTitle = styled.p`
-//   text-align: center;
-// `;
-
-// const TabsContainer = styled(Tabs)`
-//   margin-left: 28px;
-// `;
-
-// const StyledTab = styled(Tab)`
-//   color: #9A8249;
-// `;

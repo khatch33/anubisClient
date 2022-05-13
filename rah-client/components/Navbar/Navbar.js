@@ -73,8 +73,8 @@ const Navbar = () => {
   //const pagesIfLoggedIn = [, 'Ranking', <Link href='/'>Logout</Link>];
   const pagesIfNotLoggedIn = [
     ,
-    <div onClick={signupClicked}>Sign Up</div>,
-    <div onClick={loginClicked}>Login</div>,
+    <StyledLinks onClick={signupClicked}>Sign Up</StyledLinks>,
+    <StyledLinks onClick={loginClicked}>Login</StyledLinks>,
   ];
   //handles hamburger menu
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -120,21 +120,23 @@ const Navbar = () => {
   };
   //use effect for getting friend list
   useEffect(() => {
-    const url = `http://localhost:4030/blueocean/api/v1/users/friend`;
     const localUser = JSON.parse(localStorage.getItem('userToken'));
-    axios({
-      method: 'GET',
-      url,
-      headers: {
-        Authorization: `Bearer ${localUser.userToken}`,
-      },
-      user_id: localUser.userId,
-    })
-      .then((res) => {
-        console.log(res);
-        setFriendsList(res.data.user.friends);
+    if (localUser) {
+      const url = `http://localhost:4030/blueocean/api/v1/users/friend`;
+      axios({
+        method: 'GET',
+        url,
+        headers: {
+          Authorization: `Bearer ${localUser.userToken}`,
+        },
+        user_id: localUser.userId,
       })
-      .catch((err) => console.log('error friend response', err));
+        .then((res) => {
+          console.log(res);
+          setFriendsList(res.data.user.friends);
+        })
+        .catch((err) => console.log('error friend response', err));
+    }
   }, []);
 
   const filteredByOnline = (friends, online) => {
