@@ -367,3 +367,30 @@ a {
 
 /* [playerId].js */
 
+#images-container {
+  border: 1px solid #b9beb6;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border-radius: 3px;
+  color: #b9beb6;
+  align-items: center;
+  cursor: pointer;
+}
+
+#signup-title {
+  color: #9ea29b;
+  width: fit-content;
+  position: relative;
+  left: -10px;
+}
+
+.avatar-container[selected = "true"] {
+  border: 1px solid gold;
+}
+
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: white;
+}

@@ -217,7 +217,7 @@ export default function Game() {
 
 
               <StyledButton onClick={moveLeft}>
-                <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
+                <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='35' />
               </StyledButton>
 
 
@@ -245,13 +245,16 @@ export default function Game() {
                   </Stack>
                 </div>
               </div>
+
               <StyledButton onClick={moveRight}>
-                <ChevronRightIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
+                <ChevronRightIcon stroke='#F1F7ED' fill='#F1F7ED' height='35' />
               </StyledButton>
             </Container>
           </Box>
         ) : (
-          <h2>Error: No games found. Try again.</h2>
+          <StyledContainer maxWidth="sm">
+            <h2>Error: No games found. Try again.</h2>
+          </StyledContainer>
         )}
       </Container>
     </>
@@ -273,6 +276,8 @@ const StyledButton = styled.button`
   height: 20px;
   width: 20px;
   margin-left: 10px;
+  margin-right: 15px;
+  cursor: pointer;
 `;
 
 const StyledAlert = styled(Alert)`
@@ -280,4 +285,14 @@ const StyledAlert = styled(Alert)`
   background-color: #9a8249;
   color: #f1f7ed;
   display: inline;
+`;
+
+const StyledContainer = styled(Container)`
+  background-color: #F1F7ED;
+  width: fit-content;
+  height: 150px;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 40px;
+  margin-top: 40px;
 `;

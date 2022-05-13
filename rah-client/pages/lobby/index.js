@@ -108,14 +108,3 @@ export default function Lobby() {
   );
 }
 
-// const OnlineTitle = styled.p`
-//   text-align: center;
-// `;
-
-// const TabsContainer = styled(Tabs)`
-//   margin-left: 28px;
-// `;
-
-// const StyledTab = styled(Tab)`
-//   color: #9A8249;
-// `;

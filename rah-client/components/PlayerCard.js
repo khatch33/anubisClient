@@ -29,14 +29,14 @@ export default function PlayerCard(props) {
       if (role === 'villager') {
         return
       } else if (role === 'doctor') {
-        return <Button onClick={vote}>Save</Button>
+        return <Button onClick={vote}>SAVE</Button>
       } else if (role === 'wolf') {
-        return <Button onClick={vote}>Kill</Button>
+        return <Button onClick={vote}>SACRIFICE</Button>
       } else if (role === 'seer') {
-        return <Button onClick={vote}>Check if Wolf</Button>
+        return <Button onClick={vote}>REVEAL</Button>
       }
     } else if (phase === 'day2' || phase === 'day3') {
-      return <Button onClick={vote}>Accuse</Button>
+      return <Button onClick={vote}>ACCUSE</Button>
     }
   }
   return (
@@ -47,7 +47,7 @@ export default function PlayerCard(props) {
       </UserDiv>
 
       <IconDiv>
-        {alive? null : <div><Image alt='' height="35" width="35" src={deadIcon}/></div>}
+        {alive? null : <StyledDiv><Image alt='' height="55" width="55" src={deadIcon}/> <br/> <span>{`${username} was taken by Anubis`} </span></StyledDiv>}
       </IconDiv>
 
       <ButtonDiv>
@@ -59,16 +59,17 @@ export default function PlayerCard(props) {
 }
 
 const Button = styled.button`
-  --widthA: fit-content;
-  --widthB: calc(var(--widthA) + 5px);
   border: none;
   background-color: #9a824991;
   cursor: pointer;
   height: 30px;
   border-radius: 9px;
   padding: 5px;
-  width: var(--widthB);
+  width: 90%;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  font-family: 'Josefin Slab';
+  font-weight: 700;
+  font-size: 1.1em;
 `;
 
 const UserDiv = styled.div`
@@ -82,6 +83,9 @@ const UserDiv = styled.div`
 const IconDiv = styled.div`
   height: fit-content;
   text-align: center;
+  font-family: 'Josefin Slab';
+  font-weight: 700;
+  font-size: 1.1em;
 `;
 
 const ButtonDiv = styled.div`
@@ -91,4 +95,15 @@ const ButtonDiv = styled.div`
 
 const UsernameSpan = styled.div`
   margin: 5px;
+  font-family: 'Josefin Slab';
+  font-weight: 700;
+  font-size: 1.1em;
+`;
+
+const StyledDiv = styled.div`
+  position: relative;
+  bottom: -40px;
+  height: 150px;
+  width: 150px;
+  font-size: 0.85em;
 `;

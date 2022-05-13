@@ -13,7 +13,9 @@ export default function GameInfo(props) {
         </StartButton>
       </div>
 
-      <TextDiv><span>PHASE:</span> <span>{props.game.phase === 'pregame' ? <div>The game will start shortly</div> : props.game.phase}</span></TextDiv>
+      <TextDiv>
+         {props.game.phase === 'pregame' ? <><span>PHASE: </span><span>PRE-GAME</span></> : <><span>PHASE: </span> <span>{props.game.phase}</span></> }
+      </TextDiv>
       {props.info ? (
         <InfoDiv>
           <TextDiv><span>YOUR ROLE:</span> <span>{props.info.role}</span></TextDiv>
@@ -31,7 +33,7 @@ export default function GameInfo(props) {
               START GAME
             </StartButton>
           </div>
-        ) : null
+        ) : <div>The game will start shortly</div>
       ) : null}
     </InfoContainer>
     </>
@@ -50,13 +52,16 @@ const InfoContainer = styled(Container)`
   top: -20px;
   font-family: 'Josefin Slab';
   font-weight: 700;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 `;
 
 const Header = styled(Container)`
   background-color: #9a8249;
   border-radius: 5px 5px 0 0;
   height: 35px;
-  font-family: 'Roboto';
+  font-family: 'Josefin Slab';
+  font-weight: 700;
+  font-size: 1.1em;
   text-align: center;
   color: #f1f7ed;
   font-weight: 700;
@@ -75,10 +80,13 @@ const StartButton = styled.button`
   border-radius: 5px;
   border: none;
   padding: 5px;
-  width: 110px;
-  height: 35px;
+  width: fit-content;
+  height: 30px;
   text-align: center;
   margin: 3px;
+  font-family: 'Josefin Slab';
+  font-weight: 700;
+  font-size: 1.1em;
 `;
 
 const InfoDiv = styled.div`

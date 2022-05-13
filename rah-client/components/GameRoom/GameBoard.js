@@ -94,17 +94,20 @@ const ImgContainer = styled(Container)`
 const Banner = styled.div`
   width: 100%;
   height: 35px;
+  background-color: #9A8249;
+  border-radius: 5px 5px 0 0;
+
 `;
 
 const Img = styled(Image)`
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px;
   height: 80%;
 `;
 
 const Announcement = styled.marquee`
-  font-size: 1.2em;
+  font-size: 1.5em;
   line-height: 1.6em;
-  font-family: monospace;
+  font-family: 'Josefin Slab';
   font-weight: 700;
-  color: #9a8249;
+  color: white;
 `;
