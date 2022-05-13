@@ -98,6 +98,7 @@ export default function GamesList(props) {
         rows={rows}
         columns={columns}
         onRowClick={onRowClick}
+      />
       {showForm && (
         <>
           <button onClick={yesClick}>Go!</button>
