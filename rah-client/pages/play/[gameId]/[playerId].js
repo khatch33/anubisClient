@@ -17,6 +17,7 @@ import GameInfo from '../../../components/GameInfo';
 
 import TestGame from '../../../pages/_sampleData/sampleGame.js';
 
+
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
 import { useRouter } from 'next/router';
@@ -117,7 +118,6 @@ export default function Game() {
       console.log(data);
       setGame(data.game);
     }).catch((err) => err);
-
   }, []);
 
   return (
@@ -133,7 +133,7 @@ export default function Game() {
             <Container maxWidth={false} id='gameBoard-container'>
               <Drawer open={open} className='gameInfoDrawer' variant='persistent' anchor='top'>
                 <div>
-                  <GameInstructions close={closeDrawer} info={gameInfo} game={game} />
+                 <GameInstructions close={closeDrawer} info={gameInfo} game={game} />
                 </div>
               </Drawer>
 
@@ -162,6 +162,7 @@ export default function Game() {
               <StyledButton onClick={moveLeft}>
                 <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='30' />
               </StyledButton>
+
 
 
               <div className='viewport'>
