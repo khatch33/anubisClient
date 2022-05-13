@@ -11,7 +11,6 @@ const basePath = 'http://localhost:4030/blueocean/api/v1';
 export default function Home() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
   const [activeList, setActiveList] = useState([]);
 
   useEffect(() => {
@@ -36,11 +35,11 @@ export default function Home() {
         <Container maxWidth={false} id='app-container'>
           <ActiveUsersList users={activeUsers} />
 
-          <Container maxWidth={false} disableGutters={true} id="video-instructions-container">
+          <Container maxWidth={false} disableGutters={true} id='video-instructions-container'>
             <Container maxWidth={false} disableGutters={true} id='video-container'>
-              <div id="video-header">WELCOME TO WRATH OF ANUBIS</div>
+              <div id='video-header'>WELCOME TO WRATH OF ANUBIS</div>
               <iframe
-                id="video-element"
+                id='video-element'
                 src='https://www.youtube.com/embed/OysJ4nL4jS8'
                 title='YouTube video player'
                 frameBorder='0'
@@ -49,8 +48,8 @@ export default function Home() {
             </Container>
 
             <Container maxWidth={false} id='instructions-container'>
-              <div id="instructions-header">HOW TO PLAY</div>
-              <div id="instructions-text">
+              <div id='instructions-header'>HOW TO PLAY</div>
+              <div id='instructions-text'>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae
                 quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis
                 harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!

@@ -26,18 +26,21 @@ import Skeleton from '@mui/material/Skeleton';
 import LoginForm from '../LoginForm';
 import SignupForm from '../SignupForm';
 import { userState } from '../../_states/tokenState';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import LogoIcon from '../../public/anubis-bg.jpg';
 import Image from 'next/Image';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import uuid from 'react-uuid';
-
+import axios from 'axios';
+import { friendsState } from '../../_states/friendslist';
 const Navbar = () => {
   const [userData, setUserData] = useRecoilState(userState);
-  const router = useRouter()
+  const allUsers = useRecoilValue(friendsState);
+
+  const router = useRouter();
   useEffect(() => {
-    const localUser = JSON.parse(localStorage.getItem('userToken'))
-    if (userData.userToken || localUser ) {
+    const localUser = JSON.parse(localStorage.getItem('userToken'));
+    if (userData.userToken || localUser) {
       setLoggedIn(true);
     }
   }, []);
@@ -50,18 +53,23 @@ const Navbar = () => {
     handleSignupModal();
   };
   const logoutFunc = () => {
-    localStorage.removeItem('userToken')
-    setLoggedIn(false)
-    setUserData({userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}`})
-    router.push('/')
-  }
+    localStorage.removeItem('userToken');
+    setLoggedIn(false);
+    setUserData({ userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}` });
+    router.push('/');
+  };
 
   const backToLobby = () => {
-    router.push('/lobby')
-  }
+    router.push('/lobby');
+  };
 
   //navbar page states based on if user is logged in
-  const pagesIfLoggedIn = [, 'Ranking', <div onClick={backToLobby}>Lobby</div>, <div onClick={logoutFunc}>Logout</div>];
+  const pagesIfLoggedIn = [
+    ,
+    <StyledLinks>Ranking</StyledLinks>,
+    <StyledLinks onClick={backToLobby}>Lobby</StyledLinks>,
+    <StyledLinks onClick={logoutFunc}>Logout</StyledLinks>,
+  ];
   //const pagesIfLoggedIn = [, 'Ranking', <Link href='/'>Logout</Link>];
   const pagesIfNotLoggedIn = [
     ,
@@ -75,7 +83,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
-
+  const [friendsList, setFriendsList] = useState([]);
   const handleLoginModal = () => {
     setLoginModal(true);
   };
@@ -108,6 +116,40 @@ const Navbar = () => {
 
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
+  };
+  //use effect for getting friend list
+  useEffect(() => {
+    const url = `http://localhost:4030/blueocean/api/v1/users/friend`;
+    const localUser = JSON.parse(localStorage.getItem('userToken'));
+    axios({
+      method: 'GET',
+      url,
+      headers: {
+        Authorization: `Bearer ${localUser.userToken}`,
+      },
+      user_id: localUser.userId,
+    })
+      .then((res) => {
+        console.log(res);
+        setFriendsList(res.data.user.friends);
+      })
+      .catch((err) => console.log('error friend response', err));
+  }, []);
+
+  const filteredByOnline = (online, friends) => {
+    let obj = {};
+    for (let i = 0; i < friends.length; i++) {
+      let friendName = friends[i].username;
+      obj[friendName] = friends[i];
+      obj[friendName].loggedIn = false;
+    }
+    for (let i = 0; i < online.length; i++) {
+      let onlineName = online[i].username;
+      if (obj[onlineName]) {
+        obj[onlineName].loggedIn = true;
+      }
+    }
+    return Object.values(obj);
   };
 
   const list = (anchor) => (
@@ -143,29 +185,12 @@ const Navbar = () => {
       {!loading && (
         <List>
           {/* array of friends for specific user */}
-          {[
-            'Josh',
-            'Cihad',
-            'Tony',
-            'David',
-            'Lauren',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-            'Kyle',
-          ].map((text, index) => (
+          {filteredByOnline(friendsList, friendsState).map((friend) => (
             <div key={uuidv4()}>
               <ListItem>
                 <ListItemIcon>
                   {/* if user.loggedIn is true, show green, else show invisible */}
-                  {friendLoggedIn ? (
+                  {friend.loggedIn ? (
                     <Badge overlap='circular' variant='dot' color='success'>
                       <IconButton size='small' onClick={avatarClick}>
                         <Avatar />
@@ -177,7 +202,7 @@ const Navbar = () => {
                     </IconButton>
                   )}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={friend.username} />
               </ListItem>
               <Divider light />
             </div>
@@ -212,25 +237,25 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar position='static' style={{backgroundColor: 'black'}}>
-        <Container maxWidth='xl' style={{backgroundColor: 'black'}}>
-          <Toolbar style={{backgroundColor: 'black'}}>
-            <Image height="60" width="65" src={LogoIcon} alt="" />
-              <Typography
-                variant='h6'
-                noWrap
-                component='a'
-                sx={{
-                  mr: 2,
-                  display: { xs: 'none', md: 'flex' },
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  letterSpacing: '.2rem',
-                  color: '#F1F7ED',
-                  textDecoration: 'none',
-                }}>
-                WRATH OF ANUBIS
-              </Typography>
+      <AppBar position='static' style={{ backgroundColor: 'black' }}>
+        <Container maxWidth='xl' style={{ backgroundColor: 'black' }}>
+          <Toolbar style={{ backgroundColor: 'black' }}>
+            <Image height='60' width='65' src={LogoIcon} alt='' />
+            <Typography
+              variant='h6'
+              noWrap
+              component='a'
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.2rem',
+                color: '#d4af37',
+                textDecoration: 'none',
+              }}>
+              WRATH OF ANUBIS
+            </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size='large'
@@ -260,7 +285,7 @@ const Navbar = () => {
                 }}>
                 {/* if user.loggedIn is true, show green, else show invisible */}
                 {loggedIn && (
-                  <MenuItem onClick={friendsClicked} key='friends'>
+                  <MenuItem style={{ color: '#d4af37' }} onClick={friendsClicked} key='friends'>
                     Friends
                   </MenuItem>
                 )}
@@ -277,23 +302,23 @@ const Navbar = () => {
                     ))}
               </Menu>
             </Box>
-              <Typography
-                variant='h5'
-                noWrap
-                component='a'
-                href=''
-                sx={{
-                  mr: 2,
-                  display: { xs: 'flex', md: 'none' },
-                  flexGrow: 1,
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  letterSpacing: '.3rem',
-                  color: '#F1F7ED',
-                  textDecoration: 'none',
-                }}>
-                WRATH OF ANUBIS
-              </Typography>
+            <Typography
+              variant='h5'
+              noWrap
+              component='a'
+              href=''
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: '#d4af37',
+                textDecoration: 'none',
+              }}>
+              WRATH OF ANUBIS
+            </Typography>
             <Box
               sx={{
                 marginRight: '2em',
@@ -302,7 +327,7 @@ const Navbar = () => {
                 display: { xs: 'none', md: 'flex' },
               }}>
               {loggedIn && (
-                <MenuItem onClick={friendsClicked} sx={{ color: '#F1F7ED' }} key='friends'>
+                <MenuItem onClick={friendsClicked} sx={{ color: '#d4af37' }} key='friends'>
                   Friends
                 </MenuItem>
               )}
@@ -380,3 +405,7 @@ const Navbar = () => {
   );
 };
 export default Navbar;
+
+const StyledLinks = styled.div`
+  color: #d4af37;
+`;

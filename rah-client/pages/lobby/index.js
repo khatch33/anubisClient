@@ -46,12 +46,11 @@ export default function Lobby() {
       setUser(localUser);
     }
     socket.emit('get-games', games);
-    return () => {
-      socket.on('receive-games', (games) => {
-        console.log('game data is here', games);
-        setGames(games);
-      });
-    };
+
+    socket.on('receive-games', (games) => {
+      console.log('game data is here', games);
+      setGames(games);
+    });
   }, []);
 
   return (
