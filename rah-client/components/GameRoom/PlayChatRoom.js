@@ -54,7 +54,7 @@ export default function PlayChatRoom({messages}) {
 
               <div key={JSON.stringify(message)} className={`message-container ${alignMessage(message)}`}>
                   <span className="chatUser">{`${message.userName}: `}</span>
-                  <span className="chatMessage">{message.text.text}</span>
+                  <span className="chatMessage">{message.text}</span>
               </div>
             );
           })}

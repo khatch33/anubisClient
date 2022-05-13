@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 export default function GameInfo(props) {
   return (
+    <>
     <InfoContainer maxWidth={false} disableGutters={true}>
       <Header>GAME INFO</Header>
       <div>
@@ -12,21 +13,20 @@ export default function GameInfo(props) {
         </StartButton>
       </div>
 
-      <div>Phase: {props.game.phase}</div>
-
+      <TextDiv><span>PHASE:</span> <span>{props.game.phase === 'pregame' ? <div>The game will start shortly</div> : props.game.phase}</span></TextDiv>
       {props.info ? (
-        <div>
-          <div>Your Role: {props.info.role}</div>
-          <div>Players Remaining: {props.info.playersLeft}</div>
-          <div>Anubis Remaining: {props.info.wolfsLeft}</div>
-          <div>Doctors Remaining: {props.info.doctorsLeft}</div>
-          <div>Seers Remaining: {props.info.seersLeft}</div>
-        </div>
+        <InfoDiv>
+          <TextDiv><span>YOUR ROLE:</span> <span>{props.info.role}</span></TextDiv>
+          <TextDiv><span>VILLAGERS:</span> <span>{props.info.playersLeft}</span></TextDiv>
+          <TextDiv><span>ANUBIS:</span> <span>{props.info.wolfsLeft}</span></TextDiv>
+          <TextDiv><span>DOCTORS:</span> <span>{props.info.doctorsLeft}</span></TextDiv>
+          <TextDiv> <span>SEERS:</span> <span>{props.info.seersLeft}</span> </TextDiv>
+        </InfoDiv>
       ) : null}
 
       {props.game.owner ? (
         props.game.owner === props.playerId ? (
-          <div>
+          <div style={{position: 'absolute', left: '35px', bottom: '0'}}>
             <StartButton onClick={() => props.startGame()}>
               START GAME
             </StartButton>
@@ -34,21 +34,22 @@ export default function GameInfo(props) {
         ) : null
       ) : null}
     </InfoContainer>
+    </>
   );
 }
 
 const InfoContainer = styled(Container)`
   width: 250px;
-  height: 300px;
+  height: 250px;
   border-radius: 5px;
   border: 1px solid gray;
-  margin-left: 15px;
   font-size: 0.9em;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  max-width: 200px;
   background-color: #F1F7ED;
+  text-align: center;
+  position: relative;
+  top: -20px;
+  font-family: 'Josefin Slab';
+  font-weight: 700;
 `;
 
 const Header = styled(Container)`
@@ -78,4 +79,16 @@ const StartButton = styled.button`
   height: 35px;
   text-align: center;
   margin: 3px;
+`;
+
+const InfoDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const TextDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-left: 8px;
+  margin-right: 8px;
 `;

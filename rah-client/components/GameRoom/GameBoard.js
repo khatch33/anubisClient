@@ -9,7 +9,6 @@ import Game from '../../pages/_sampleData/sampleGame.js'
 import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
 //import { useRecoilState } from 'recoil';
 
-
 const sprite = {height: '60px', width: '30px'}
 export default function GameBoard(props) {
   const players = props.game.players
@@ -21,11 +20,11 @@ export default function GameBoard(props) {
     var phase = game.phase || 'night'
     var Arr;
     if (phase === 'day2') {
-      Arr = MapEmAcross(players, 60, 30, 500, 500)
+      Arr = MapEmAcross(players, 60, 30, 390, 736)
     } else if (phase === 'day3') {
-      Arr = oneInMiddle(players, 60, 30, 500, 500, '627d86726902e534664e1b02')
+      Arr = oneInMiddle(players, 60, 30, 390, 736, '627d86726902e534664e1b02')
     } else {
-      Arr = MapEmCircle(players, 60, 30, 500, 500)
+      Arr = MapEmCircle(players, 60, 30, 390, 736)
     }
     return Object.values(Arr).map((locale) => {
       return <Person left={locale.left} top={locale.top}></Person>
@@ -45,16 +44,11 @@ export default function GameBoard(props) {
         ) : null}
       </Banner>
 
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <ImgContainer maxWidth={false} disableGutters={true} id='gameboard-container'>
-          <Img src={BoardImg} alt='' height='500' width='500' />
+      <ImgContainer maxWidth={false} disableGutters={true}>
+        <Img src={BoardImg} alt='' id='bgimg' height="450" width="850"/>
+        {props.game ? renderItems(game) : null}
+      </ImgContainer>
 
-          {props.game ? renderItems(game) : null}
-
-        </ImgContainer>
-
-
-      </div>
     </OuterContainer>
   );
 }
@@ -78,31 +72,30 @@ const OuterContainer = styled(Container)`
   max-width: 800px;
   background-color: #f1f7ed;
   border-radius: 5px;
-  height: 350px;
+  height: 400px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   padding: 10px;
-  height: 100%;
-  margin-top: 20px;
+  height: 70%;
+  margin-top: 10px;
   text-align: center;
   min-width: 750px;
+  margin-bottom: 0;
 `;
 
 const ImgContainer = styled(Container)`
   position: relative;
-  border: 1px solid black;
   border-radius: 5px;
-  width: 500px;
-  height: 500px;
   margin-left: 0;
 `;
 
 const Banner = styled.div`
   width: 100%;
-  height: 50px;
+  height: 35px;
 `;
 
 const Img = styled(Image)`
   border-radius: 5px;
+  height: 80%;
 `;
 
 const Announcement = styled.marquee`
