@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
 import Image from 'next/Image';
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
 
@@ -11,20 +11,23 @@ import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
 
 const sprite = {height: '60px', width: '30px'}
 export default function GameBoard(props) {
+  const [height, setHeight] = useState()
+  const [width, setWidth] = useState()
   const players = props.game.players
   const game = props.game
   useEffect(() => {
-    console.log(game, players)
-  })
+      setHeight(document.getElementById('bgimg').clientHeight)
+      setWidth(document.getElementById('bgimg').clientWidth)
+   })
   const renderItems = (game) => {
     var phase = game.phase || 'night'
     var Arr;
     if (phase === 'day2') {
-      Arr = MapEmAcross(players, 60, 30, 390, 736)
+      Arr = MapEmAcross(players, 60, 30, height, width)
     } else if (phase === 'day3') {
-      Arr = oneInMiddle(players, 60, 30, 390, 736, '627d86726902e534664e1b02')
+      Arr = oneInMiddle(players, 60, 30,  height, width, '1')
     } else {
-      Arr = MapEmCircle(players, 60, 30, 390, 736)
+      Arr = MapEmCircle(players, 60, 30,  height, width)
     }
     return Object.values(Arr).map((locale) => {
       return <Person left={locale.left} top={locale.top}></Person>

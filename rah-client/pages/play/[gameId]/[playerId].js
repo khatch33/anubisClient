@@ -28,6 +28,7 @@ import PlayChatRoom from '../../../components/GameRoom/PlayChatRoom';
 import PlayerCard from '../../../components/PlayerCard.js';
 import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
+import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
 const basePath = 'http://localhost:4030/blueocean/api/v1';
 
@@ -48,12 +49,36 @@ export default function Game() {
   var started = false;
   //const TestGame = TestGame.sampleGame
 
+
+  useEffect(() => {
+     socket.on(`game-send`, (game) => {
+        setGame(game);
+
+        setGameInfo(getGameInfo(game, playerId));
+      })
+      socket.on(`receive-message-${gameId}`, (user, message) => {
+        let messageObj = {userName: user.userName, text: message, user_id: user.user_id}
+        if (user.user_id === 'announcement') {
+          setAnnouncement(message);
+        } else {
+          setMessages([...messages, messageObj]);
+        }
+      });
+  })
+
   useEffect(() => {
 
-    return (() => {
-      socket.emit('join-room', playerId, gameId);
+
+
+
+      return () => {
+        socket.emit('join-room', playerId, gameId)
+        //socket.disconnect()
+      }
+
       // socket.emit("start-test", playerId, gameId, 5000);
-    })
+
+
     // if (started === false) {
     //    started = true;
     // }
@@ -65,50 +90,25 @@ export default function Game() {
       container.style.transform = `translate( -${card * 150}px)`;
     }
   }, [card]);
-  useEffect(() => {
-    socket.on(`game-send`, (game) => {
-      setGame(game);
-      console.log(game)
-      setGameInfo(getGameInfo(game, playerId));
-    })
-    socket.on(`receive-message-${gameId}`, (user, message) => {
 
-      let messageObj = {userName: user.userName, text: message, user_id: user.user_id}
-      if (user.user_id === 'announcement') {
-
-        setAnnouncement(message);
-      } else {
-        console.log(messageObj)
-        setMessages([...messages, messageObj]);
-      }
-    });
-  })
   useEffect(() => {
 
-
-    console.log(gameId);
-    // axios
-    //   .get('http://localhost:4030/blueocean/api/v1/games/single', { gameId })
-    //   .then((res) => console.log(res));
     axios({
       method: 'get',
       url: 'http://localhost:4030/blueocean/api/v1/games/single?',
       params: { id: gameId },
     }).then((res) => {
        let data = res.data;
-        console.log(data);
         setGame(data.game);
         }).catch((err) => err);
       //setGameInfo(getGameInfo(game, playerId));
-  }, []);
+  }, [gameId]);
 
   const closeDrawer = () => {
     setOpen(false);
   };
   const startGame = () => {
-
-    console.log('gamestart')
-
+    console.log('buitton', playerId, gameId)
     socket.emit('start-test', playerId, gameId, 10000);
   };
   const switchPhase = () => {
