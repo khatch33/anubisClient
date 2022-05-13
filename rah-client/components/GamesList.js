@@ -79,7 +79,7 @@ export default function GamesList(props) {
   };
 
   return (
-    <Container style={{ height: 350, minWidth: "500px", maxWidth: "675px" }}>
+    <Container style={{ height: 350, minWidth: "550px", maxWidth: "675px" }}>
       <TabsContainer
         TabIndicatorProps={{
           style: { backgroundColor: "#9A8249", color: "#F1F7ED" },
@@ -98,6 +98,7 @@ export default function GamesList(props) {
         rows={rows}
         columns={columns}
         onRowClick={onRowClick}
+      />
       {showForm && (
         <>
           <button onClick={yesClick}>Go!</button>
