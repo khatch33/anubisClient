@@ -7,7 +7,9 @@ import Image from 'next/Image';
 import deadIcon from '../public/killed.png';
 import styled from "styled-components";
 import { shadows } from "@mui/system";
-
+import { useRecoilState } from 'recoil';
+import {useRouter} from 'next/router'
+import { userState } from '../_states/tokenState';
 export default function PlayerCard(props) {
   const player = props.player
   const username = player.player.userName
@@ -15,20 +17,26 @@ export default function PlayerCard(props) {
   const phase = props.phase
   const role = props.role
 
+  const [user, setUser] = useRecoilState(userState);
+  const router = useRouter();
+  const { gameId, playerId } = router.query;
+  const vote = (user, candidate, room) => {
+    socket.emit('player-vote', user, player, room)
+  }
   const renderActionButton = () => {
 
     if (phase === 'night') {
       if (role === 'villager') {
         return
       } else if (role === 'doctor') {
-        return <Button>SAVE</Button>
+        return <Button onClick={vote}>SAVE</Button>
       } else if (role === 'wolf') {
-        return <Button>SACRIFICE</Button>
+        return <Button onClick={vote}>SACRIFICE</Button>
       } else if (role === 'seer') {
-        return <Button>REVEAL</Button>
+        return <Button onClick={vote}>REVEAL</Button>
       }
     } else if (phase === 'day2' || phase === 'day3') {
-      return <Button>ACCUSE</Button>
+      return <Button onClick={vote}>ACCUSE</Button>
     }
   }
   return (
