@@ -18,22 +18,22 @@ export default function PlayerCard(props) {
   const player = props.player
   const username = player.player.userName
   const alive = player.status
-  const [voted, setVoted] = useState(false)
   const [revealed, setRevealed] = useState(false)
   const phase = props.phase
   const role = props.role
   const socket = useContext(SocketContext);
   const [user, setUser] = useRecoilState(userState);
   const router = useRouter();
+  const voted = props.voted
+  const markAsVoted = props.markAsVoted
   const { gameId, playerId } = router.query;
   const vote = () => {
-    setVoted(true)
+    markAsVoted()
     let user1 = {user_id: user.userId, userName: user.userName}
     socket.emit('player-vote', user1, player, gameId)
   }
   const seerVote = () => {
     vote()
-    setVoted(true)
     revealed(true)
     //reveal role to user
   }
@@ -47,7 +47,7 @@ export default function PlayerCard(props) {
       } else if (role === 'wolf') {
         return <Button onClick={() => seerVote()}>SACRIFICE</Button>
       } else if (role === 'seer') {
-        return <Button onClick={() => vote()}>{revealed ? 'REVEAL' : player.role}</Button>
+        return <Button onClick={() => vote()}>{revealed ? player.role : 'REVEAL'}</Button>
       }
     } else if (phase === 'day2' || phase === 'day3') {
       return <Button onClick={() => vote()}>ACCUSE</Button>

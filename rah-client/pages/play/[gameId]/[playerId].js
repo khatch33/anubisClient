@@ -42,7 +42,7 @@ export default function Game() {
   const [phase, setPhase] = useState('night');
   const [card, setCard] = useState(0);
   const [open, setOpen] = useState(false);
-  const [voted, setVoted] = useState(voted)
+  const [voted, setVoted] = useState(false)
   const [game, setGame] = useState();
   const [gameInfo, setGameInfo] = useState();
   const [messages, setMessages] = useState([]);
@@ -53,6 +53,9 @@ export default function Game() {
   var started = false;
 
   //const TestGame = TestGame.sampleGame
+  const markAsVoted = () => {
+    setVoted(true)
+  }
 
   useEffect(() => {
     socket.on(`receive-${gameId}`, (user) => {
@@ -241,6 +244,8 @@ export default function Game() {
                               phase={gameInfo.phase}
                               role={gameInfo.role}
                               player={player}
+                              voted={voted}
+                              markAsVoted={markAsVoted}
                             />
                           );
                         }
