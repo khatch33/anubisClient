@@ -78,15 +78,14 @@ export default function GamesList(props) {
   return (
     <Container style={{ height: '350px', minWidth: '500px', maxWidth: '682px !important' }}>
       <TabsContainer
-        disableRipple
         TabIndicatorProps={{
           style: { backgroundColor: '#9A8249 !important', color: '#F1F7ED !important' },
         }}
         value={value}
         onChange={handleChange}
         aria-label='tabs'>
-        <StyledTab label='Lobby' disableRipple/>
-        <StyledTab label='Create' disableRipple/>
+        <StyledTab label='Lobby'/>
+        <StyledTab label='Create'/>
       </TabsContainer>
 
       {value === 0 ? (
