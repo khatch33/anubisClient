@@ -50,6 +50,10 @@ export default function Game() {
   //const TestGame = TestGame.sampleGame
 
   useEffect(() => {
+    socket.on(`receive-${gameId}`, (user) => {
+      console.log(user);
+    });
+
     socket.on(`game-send`, (game) => {
       setGame(game);
 
@@ -173,7 +177,6 @@ export default function Game() {
   //     setGame(data.game);
   //   }).catch((err) => err);
   // }, []);
-
   return (
     <>
       <Navbar />
