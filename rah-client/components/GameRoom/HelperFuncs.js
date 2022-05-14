@@ -5,8 +5,7 @@
 
 //gb = gameboard
 exports.MapEmAcross = (playersArr, spH, spW, gbH, gbW, overRide) => {
-  var length;
-  overRide ? length = overRide : length = playersArr.length
+  var length = playersArr.length
 
   var halfwayTopPercentage = (50 - ((spH/gbH) * 100)).toString() + '%'
   var halfwayMaxLeftPercentage = 100 - ((spW/gbW) * 100)
@@ -27,12 +26,12 @@ exports.MapEmAcross = (playersArr, spH, spW, gbH, gbW, overRide) => {
 const getMidpoint = (hDif, wDif, spW) => {
   return (hDif <= wDif) ? [(wDif/2), (hDif/2)] : [((wDif/2) + (spW/2)), (hDif/2)]
 }
-exports.MapEmCircle = function (playersArr, spH, spW, gbH, gbW, overRide) {
+exports.MapEmCircle = function (playersArr, spH, spW, gbH, gbW) {
   let map = {}
   var hDif =  gbH - spH
   var wDif = gbW - spW
-  overRide ? length = overRide : length = playersArr.length
-  console.log('pa', playersArr)
+  var length = playersArr.length
+  //console.log('pa', playersArr)
   //console.log((gbH - hDif)/2)
   // const getMidpoint = () => {
   //   return (hDif <= wDif) ? [(wDif/2), (hDif/2)] : [((wDif/2) + (spW/2)), (hDif/2)]
@@ -51,7 +50,7 @@ exports.MapEmCircle = function (playersArr, spH, spW, gbH, gbW, overRide) {
     let x = ((Math.cos(angle) * radius) + midpoint[0]).toFixed(2) + 'px'
     let y = ((Math.sin(angle) * radius) + midpoint[1]).toFixed(2) + 'px'
     //map[playersArr[i].player._id] = {left: x, top: y}
-    overRide ? map[i] = {left: x, top: y} : map[playersArr[i].player.user_id] = {left: x, top: y}
+    map[playersArr[i].player.user_id] = {left: x, top: y}
   }
   //console.log(midpoint, midpoint[0], midpoint[1], radius)
   //console.log(map)
@@ -68,11 +67,7 @@ exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerName) => {
   var radius = Math.min(hDif / 2, wDif / 2)
   let interval = 360 / length
   for (let i = 0; i < length; i++) {
-    if (i === overRideId) {
-      let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length))
-      map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, overRide)
-      map[i] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
-    } else if (playerName) {
+    if (playerName) {
          if (playersArr[i].player.userName === playerName) {
           let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length))
           map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, overRide)

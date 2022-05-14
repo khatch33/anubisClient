@@ -29,7 +29,7 @@ export default function GameInfo(props) {
       {props.game.owner ? (
         props.game.owner === props.playerId ? (
           <div style={{position: 'absolute', left: '35px', bottom: '0'}}>
-            {(props.game.phase !== 'pregame') ? <StartButton onClick={() => props.startGame()}>
+            {(props.game.phase === 'pregame') ? <StartButton onClick={() => props.startGame()}>
               START GAME
             </StartButton> : null}
           </div>
