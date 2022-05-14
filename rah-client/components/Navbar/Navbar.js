@@ -114,7 +114,6 @@ const Navbar = () => {
   });
   //toggle skeleton
   const [loading, setLoading] = useState(false);
-
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };
@@ -122,7 +121,7 @@ const Navbar = () => {
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('userToken'));
     if (localUser) {
-      const url = `http://localhost:4030/blueocean/api/v1/users/friend`;
+      const url = `http://${process.env.REACT_APP_URL}/blueocean/api/v1/users/friend`;
       axios({
         method: 'GET',
         url,
@@ -188,7 +187,7 @@ const Navbar = () => {
       {!loading && (
         <List>
           {/* array of friends for specific user */}
-          {filteredByOnline(friendsList, friendsState).map((friend) => (
+          {filteredByOnline(friendsList, allUsers).map((friend) => (
             <div key={uuidv4()}>
               <ListItem>
                 <ListItemIcon>

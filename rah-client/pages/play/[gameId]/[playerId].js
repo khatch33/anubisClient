@@ -86,7 +86,7 @@ export default function Game() {
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'http://localhost:4030/blueocean/api/v1/games/single?',
+      url: `http://${process.env.REACT_APP_URL}/blueocean/api/v1/games/single?`,
       params: { id: gameId },
     })
       .then((res) => {

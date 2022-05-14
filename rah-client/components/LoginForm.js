@@ -23,7 +23,7 @@ const style = {
   textAlign: 'center',
 };
 
-const basePath = 'http://localhost:4030/blueocean/api/v1';
+const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
 export default function LoginForm() {
   const router = useRouter();
@@ -43,7 +43,7 @@ export default function LoginForm() {
   });
 
   const onSubmit = (data) => {
-    axios({ method: 'POST', url: `${basePath}/users/login`, data: data })
+    axios({ method: 'POST', url: `http://${basePath}/users/login`, data: data })
       .then((res) => {
         if (res.status === 200) {
           setToken({

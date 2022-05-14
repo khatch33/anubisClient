@@ -28,20 +28,13 @@ export default function FriendsModalForm() {
   const onSubmitForm = (e) => {
     e.preventDefault();
     console.log(message);
-
     setMessage('');
   };
   return (
     <>
       <Box sx={style}>
         <FriendName>FRIEND NAME HERE</FriendName>
-        <StyledChatBox>
-          DO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE
-          CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO
-          HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE
-          CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO
-          HEREDO THE CHATS GO HEREDO THE CHATS GO HEREDO THE CHATS GO HERE
-        </StyledChatBox>
+        <StyledChatBox></StyledChatBox>
         <Form onSubmit={onSubmitForm}>
           <FormInput
             value={message}
@@ -85,4 +78,6 @@ const StyledChatBox = styled(List)`
   max-height: 200px;
   overflow: auto;
   padding: 7px;
+  height: 250px;
+  width: 250px;
 `;
