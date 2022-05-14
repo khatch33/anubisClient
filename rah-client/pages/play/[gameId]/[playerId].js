@@ -42,6 +42,7 @@ export default function Game() {
   const [phase, setPhase] = useState('night');
   const [card, setCard] = useState(0);
   const [open, setOpen] = useState(false);
+  const [voted, setVoted] = useState(voted)
   const [game, setGame] = useState();
   const [gameInfo, setGameInfo] = useState();
   const [messages, setMessages] = useState([]);
