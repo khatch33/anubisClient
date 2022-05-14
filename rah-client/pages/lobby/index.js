@@ -89,7 +89,7 @@ export default function Lobby() {
             <Container
               maxWidth={false}
               id='gameDisplay-container'
-              style={{ margin: '0', marginBottom: '15px' }}>
+              style={{marginBottom: '15px'}}>
               {value === 0 ? (
                 <GamesList games={games} value={value} handleChange={handleChange} />
               ) : (

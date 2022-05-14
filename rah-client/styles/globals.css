@@ -77,8 +77,8 @@ a {
   font-weight: 700;
   letter-spacing: 0.2rem;
   line-height: 1.6;
-  padding-top: 2px;
-  font-size: 1.25rem;
+  padding-top: 5px;
+  font-size: 1.1rem;
 }
 
 #activeUsersList-container {
@@ -111,6 +111,7 @@ a {
   background-color: lightgray;
   padding-top: 5px;
   font-size: 0.9em;
+  overflow-x: hidden;
 }
 
 .userName {
@@ -182,12 +183,12 @@ a {
   max-height: 100vh;
 }
 
-#gameDisplay-container {
+/* #gameDisplay-container {
   min-width: 65vw;
   height: fit-content;
-  /* margin-top: 3.5em; */
-  /* overflow: auto; */
-}
+  margin-top: 3.5em;
+  overflow: auto;
+} */
 
 #lobbyChat-container {
   height: 35vh;
@@ -406,4 +407,8 @@ a {
 
 .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: white;
+}
+
+.MuiTouchRipple-root, .css-8je8zh-MuiTouchRipple-root {
+  color: #9A8249 !important;
 }

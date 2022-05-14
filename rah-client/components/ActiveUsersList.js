@@ -13,9 +13,7 @@ export default function ActiveUsersList() {
   const userData = useRecoilValue(userState);
   const [usersList, setUsersList] = useState([]);
   const [globalUsersList, setGlobalUsersList] = useRecoilState(friendsState);
-
   const avatars = ["/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon2.37800c5f.png", "/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon4.e31317e0.png", "/_next/static/media/icon5.173d920f.png"]
-
 
   useEffect(() => {
     socket.on('receive-lobby', (users) => {

@@ -96,6 +96,7 @@ const RolesDiv = styled.div`
 
 const Header = styled.div`
   background-color: #9a8249;
+  border-radius: 5px 5px 0 0;
   height: 35px;
   font-family: 'Josefin Slab';
   text-align: center;
