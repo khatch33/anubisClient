@@ -48,7 +48,6 @@ export default function ActiveUsersList() {
           <div key={JSON.stringify(user)} className='activeUser-item'>
             <div id='activeUsersList-container'>
               <div className='activeUsers-username'>
-
                 <img className='userAvatar' src={!user.img || user.img === "" ? avatars[Math.floor(Math.random() * 5) + 1] : user.img } height={"33"} width={"33"} />
                 <span className='userName'>{user.userName}</span>
 

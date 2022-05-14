@@ -40,9 +40,6 @@ export default function SignupForm(props) {
     if (submitted) {
       router.push('/lobby');
     }
-    console.log(Icon4.src, 'icon4')
-    console.log(Icon5.src, 'icon4')
-
   });
 
   const [submitted, setSubmitted] = useState(false);
