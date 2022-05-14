@@ -28,6 +28,7 @@ import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
 import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
+import { useRecoilValue } from 'recoil';
 const basePath = 'http://localhost:4030/blueocean/api/v1';
 
 export default function Game() {
@@ -41,6 +42,7 @@ export default function Game() {
   const [game, setGame] = useState();
   const [gameInfo, setGameInfo] = useState();
   const [messages, setMessages] = useState([]);
+  const user = useRecoilValue(userState);
   const socket = useContext(SocketContext);
   const router = useRouter();
   const { gameId, playerId } = router.query;
@@ -100,9 +102,11 @@ export default function Game() {
   const closeDrawer = () => {
     setOpen(false);
   };
+
   const startGame = () => {
+    var player1 = { user_id: playerId, userName: user.userName };
     console.log('buitton', playerId, gameId);
-    socket.emit('start-test', playerId, gameId, 10000);
+    socket.emit('start-game', player1, gameId);
   };
   const switchPhase = () => {
     phase === 'night' ? setPhase('day') : setPhase('night');
