@@ -1,4 +1,5 @@
 import Card from '@mui/material/Card';
+import {useState} from 'react'
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography'
@@ -12,11 +13,13 @@ import {useRouter} from 'next/router'
 import { userState } from '../_states/tokenState';
 import { SocketContext } from '../socket/socket';
 
+
 export default function PlayerCard(props) {
   const player = props.player
   const username = player.player.userName
   const alive = player.status
-  const clicked = false
+  const [voted, setVoted] = useState(false)
+  const [revealed, setRevealed] = useState(false)
   const phase = props.phase
   const role = props.role
   const socket = useContext(SocketContext);
@@ -24,20 +27,27 @@ export default function PlayerCard(props) {
   const router = useRouter();
   const { gameId, playerId } = router.query;
   const vote = () => {
+    setVoted(true)
     let user1 = {user_id: user.userId, userName: user.userName}
     socket.emit('player-vote', user1, player, gameId)
   }
+  const seerVote = () => {
+    vote()
+    setVoted(true)
+    revealed(true)
+    //reveal role to user
+  }
   const renderActionButton = () => {
-    if (!clicked) {
+    if (!voted) {
       if (phase === 'night') {
       if (role === 'villager') {
         return
       } else if (role === 'doctor') {
         return <Button onClick={() => vote()}>SAVE</Button>
       } else if (role === 'wolf') {
-        return <Button onClick={() => vote()}>SACRIFICE</Button>
+        return <Button onClick={() => seerVote()}>SACRIFICE</Button>
       } else if (role === 'seer') {
-        return <Button onClick={() => vote()}>REVEAL</Button>
+        return <Button onClick={() => vote()}>{revealed ? 'REVEAL' : player.role}</Button>
       }
     } else if (phase === 'day2' || phase === 'day3') {
       return <Button onClick={() => vote()}>ACCUSE</Button>
@@ -59,7 +69,7 @@ export default function PlayerCard(props) {
       </IconDiv>
 
       <ButtonDiv>
-        {alive ? renderActionButton() : null}
+        {!voted && alive ? renderActionButton() : null}
       </ButtonDiv>
 
     </Card>
