@@ -30,7 +30,8 @@ import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
 import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
-const basePath = 'http://localhost:4030/blueocean/api/v1';
+// const basePath = 'http://localhost:4030/blueocean/api/v1';
+const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
 export default function Game() {
   const [players, setPlayers] = useState([]);
@@ -47,8 +48,6 @@ export default function Game() {
   const router = useRouter();
   const { gameId, playerId } = router.query;
   var started = false;
-  //const TestGame = TestGame.sampleGame
-
 
   useEffect(() => {
      socket.on(`game-send`, (game) => {
@@ -67,21 +66,11 @@ export default function Game() {
   })
 
   useEffect(() => {
-
-
-
-
       return () => {
         socket.emit('join-room', playerId, gameId)
-        //socket.disconnect()
+
       }
 
-      // socket.emit("start-test", playerId, gameId, 5000);
-
-
-    // if (started === false) {
-    //    started = true;
-    // }
   }, [socket]);
   useEffect(() => {
     if (game) {
@@ -95,7 +84,8 @@ export default function Game() {
 
     axios({
       method: 'get',
-      url: 'http://localhost:4030/blueocean/api/v1/games/single?',
+      // url: 'http://localhost:4030/blueocean/api/v1/games/single?',
+      url: `${process.env.REACT_APP_URL}/blueocean/api/v1/games/single?`,
       params: { id: gameId },
     }).then((res) => {
        let data = res.data;
@@ -108,8 +98,8 @@ export default function Game() {
     setOpen(false);
   };
   const startGame = () => {
-    console.log('buitton', playerId, gameId)
-    socket.emit('start-test', playerId, gameId, 10000);
+    console.log('button', playerId, gameId)
+    socket.emit('start-game', playerId, gameId);
   };
   const switchPhase = () => {
     phase === 'night' ? setPhase('day') : setPhase('night');
@@ -132,50 +122,6 @@ export default function Game() {
       setCard(0);
     }
   };
-  // socket.on(`receive-message-${gameId}`, (user, message) => {
-
-  //   let messageObj = {userName: user.userName, text: message, user_id: user.user_id}
-  //   if (user.user_id === 'announcement') {
-
-  //     setAnnouncement(message);
-  //   } else {
-  //     console.log(messageObj)
-  //     setMessages([...messages, messageObj]);
-  //     console.log(messages)
-  //   }
-  // });
-  // useEffect(() => {
-  //   if (started === false) {
-  //     socket.emit('join-room', playerId, gameId);
-  //     started = true;
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (game) {
-  //     const container = document.querySelector('.playerCardContainer');
-  //     container.style.transitionDuration = '.8s';
-  //     container.style.transform = `translate( -${card * 150}px)`;
-  //   }
-  // }, [card]);
-  // socket.on(`game-send`, (game) => {
-  //   setGame(game);
-  //   console.log(game)
-  //   setGameInfo(getGameInfo(game, playerId));
-  // })
-
-  // useEffect(() => {
-  //   console.log(gameId);
-  //   axios({
-  //     method: 'get',
-  //     url: 'http://localhost:4030/blueocean/api/v1/games/single?',
-  //     params: { id: gameId },
-  //   }).then((res) => {
-  //     let data = res.data;
-  //     console.log(data);
-  //     setGame(data.game);
-  //   }).catch((err) => err);
-  // }, []);
 
   return (
     <>
@@ -186,7 +132,7 @@ export default function Game() {
           <PlayChat />
         </Container>
         {game ? (
-          <Box sx={{ display: 'inline-block', float: 'right', width: '75%' }}>
+          <Box sx={{ display: 'inline-block', float: 'right', width: '75%'}}>
             <Container maxWidth={false} id='gameBoard-container'>
               <Drawer open={open} className='gameInfoDrawer' variant='persistent' anchor='top'>
                 <div>

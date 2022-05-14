@@ -28,8 +28,9 @@ const style = {
   borderRadius: "5px",
   textAlign: "center",
 };
+// const basePath = `http://35.245.230.155:4040/blueocean/api/v1`;
+const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
-const basePath = "http://localhost:4030/blueocean/api/v1";
 
 export default function SignupForm(props) {
   const router = useRouter();
@@ -53,7 +54,7 @@ export default function SignupForm(props) {
   const onSubmit = (data) => {
     data['img'] = img;
     console.log(data);
-    axios({ method: "post", url: `${basePath}/users`, data: data })
+    axios({ method: "post", url:`${basePath}/blueocean/api/v1/users`, data: data })
       .then((res) => {
         if (res.status === 200) {
           setToken({
