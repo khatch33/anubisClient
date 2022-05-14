@@ -128,24 +128,24 @@ export default function SignupForm(props) {
                 style={{ paddingRight: '3px' }}
                 height='40'
                 width='35'
-                src={Icon1}
+                src={Icon1.src}
                 name={'Icon1'}
               />
             </ImageContainer>
 
-            <ImageContainer className='avatar-container' onClick={() => setImg(Icon2.src)}>
-              <StyledImage name={'Icon2'} src={Icon2} height='37' width='35' />
+            <ImageContainer name={'2'} className='avatar-container' onClick={(e) => handleImgClick(e)}>
+              <StyledImage name={'2'} src={Icon2.src} height='37' width='35' />
             </ImageContainer>
 
             <ImageContainer
               className='avatar-container'
               style={{ paddingTop: '5px', paddingLeft: '3px' }}
               onClick={() => setImg(Icon3.src)}>
-              <StyledImage src={Icon3} name={'Icon1'} height='35' width='35' />
+              <StyledImage src={Icon3.src} name={'Icon1'} height='35' width='35' />
             </ImageContainer>
 
             <ImageContainer className='avatar-container' onClick={(e) => setImg(Icon3.src)}>
-              <StyledImage src={Icon4} height='37' width='35' />
+              <StyledImage src={Icon4.src} height='37' width='33' />
             </ImageContainer>
           </Container>
 
@@ -170,18 +170,22 @@ const StyledContainer = styled(Container)`
   justify-content: space-evenly;
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled.img`
   border-radius: 99px;
   height: 100%;
   width: 100%;
+
 `;
 
 const ImageContainer = styled.div`
   background-color: lightgray;
-  width: 50px;
+  width: 60px;
   height: 40px;
   border-radius: 99px;
   text-align: center;
-  margin: 3px;
+  margin: 3px 5px 3px 5px;
   text-align: center;
+  &:hover {
+    border: 1px solid #9A8249;
+  }
 `;
