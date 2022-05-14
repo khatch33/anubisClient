@@ -31,7 +31,7 @@ export default function Game() {
   const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
   const [players, setPlayers] = useState([]);
   const [owner, setOwner] = useState();
-  const [announcement, setAnnouncement] = useState('somegr greauig yu ireuygr iuo');
+  const [announcement, setAnnouncement] = useState([]);
   const [role, setRole] = useState('wolf');
   const [phase, setPhase] = useState('night');
   const [card, setCard] = useState(0);
