@@ -120,7 +120,7 @@ export default function SignupForm(props) {
           <Container id='images-container'>
             <span id='signup-title'>Choose an Avatar:</span>
 
-            <ImageContainer onClick={() => setImg(Icon1.src)} className='avatar-container'>
+            <ImageContainer onClick={(e) => setImg(Icon1.src)} className='avatar-container'>
               <StyledImage
                 style={{ paddingRight: '3px' }}
                 height='40'
@@ -130,14 +130,14 @@ export default function SignupForm(props) {
               />
             </ImageContainer>
 
-            <ImageContainer name={'2'} className='avatar-container' onClick={(e) => handleImgClick(e)}>
+            <ImageContainer name={'2'} className='avatar-container' onClick={(e) => setImage(Icon2.src)}>
               <StyledImage name={'2'} src={Icon2.src} height='37' width='35' />
             </ImageContainer>
 
             <ImageContainer
               className='avatar-container'
               style={{ paddingTop: '5px', paddingLeft: '3px' }}
-              onClick={() => setImg(Icon3.src)}>
+              onClick={(e) => setImg(Icon3.src)}>
               <StyledImage src={Icon3.src} name={'Icon1'} height='35' width='35' />
             </ImageContainer>
 
