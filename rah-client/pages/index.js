@@ -8,7 +8,9 @@ import activeUsers from "../pages/_sampleData/activeUsers";
 import GameInstructions from "../components/GameInstructions";
 import styled from 'styled-components';
 
+
 const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
+
 
 export default function Home() {
   const [error, setError] = useState(null);
@@ -33,6 +35,7 @@ export default function Home() {
         <Navbar />
         <Container maxWidth={false} id="app-container">
           <ActiveUsersList users={activeUsers} />
+
 
           <Container
             maxWidth={false}

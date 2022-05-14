@@ -4,6 +4,7 @@ import Image from 'next/Image';
 import { useEffect, useState } from 'react';
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
+
 import Sprite1 from '../../public/sprite1.png';
 import Sprite2 from '../../public/sprite2.png';
 import Sprite3 from '../../public/sprite3.png';
@@ -19,6 +20,7 @@ export default function GameBoard(props) {
   const players = props.game.players
   const game = props.game
 
+
   useEffect(() => {
     setHeight(document.getElementById('bgimg').clientHeight);
     setWidth(document.getElementById('bgimg').clientWidth);
@@ -27,6 +29,7 @@ export default function GameBoard(props) {
     var phase = game.phase || 'night';
     var Arr;
     if (phase === 'day2') {
+
       Arr = MapEmAcross(players, 70, 40, height, width)
     } else if (phase === 'day3') {
       Arr = oneInMiddle(players, 70, 40,  height, width, '1')
@@ -37,6 +40,7 @@ export default function GameBoard(props) {
       return <Person left={locale.left} top={locale.top}><Image src={sprites[i % 4]} alt="" height="70" width="40"/></Person>
     })
   }
+
 
   return (
     <OuterContainer maxWidth={false} disableGutters={true}>
