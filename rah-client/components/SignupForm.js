@@ -29,7 +29,7 @@ const style = {
   textAlign: 'center',
 };
 
-const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
+const basePath = `http://${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
 
 export default function SignupForm(props) {
@@ -53,7 +53,7 @@ export default function SignupForm(props) {
 
   const onSubmit = (data) => {
     data['img'] = img;
-    axios({ method: "post", url:`${basePath}/blueocean/api/v1/users`, data: data })
+    axios({ method: "post", url:`${basePath}/users`, data: data })
       .then((res) => {
         if (res.status === 200) {
           setToken({
