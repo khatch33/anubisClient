@@ -47,8 +47,8 @@ export default function Lobby() {
     }
     socket.emit('get-games', games);
     socket.on('receive-games', (games) => {
-        console.log('game data is here', games);
-        setGames(games);
+      console.log('game data is here', games);
+      setGames(games);
     });
     return () => {
       //socket.disconnect()
@@ -107,4 +107,3 @@ export default function Lobby() {
     </>
   );
 }
-

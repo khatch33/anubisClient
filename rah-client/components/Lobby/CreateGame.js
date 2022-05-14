@@ -1,18 +1,17 @@
-
-import React, { useState } from "react";
-import styled from "styled-components";
-import Button from "@mui/material/Button";
-import axios from "axios";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../_states/tokenState";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Button from '@mui/material/Button';
+import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../_states/tokenState';
 import Container from '@mui/material/Container';
 
-export default function CreateGame({handleChange}) {
+export default function CreateGame({ handleChange }) {
   // /blueocean/api/v1/games
   //send token as header to so backend can get id from token
-  const [playerName, setPlayerName] = useState("");
+  const [playerName, setPlayerName] = useState('');
   const [players, setPlayers] = useState(0);
-  const [gameName, setGameName] = useState("");
+  const [gameName, setGameName] = useState('');
 
   const creator = useRecoilValue(userState);
   const nameChange = (e) => {
@@ -29,8 +28,7 @@ export default function CreateGame({handleChange}) {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    const url = 'http://localhost:4030/blueocean/api/v1/games';
-    console.log(players, gameName);
+    const url = `http://${process.env.REACT_APP_URL}/blueocean/api/v1/games`;
     axios
       .post(
         url,
@@ -43,17 +41,17 @@ export default function CreateGame({handleChange}) {
       )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-     handleChange()
+    handleChange();
   };
 
   return (
     <StyledContainer maxWidth={false} disableGutters={true}>
       <Form onSubmit={onSubmitHandler}>
         <label>How many people are playing?</label>
-        <FormInput onChange={numPlayers} type="number" />
+        <FormInput onChange={numPlayers} type='number' />
         <label>What will the game name be?</label>
-        <FormInput onChange={gameNameHandler} type="text" />
-        <Button size="small" type="submit" variant="outlined" id="createGame-button">
+        <FormInput onChange={gameNameHandler} type='text' />
+        <Button size='small' type='submit' variant='outlined' id='createGame-button'>
           <b>Create</b>
         </Button>
       </Form>
@@ -62,7 +60,7 @@ export default function CreateGame({handleChange}) {
 }
 
 const Form = styled.form`
-  background-color: #F1F7ED;
+  background-color: #f1f7ed;
   display: flex;
   border-radius: 5px;
   flex-direction: column;
@@ -90,5 +88,4 @@ const FormInput = styled.input`
 const StyledContainer = styled(Container)`
   height: 350px;
   justify-content: center;
-
 `;

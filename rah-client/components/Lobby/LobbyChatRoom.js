@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
-import List from "@mui/material/List";
-import styled from "styled-components";
-import { SocketContext } from "../../socket/socket";
-import Container from "@mui/material/Container";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { userState } from "../../_states/tokenState";
-import { useRecoilValue } from "recoil";
-import { shadows } from "@mui/system";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import React, { useState, useEffect, useContext } from 'react';
+import List from '@mui/material/List';
+import styled from 'styled-components';
+import { SocketContext } from '../../socket/socket';
+import Container from '@mui/material/Container';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import { userState } from '../../_states/tokenState';
+import { useRecoilValue } from 'recoil';
+import { shadows } from '@mui/system';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export default function LobbyChatRoom() {
   const [chats, setChats] = useState([]);
@@ -19,53 +19,48 @@ export default function LobbyChatRoom() {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    socket.on("receive-message-lobby", (user, message) => {
-      console.log(user);
+    socket.on('receive-message-lobby', (user, message) => {
       setMessages([...messages, message]);
     });
   });
 
   const alignMessage = (message) => {
     if (message.username === userData.userName) {
-      return "chatMessage-right";
+      return 'chatMessage-right';
     } else {
-      return "chatMessage-left";
+      return 'chatMessage-left';
     }
   };
 
   return (
-    <StyledChatBox
-      disableGutters={true}
-      maxWidth={false}
-      id="chatList-container"
-    >
+    <StyledChatBox disableGutters={true} maxWidth={false} id='chatList-container'>
       <StyledBox>
         <Typography
-          variant="h6"
+          variant='h6'
           noWrap
-          component="p"
+          component='p'
           sx={{
-            fontFamily: "Roboto",
+            fontFamily: 'Roboto',
             fontWeight: 400,
-            letterSpacing: "0.00938em",
+            letterSpacing: '0.00938em',
             lineHeight: 1.5,
-            fontSize: "1em",
-            color: "inherit",
-            textDecoration: "none",
-            paddingTop: "5px"
-          }}
-        >
+            fontSize: '1em',
+            color: 'inherit',
+            textDecoration: 'none',
+            paddingTop: '5px',
+          }}>
           CHAT
         </Typography>
       </StyledBox>
-      <div id="chatList-outerContainer">
-        <div id="chatList">
+      <div id='chatList-outerContainer'>
+        <div id='chatList'>
           {messages.map((message) => {
-            console.log(message);
             return (
-              <div key={JSON.stringify(message)} className={`message-container ${alignMessage(message)}`} >
-                  <span className="chatUser">{`${message.username}: `}</span>
-                  <span className="chatMessage">{message.text}</span>
+              <div
+                key={JSON.stringify(message)}
+                className={`message-container ${alignMessage(message)}`}>
+                <span className='chatUser'>{`${message.username}: `}</span>
+                <span className='chatMessage'>{message.text}</span>
               </div>
             );
           })}

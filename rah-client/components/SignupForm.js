@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { useForm } from "react-hook-form";
-import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import axios from "axios";
-import Box from "@mui/material/Box";
-import { userState } from "../_states/tokenState";
-import { useRouter } from "next/router";
-import styled from "styled-components";
-import Icon1 from "../public/icons2/icon1.png";
-import Icon2 from "../public/icons2/icon2.png";
-import Icon3 from "../public/icons2/icon3.png";
-import Icon4 from "../public/icons2/icon4.png";
-import Image from "next/Image";
+import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { useForm } from 'react-hook-form';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import { userState } from '../_states/tokenState';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+import Icon1 from '../public/icons2/icon1.png';
+import Icon2 from '../public/icons2/icon2.png';
+import Icon3 from '../public/icons2/icon3.png';
+import Icon4 from '../public/icons2/icon4.png';
+import Image from 'next/Image';
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "#F1F7ED",
-  border: "1px solid gray",
+  bgcolor: '#F1F7ED',
+  border: '1px solid gray',
   boxShadow: 24,
   p: 4,
-  borderRadius: "5px",
-  textAlign: "center",
+  borderRadius: '5px',
+  textAlign: 'center',
 };
 
-const basePath = "http://localhost:4030/blueocean/api/v1";
+const basePath = 'http://localhost:4030/blueocean/api/v1';
 
 export default function SignupForm(props) {
   const router = useRouter();
 
   useEffect(() => {
     if (submitted) {
-      router.push("/lobby");
+      router.push('/lobby');
     }
   });
 
@@ -53,7 +53,11 @@ export default function SignupForm(props) {
   const onSubmit = (data) => {
     data['img'] = img;
     console.log(data);
-    axios({ method: "post", url: `${basePath}/users`, data: data })
+    axios({
+      method: 'post',
+      url: `http://${process.env.REACT_APP_URL}/blueocean/api/v1/users`,
+      data: data,
+    })
       .then((res) => {
         if (res.status === 200) {
           setToken({
@@ -64,7 +68,7 @@ export default function SignupForm(props) {
           });
           setSubmitted(true);
           localStorage.setItem(
-            "userToken",
+            'userToken',
             JSON.stringify({
               userId: res.data.user._id,
               userToken: res.data.token,
@@ -74,92 +78,79 @@ export default function SignupForm(props) {
           );
         }
       })
-      .catch((err) => console.log("ERR IN SIGN UP"));
+      .catch((err) => console.log('ERR IN SIGN UP'));
   };
 
   return (
     <>
       <Box sx={style}>
-        <h3 style={{ color: "#9A8249" }}>SIGN UP</h3>
-        <form id="signup-container" onSubmit={handleSubmit(onSubmit)}>
+        <h3 style={{ color: '#9A8249' }}>SIGN UP</h3>
+        <form id='signup-container' onSubmit={handleSubmit(onSubmit)}>
           <TextField
-            placeholder="Username"
-            {...register("userName", { required: true, minLength: 5 })}
+            placeholder='Username'
+            {...register('userName', { required: true, minLength: 5 })}
           />
           {errors.userName && (
-            <div className="formValidation-error">
+            <div className='formValidation-error'>
               Username must contain more than 5 alphanumeric characters
             </div>
           )}
           <TextField
-            placeholder="Password"
-            type="password"
-            {...register("password", { required: true })}
+            placeholder='Password'
+            type='password'
+            {...register('password', { required: true })}
           />
           {errors.password && (
-            <div className="formValidation-error">
-              Enter a valid password with:{" "}
+            <div className='formValidation-error'>
+              Enter a valid password with:{' '}
               <ul>
                 <li>At least 2 uppercase letters</li>
                 <li>At least 1 number</li>
                 <li>At least one special character</li>
-              </ul>{" "}
+              </ul>{' '}
             </div>
           )}
           <TextField
-            placeholder="Email"
-            {...register("email", {
+            placeholder='Email'
+            {...register('email', {
               required: true,
               pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
             })}
           />
-          {errors.email && (
-            <div className="formValidation-error">Enter a valid email</div>
-          )}
-          <Container id="images-container">
-            <span id="signup-title">Choose an Avatar:</span>
+          {errors.email && <div className='formValidation-error'>Enter a valid email</div>}
+          <Container id='images-container'>
+            <span id='signup-title'>Choose an Avatar:</span>
 
-            <ImageContainer
-              onClick={() =>setImg(Icon1.src)}
-              className="avatar-container"
-            >
+            <ImageContainer onClick={() => setImg(Icon1.src)} className='avatar-container'>
               <StyledImage
-                style={{ paddingRight: "3px" }}
-                height="40"
-                width="35"
+                style={{ paddingRight: '3px' }}
+                height='40'
+                width='35'
                 src={Icon1}
-                name={"Icon1"}
+                name={'Icon1'}
               />
             </ImageContainer>
 
-            <ImageContainer
-              className="avatar-container"
-              onClick={() =>setImg(Icon2.src)}
-            >
-              <StyledImage name={"Icon2"} src={Icon2} height="37" width="35" />
+            <ImageContainer className='avatar-container' onClick={() => setImg(Icon2.src)}>
+              <StyledImage name={'Icon2'} src={Icon2} height='37' width='35' />
             </ImageContainer>
 
             <ImageContainer
-              className="avatar-container"
-              style={{ paddingTop: "5px", paddingLeft: "3px" }}
-              onClick={() =>setImg(Icon3.src)}
-            >
-              <StyledImage src={Icon3} name={"Icon1"}height="35" width="35" />
+              className='avatar-container'
+              style={{ paddingTop: '5px', paddingLeft: '3px' }}
+              onClick={() => setImg(Icon3.src)}>
+              <StyledImage src={Icon3} name={'Icon1'} height='35' width='35' />
             </ImageContainer>
 
-            <ImageContainer
-              className="avatar-container"
-              onClick={(e) =>setImg(Icon3.src)}
-            >
-              <StyledImage src={Icon4} height="37" width="35" />
+            <ImageContainer className='avatar-container' onClick={(e) => setImg(Icon3.src)}>
+              <StyledImage src={Icon4} height='37' width='35' />
             </ImageContainer>
           </Container>
 
           <Button
-            type="submit"
-            size="medium"
-            sx={{ color: "#9A8249", border: "1px solid #9a824991" }}
-          >
+            type='submit'
+            size='medium'
+            sx={{ color: '#9A8249', border: '1px solid #9a824991' }}>
             Create Account
           </Button>
         </form>

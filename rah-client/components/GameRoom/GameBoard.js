@@ -1,41 +1,39 @@
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
 import Image from 'next/Image';
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react';
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
 
-import Game from '../../pages/_sampleData/sampleGame.js'
-import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
+import Game from '../../pages/_sampleData/sampleGame.js';
+import { MapEmAcross, MapEmCircle, oneInMiddle } from './HelperFuncs.js';
 //import { useRecoilState } from 'recoil';
 
-const sprite = {height: '60px', width: '30px'}
+const sprite = { height: '60px', width: '30px' };
 export default function GameBoard(props) {
-  const [height, setHeight] = useState()
-  const [width, setWidth] = useState()
-  const players = props.game.players
-  const game = props.game
+  const [height, setHeight] = useState();
+  const [width, setWidth] = useState();
+  const players = props.game.players;
+  const game = props.game;
   useEffect(() => {
-      setHeight(document.getElementById('bgimg').clientHeight)
-      setWidth(document.getElementById('bgimg').clientWidth)
-   })
+    setHeight(document.getElementById('bgimg').clientHeight);
+    setWidth(document.getElementById('bgimg').clientWidth);
+  });
   const renderItems = (game) => {
-    var phase = game.phase || 'night'
+    var phase = game.phase || 'night';
     var Arr;
     if (phase === 'day2') {
-      Arr = MapEmAcross(players, 60, 30, height, width)
+      Arr = MapEmAcross(players, 60, 30, height, width);
     } else if (phase === 'day3') {
-      Arr = oneInMiddle(players, 60, 30,  height, width, '1')
+      Arr = oneInMiddle(players, 60, 30, height, width, '1');
     } else {
-      Arr = MapEmCircle(players, 60, 30,  height, width)
+      Arr = MapEmCircle(players, 60, 30, height, width);
     }
     return Object.values(Arr).map((locale) => {
-      return <Person left={locale.left} top={locale.top}></Person>
-    } )
-  }
-  const handleClick = () => {
-
-  }
+      return <Person left={locale.left} top={locale.top}></Person>;
+    });
+  };
+  const handleClick = () => {};
 
   return (
     <OuterContainer maxWidth={false} disableGutters={true}>
@@ -48,10 +46,9 @@ export default function GameBoard(props) {
       </Banner>
 
       <ImgContainer maxWidth={false} disableGutters={true}>
-        <Img src={BoardImg} alt='' id='bgimg' height="450" width="850"/>
+        <Img src={BoardImg} alt='' id='bgimg' height='450' width='850' />
         {props.game ? renderItems(game) : null}
       </ImgContainer>
-
     </OuterContainer>
   );
 }
@@ -94,9 +91,8 @@ const ImgContainer = styled(Container)`
 const Banner = styled.div`
   width: 100%;
   height: 35px;
-  background-color: #9A8249;
+  background-color: #9a8249;
   border-radius: 5px 5px 0 0;
-
 `;
 
 const Img = styled(Image)`

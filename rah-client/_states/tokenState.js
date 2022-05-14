@@ -3,15 +3,15 @@ const uuid = require('react-uuid');
 
 const userState = atom({
   key: 'tokenState',
-  default: {userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}`},
+  default: { userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}` },
 });
 
 const userTokenState = selector({
   key: 'userTokenState',
-  get: ({get}) => {
+  get: ({ get }) => {
     const token = get(userState.token);
     return token;
-  }
+  },
 });
 
-export { userState, userTokenState }
+export { userState, userTokenState };

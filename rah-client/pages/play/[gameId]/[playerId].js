@@ -14,9 +14,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import GameInfo from '../../../components/GameInfo';
 
-
 import TestGame from '../../../pages/_sampleData/sampleGame.js';
-
 
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
@@ -49,35 +47,29 @@ export default function Game() {
   var started = false;
   //const TestGame = TestGame.sampleGame
 
-
   useEffect(() => {
-     socket.on(`game-send`, (game) => {
-        setGame(game);
+    socket.on(`game-send`, (game) => {
+      setGame(game);
 
-        setGameInfo(getGameInfo(game, playerId));
-      })
-      socket.on(`receive-message-${gameId}`, (user, message) => {
-        let messageObj = {userName: user.userName, text: message, user_id: user.user_id}
-        if (user.user_id === 'announcement') {
-          setAnnouncement(message);
-        } else {
-          setMessages([...messages, messageObj]);
-        }
-      });
-  })
-
-  useEffect(() => {
-
-
-
-
-      return () => {
-        socket.emit('join-room', playerId, gameId)
-        //socket.disconnect()
+      setGameInfo(getGameInfo(game, playerId));
+    });
+    socket.on(`receive-message-${gameId}`, (user, message) => {
+      let messageObj = { userName: user.userName, text: message, user_id: user.user_id };
+      if (user.user_id === 'announcement') {
+        setAnnouncement(message);
+      } else {
+        setMessages([...messages, messageObj]);
       }
+    });
+  });
 
-      // socket.emit("start-test", playerId, gameId, 5000);
+  useEffect(() => {
+    return () => {
+      socket.emit('join-room', playerId, gameId);
+      //socket.disconnect()
+    };
 
+    // socket.emit("start-test", playerId, gameId, 5000);
 
     // if (started === false) {
     //    started = true;
@@ -92,23 +84,24 @@ export default function Game() {
   }, [card]);
 
   useEffect(() => {
-
     axios({
       method: 'get',
-      url: 'http://localhost:4030/blueocean/api/v1/games/single?',
+      url: `http://${process.env.REACT_APP_URL}/blueocean/api/v1/games/single?`,
       params: { id: gameId },
-    }).then((res) => {
-       let data = res.data;
+    })
+      .then((res) => {
+        let data = res.data;
         setGame(data.game);
-        }).catch((err) => err);
-      //setGameInfo(getGameInfo(game, playerId));
+      })
+      .catch((err) => err);
+    //setGameInfo(getGameInfo(game, playerId));
   }, [gameId]);
 
   const closeDrawer = () => {
     setOpen(false);
   };
   const startGame = () => {
-    console.log('buitton', playerId, gameId)
+    console.log('buitton', playerId, gameId);
     socket.emit('start-test', playerId, gameId, 10000);
   };
   const switchPhase = () => {
@@ -190,7 +183,7 @@ export default function Game() {
             <Container maxWidth={false} id='gameBoard-container'>
               <Drawer open={open} className='gameInfoDrawer' variant='persistent' anchor='top'>
                 <div>
-                 <GameInstructions close={closeDrawer} info={gameInfo} game={game} />
+                  <GameInstructions close={closeDrawer} info={gameInfo} game={game} />
                 </div>
               </Drawer>
 
@@ -205,25 +198,21 @@ export default function Game() {
               />
             </Container>
             <Container maxWidth={false} id='playerCards-container'>
-            <GameInfo
-                  announcement={announcement}
-                  info={gameInfo}
-                  setOpen={setOpen}
-                  open={open}
-                  startGame={startGame}
-                  playerId={playerId}
-                  game={game}
-                />
-
+              <GameInfo
+                announcement={announcement}
+                info={gameInfo}
+                setOpen={setOpen}
+                open={open}
+                startGame={startGame}
+                playerId={playerId}
+                game={game}
+              />
 
               <StyledButton onClick={moveLeft}>
                 <ChevronLeftIcon stroke='#F1F7ED' fill='#F1F7ED' height='35' />
               </StyledButton>
 
-
-
               <div className='viewport'>
-
                 <div disableGutters={true} maxWidth={false} className='playerCardContainer'>
                   <Stack direction='row' spacing={0}>
                     {game.players ? (
@@ -252,7 +241,7 @@ export default function Game() {
             </Container>
           </Box>
         ) : (
-          <StyledContainer maxWidth="sm">
+          <StyledContainer maxWidth='sm'>
             <h2>Error: No games found. Try again.</h2>
           </StyledContainer>
         )}
@@ -288,7 +277,7 @@ const StyledAlert = styled(Alert)`
 `;
 
 const StyledContainer = styled(Container)`
-  background-color: #F1F7ED;
+  background-color: #f1f7ed;
   width: fit-content;
   height: 150px;
   border-radius: 5px;
