@@ -8,7 +8,8 @@ const nextConfig = {
   },
 };
 
-const intercept = require('intercept-stdout');
+const intercept = require("intercept-stdout")
+
 
 // safely ignore recoil warning messages in dev (triggered by HMR)
 function interceptStdout(text) {
