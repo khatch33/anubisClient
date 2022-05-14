@@ -71,7 +71,7 @@ export default function Game() {
 
   useEffect(() => {
     return () => {
-      socket.emit('join-room', playerId, gameId);
+      socket.emit('join-room', { user_id: playerId, userName: user.userName }, gameId);
       //socket.disconnect()
     };
 
