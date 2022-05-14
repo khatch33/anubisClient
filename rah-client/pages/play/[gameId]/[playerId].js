@@ -116,18 +116,18 @@ export default function Game() {
     phase === 'night' ? setPhase('day') : setPhase('night');
   };
   const moveRight = () => {
-    if (card < game.players.length - 5) {
+    if (card < game.players.length - 2) {
       let current = card;
-      setCard(current + 5);
+      setCard(current + 2);
     } else {
       let current = card;
-      setCard(players.length - 5);
+      setCard(players.length - 2);
     }
   };
   const moveLeft = () => {
-    if (Card > 5) {
+    if (Card > 2) {
       let current = card;
-      setCard(current - 5);
+      setCard(current - 2);
     } else {
       let current = card;
       setCard(0);

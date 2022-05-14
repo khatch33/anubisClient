@@ -16,6 +16,7 @@ export default function PlayerCard(props) {
   const player = props.player
   const username = player.player.userName
   const alive = player.status
+  const clicked = false
   const phase = props.phase
   const role = props.role
   const socket = useContext(SocketContext);
@@ -27,8 +28,8 @@ export default function PlayerCard(props) {
     socket.emit('player-vote', user1, player, gameId)
   }
   const renderActionButton = () => {
-
-    if (phase === 'night') {
+    if (!clicked) {
+      if (phase === 'night') {
       if (role === 'villager') {
         return
       } else if (role === 'doctor') {
@@ -41,6 +42,10 @@ export default function PlayerCard(props) {
     } else if (phase === 'day2' || phase === 'day3') {
       return <Button onClick={() => vote()}>ACCUSE</Button>
     }
+  } else {
+    return <h4>voted</h4>
+  }
+
   }
   return (
     <Card key={'pc' + username} className={`playerCard alive-${alive}`} id="player-card" sx={{ boxShadow: 3}}>
