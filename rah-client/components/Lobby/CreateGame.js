@@ -29,7 +29,8 @@ export default function CreateGame({handleChange}) {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    const url = 'http://localhost:4030/blueocean/api/v1/games';
+    const url = `http://35.245.230.155:4040/blueocean/api/v1/games`;
+    // const url = 'http://localhost:4030/blueocean/api/v1/games';
     console.log(players, gameName);
     axios
       .post(

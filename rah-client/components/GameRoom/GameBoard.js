@@ -4,10 +4,11 @@ import Image from 'next/Image';
 import {useEffect, useState} from 'react'
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
+import Sprite1 from '../../public/sprite1.png';
 
 import Game from '../../pages/_sampleData/sampleGame.js'
 import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
-//import { useRecoilState } from 'recoil';
+
 
 const sprite = {height: '60px', width: '30px'}
 export default function GameBoard(props) {
@@ -30,7 +31,7 @@ export default function GameBoard(props) {
       Arr = MapEmCircle(players, 60, 30,  height, width)
     }
     return Object.values(Arr).map((locale) => {
-      return <Person left={locale.left} top={locale.top}></Person>
+      return <Person left={locale.left} top={locale.top}><Image src={Sprite1} alt="" height="70" width="40"/></Person>
     } )
   }
   const handleClick = () => {
@@ -58,7 +59,7 @@ export default function GameBoard(props) {
 
 const Person = styled.span`
   position: absolute;
-  border: 15px solid red;
+  /* border: 15px solid red; */
 
   width: ${sprite.width};
   height: ${sprite.height};

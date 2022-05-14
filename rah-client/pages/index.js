@@ -5,8 +5,10 @@ import React, { useState, useEffect } from 'react';
 import ActiveUsersList from '../components/ActiveUsersList';
 import axios from 'axios';
 import activeUsers from '../pages/_sampleData/activeUsers';
+import GameInstructions from '../components/GameInstructions';
 
-const basePath = 'http://localhost:4030/blueocean/api/v1';
+// const basePath = 'http://localhost:4030/blueocean/api/v1';
+const basePath = `http://35.245.230.155:4040/blueocean/api/v1`;
 
 export default function Home() {
   const [error, setError] = useState(null);
@@ -51,15 +53,7 @@ export default function Home() {
             <Container maxWidth={false} id='instructions-container'>
               <div id="instructions-header">HOW TO PLAY</div>
               <div id="instructions-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae
-                quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis
-                harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!
-                Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius
-                earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia
-                aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis
-                quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga? Ipsa laudantium
-                molestias eos sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-                recusandae alias error harum maxime adipisci amet laborum.
+
               </div>
             </Container>
           </Container>
