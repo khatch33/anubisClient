@@ -32,12 +32,14 @@ export default function GameBoard(props) {
 
       Arr = MapEmAcross(players, 70, 40, height, width)
     } else if (phase === 'day3') {
-      Arr = oneInMiddle(players, 70, 40,  height, width, '1')
+      let userName = game.playerVoted
+      Arr = oneInMiddle(players, 70, 40,  height, width, userName)
     } else {
       Arr = MapEmCircle(players, 70, 40,  height, width)
     }
+    console.log(Arr)
     return Object.values(Arr).map((locale, i) => {
-      return <Tooltip title='username'><Person left={locale.left} top={locale.top}><Image src={sprites[i % 4]} alt="" height="70" width="40"/></Person></Tooltip>
+      return <Tooltip title={players[i].player.userName}><Person left={locale.left} top={locale.top}><Image src={sprites[i % 4]} alt="" height="70" width="40"/></Person></Tooltip>
     })
   }
 
