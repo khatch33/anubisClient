@@ -77,7 +77,7 @@ export default function Game() {
 
     axios({
       method: 'get',
-      url: `${process.env.REACT_APP_URL}/blueocean/api/v1/games/single?`,
+      url: `http://${basePath}/games/single?`,
       params: { id: gameId },
     }).then((res) => {
        let data = res.data;

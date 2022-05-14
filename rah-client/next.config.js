@@ -13,8 +13,8 @@ const intercept = require("intercept-stdout")
 
 // safely ignore recoil warning messages in dev (triggered by HMR)
 function interceptStdout(text) {
-  if (text.includes('Duplicate atom key')) {
-    return '';
+  if (text.includes("Duplicate atom key")) {
+    return "";
   }
   return text;
 }
