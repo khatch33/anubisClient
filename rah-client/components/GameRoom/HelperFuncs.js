@@ -59,11 +59,11 @@ exports.MapEmCircle = function (playersArr, spH, spW, gbH, gbW, overRide) {
 
 }
 
-exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerId, overRide, overRideId) => {
+exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerName, overRide, overRideId) => {
   let map = {}
   var hDif =  gbH - spH
   var wDif = gbW - spW
-  overRide ? length = overRide : length = playersArr.length
+  var length = playersArr.length
   var middy = getMidpoint(hDif, wDif, spW)
   var radius = Math.min(hDif / 2, wDif / 2)
   let interval = 360 / length
@@ -73,10 +73,10 @@ exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerId, overRide, overR
       map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, overRide)
       map[i] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
     } else if (playerId) {
-         if (playersArr[i].player.user_id) {
+         if (playersArr[i].player.userName === userName) {
           let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length))
           map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, overRide)
-          map[playersArr[i].player.user_id] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
+          map[playersArr[i].player.userName] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
          }
     }
   }
