@@ -77,7 +77,7 @@ export default function GamesList(props) {
   return (
     <Container style={{ height: 350, minWidth: '500px', maxWidth: '675px' }}>
       <TabsContainer
-        TabIndicatorProps={{
+        tabindicatorprops={{
           style: { backgroundColor: '#9A8249', color: '#F1F7ED' },
         }}
         value={value}

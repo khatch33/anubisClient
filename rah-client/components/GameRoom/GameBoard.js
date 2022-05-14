@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
 import Image from 'next/Image';
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react';
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
 import Sprite1 from '../../public/sprite1.png';
@@ -20,11 +20,11 @@ export default function GameBoard(props) {
   const game = props.game
 
   useEffect(() => {
-      setHeight(document.getElementById('bgimg').clientHeight)
-      setWidth(document.getElementById('bgimg').clientWidth)
-   })
+    setHeight(document.getElementById('bgimg').clientHeight);
+    setWidth(document.getElementById('bgimg').clientWidth);
+  });
   const renderItems = (game) => {
-    var phase = game.phase || 'night'
+    var phase = game.phase || 'night';
     var Arr;
     if (phase === 'day2') {
       Arr = MapEmAcross(players, 70, 40, height, width)
@@ -37,6 +37,7 @@ export default function GameBoard(props) {
       return <Person left={locale.left} top={locale.top}><Image src={sprites[i % 4]} alt="" height="70" width="40"/></Person>
     })
   }
+
   return (
     <OuterContainer maxWidth={false} disableGutters={true}>
       <Banner>
@@ -47,10 +48,9 @@ export default function GameBoard(props) {
         ) : null}
       </Banner>
       <ImgContainer maxWidth={false} disableGutters={true}>
-        <Img src={BoardImg} alt='' id='bgimg' height="450" width="850"/>
+        <Img src={BoardImg} alt='' id='bgimg' height='450' width='850' />
         {props.game ? renderItems(game) : null}
       </ImgContainer>
-
     </OuterContainer>
   );
 }
@@ -92,9 +92,8 @@ const ImgContainer = styled(Container)`
 const Banner = styled.div`
   width: 100%;
   height: 35px;
-  background-color: #9A8249;
+  background-color: #9a8249;
   border-radius: 5px 5px 0 0;
-
 `;
 
 const Img = styled(Image)`

@@ -16,9 +16,6 @@ export default function ChatForm() {
   const [chatBoxInput, setChatBoxInput] = useState('');
 
   const [user, setUser] = useRecoilState(userState);
-  useEffect(() => {
-    console.log(user);
-  }, []);
 
   const chatBoxOnChange = (e) => {
     setChatBoxInput(e.target.value);
@@ -45,7 +42,7 @@ export default function ChatForm() {
         id='chat-input'
       />
       <StyledButton
-        style={{color: "#9A8249" }}
+        style={{ color: '#9A8249' }}
         id='submitChat-button'
         endIcon={<SendIcon />}
         type='submit'
@@ -55,7 +52,7 @@ export default function ChatForm() {
 }
 
 const Form = styled.form`
-  background-color: #F1F7ED;
+  background-color: #f1f7ed;
   border: 1px solid gray;
   border-radius: 0 0 5px 5px;
   display: flex;

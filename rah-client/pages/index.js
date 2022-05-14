@@ -8,13 +8,11 @@ import activeUsers from "../pages/_sampleData/activeUsers";
 import GameInstructions from "../components/GameInstructions";
 import styled from 'styled-components';
 
-// const basePath = "http://localhost:4030/blueocean/api/v1";
 const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
 export default function Home() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
   const [activeList, setActiveList] = useState([]);
 
   useEffect(() => {

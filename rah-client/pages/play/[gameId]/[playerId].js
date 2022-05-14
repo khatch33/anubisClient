@@ -13,11 +13,7 @@ import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios';
 import GameInfo from '../../../components/GameInfo';
-
-
 import TestGame from '../../../pages/_sampleData/sampleGame.js';
-
-
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
 import { useRouter } from 'next/router';
@@ -30,10 +26,9 @@ import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
 import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
-// const basePath = 'http://localhost:4030/blueocean/api/v1';
-const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
 export default function Game() {
+  const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
   const [players, setPlayers] = useState([]);
   const [owner, setOwner] = useState();
   const [announcement, setAnnouncement] = useState('somegr greauig yu ireuygr iuo');
@@ -68,9 +63,7 @@ export default function Game() {
   useEffect(() => {
       return () => {
         socket.emit('join-room', playerId, gameId)
-
       }
-
   }, [socket]);
   useEffect(() => {
     if (game) {
@@ -84,14 +77,12 @@ export default function Game() {
 
     axios({
       method: 'get',
-      // url: 'http://localhost:4030/blueocean/api/v1/games/single?',
       url: `${process.env.REACT_APP_URL}/blueocean/api/v1/games/single?`,
       params: { id: gameId },
     }).then((res) => {
        let data = res.data;
         setGame(data.game);
         }).catch((err) => err);
-      //setGameInfo(getGameInfo(game, playerId));
   }, [gameId]);
 
   const closeDrawer = () => {
