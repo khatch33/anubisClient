@@ -68,11 +68,7 @@ exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerName) => {
   var radius = Math.min(hDif / 2, wDif / 2)
   let interval = 360 / length
   for (let i = 0; i < length; i++) {
-    if (i === overRideId) {
-      let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length))
-      map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, overRide)
-      map[i] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
-    } else if (playerName) {
+    if (playerName) {
          if (playersArr[i].player.userName === playerName) {
           let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length))
           map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, overRide)
