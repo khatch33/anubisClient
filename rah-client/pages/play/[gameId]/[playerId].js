@@ -258,7 +258,7 @@ export default function Game() {
           </Box>
         ) : (
           <StyledContainer maxWidth='sm'>
-            <h2>Error: No games found. Try again.</h2>
+            <p>Error: No games found. Try again.</p>
           </StyledContainer>
         )}
       </Container>

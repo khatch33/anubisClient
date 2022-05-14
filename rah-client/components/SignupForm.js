@@ -13,6 +13,7 @@ import Icon1 from '../public/icons2/icon1.png';
 import Icon2 from '../public/icons2/icon2.png';
 import Icon3 from '../public/icons2/icon3.png';
 import Icon4 from '../public/icons2/icon4.png';
+import Icon5 from '../public/icons2/icon5.png';
 import Image from 'next/Image';
 
 const style = {
@@ -39,11 +40,14 @@ export default function SignupForm(props) {
     if (submitted) {
       router.push('/lobby');
     }
+    console.log(Icon4.src, 'icon4')
+    console.log(Icon5.src, 'icon4')
+
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [token, setToken] = useRecoilState(userState);
-  const [img, setImg] = useState('');
+  const [img, setImg] = useState('/_next/static/media/icon1.ca5cbabd.png');
 
   const {
     register,
@@ -174,11 +178,10 @@ const StyledImage = styled(Image)`
 
 const ImageContainer = styled.div`
   background-color: lightgray;
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 40px;
   border-radius: 99px;
   text-align: center;
   margin: 3px;
   text-align: center;
-  padding-top: 3px;
 `;
