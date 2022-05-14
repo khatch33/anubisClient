@@ -13,22 +13,32 @@ export default function GameInstructions (props) {
 
 
   return (
-    <StyledContainer style={{backgroundColor: 'rgba(255, 255, 255, 0.9)'}}>
+    <StyledContainer>
       <StyledCard>
         <h3>Instructions</h3>
-        <ol>
-          <li>Each player will be randomly assigned one of the following roles:</li>
-            <ul>
-              <li>Anubis</li>
-              <li>Doctor</li>
-              <li>Seer</li>
-              <li>Villager</li>
-            </ul>
-        </ol>
+        <div>
+          <ol>
+            <li>Each player will be randomly assigned one of the following roles: Anubis, Seer, Doctor, Villager </li>
+            <li>Each night, the players assigned the role of Anubis will vote to mummify one player.</li>
+            <li>Each day, the non-mummified players can chat to attempt to determine who is Anubis.</li>
+            <li>Once the votes are tallied, the chosen player will be sacrified to their gods.</li>
+            <li>The final remaining player wins.</li>
+          </ol>
+        </div>
+        <div style={{display: 'flex', textAlign: 'center'}}>
 
+        <RolesDiv>
+          <span>Doctor</span>
+          <div>Doctors have the special ability to reverse the mummification for one player should that player be chosen by Anubis for sacrifice. To heal a player, the Doctor must click the "Heal" button displayed on the player's card they wish to heal.</div>
+        </RolesDiv>
 
-
+        <RolesDiv>
+          <div>Seer</div>
+          <div>Seers can choose to reveal the identity of one player by clicking the "Reveal" button displayed on the player's card they wish to unveil.</div>
+        </RolesDiv>
+          </div>
         <Button onClick={props.close}>X</Button>
+
       </StyledCard>
     </StyledContainer>
   )
@@ -40,14 +50,13 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   text-align: center;
-  height: 300px;
 `;
 
 const StyledCard = styled(Card)`
   background-color: #F1F7ED;
   margin: 5px;
   padding: 5px;
-  width: 500px;
+  width: 100%;
 `;
 
 const GameInfoCard = styled(Card)`
@@ -69,4 +78,9 @@ const Button = styled.button`
   margin: 5px;
   position: relative;
   width: fit-content;
+`;
+
+const RolesDiv = styled.div`
+  width: 250px;
+  height: 250px;
 `;
