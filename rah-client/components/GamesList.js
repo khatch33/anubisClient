@@ -29,7 +29,7 @@ const columns = [
   },
   {
     field: 'playersNum',
-    headerName: 'PLAYERS',
+    headerName: 'MAX PLAYERS',
     type: 'number',
     width: 170,
     editable: false,
@@ -52,7 +52,7 @@ export default function GamesList(props) {
   const [showForm, setShowForm] = useState(false);
 
   const rows = props.games.map((game) => {
-    let players = 'players: ' + game.players.length.toString() + '/' + game.playerAllowed;
+    let players = 'players: ' + game.playerAllowed;
     return {
       id: game._id,
       creatorName: game.ownerName,

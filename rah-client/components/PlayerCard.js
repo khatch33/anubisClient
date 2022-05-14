@@ -34,7 +34,7 @@ export default function PlayerCard(props) {
   }
   const seerVote = () => {
     vote()
-    revealed(true)
+    setRevealed(true)
     //reveal role to user
   }
   const renderActionButton = () => {
@@ -45,9 +45,9 @@ export default function PlayerCard(props) {
       } else if (role === 'doctor') {
         return <Button onClick={() => vote()}>SAVE</Button>
       } else if (role === 'wolf') {
-        return <Button onClick={() => seerVote()}>SACRIFICE</Button>
+        return <Button onClick={() => vote()}>SACRIFICE</Button>
       } else if (role === 'seer') {
-        return <Button onClick={() => vote()}>{revealed ? player.role : 'REVEAL'}</Button>
+        return <Button onClick={() => seerVote()}>REVEAL</Button>
       }
     } else if (phase === 'day2' || phase === 'day3') {
       return <Button onClick={() => vote()}>ACCUSE</Button>
@@ -67,7 +67,7 @@ export default function PlayerCard(props) {
       <IconDiv>
         {alive? null : <StyledDiv><Image alt='' height="55" width="55" src={deadIcon}/> <br/> <span>{`${username} was taken by Anubis`} </span></StyledDiv>}
       </IconDiv>
-
+      {revealed ? <h4>{role}</h4>: null}
       <ButtonDiv>
         {!voted && alive ? renderActionButton() : null}
       </ButtonDiv>
