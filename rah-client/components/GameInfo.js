@@ -41,6 +41,7 @@ export default function GameInfo(props) {
 }
 
 const InfoContainer = styled(Container)`
+
   width: 250px;
   height: 250px;
   border-radius: 5px;
@@ -53,6 +54,7 @@ const InfoContainer = styled(Container)`
   font-family: 'Josefin Slab';
   font-weight: 700;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  max-width: 250px !important;
 `;
 
 const Header = styled(Container)`

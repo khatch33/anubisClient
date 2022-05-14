@@ -7,19 +7,20 @@ import { userState } from '../_states/tokenState';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import Typography from '@mui/material/Typography';
 import { friendsState } from '../_states/friendslist';
-// remove
-import activeUsers from '../pages/_sampleData/activeUsers';
+import Image from 'next/Image';
 
-// !! TO DO -> switch from props to users list
 export default function ActiveUsersList() {
+
   const socket = useContext(SocketContext);
   const userData = useRecoilValue(userState);
   const [usersList, setUsersList] = useState([]);
   const [globalUsersList, setGlobalUsersList] = useRecoilState(friendsState);
+  const avatars = ["/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon2.37800c5f.png", "/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon4.e31317e0.png icon4", "/_next/static/media/icon5.173d920f.png"]
 
   useEffect(() => {
     socket.on('receive-lobby', (users) => {
       setUsersList(users);
+      console.log(users, 'users');
       setGlobalUsersList(users);
     });
     socket.on('error', (err) => {
@@ -44,15 +45,14 @@ export default function ActiveUsersList() {
     <div id='activeUsers-outerContainer'>
       <Title id='activeUsers-header'>ONLINE PLAYERS</Title>
       <Container disableGutters={true} maxWidth={false} id='activeUsers-container'>
-        {/* {!usersList.length ? <div>No active users</div> : usersList.map((user) => ( */}
-        {activeUsers.map((user) => (
+        {!usersList.length ? <div style={{textAlign: 'center', marginTop: '5px'}}>No active users</div> : usersList.map((user) => (
           <div key={JSON.stringify(user)} className='activeUser-item'>
             <div id='activeUsersList-container'>
               <div className='activeUsers-username'>
-                <span className='userAvatar'>{user.userName[0]}</span>
+                <Image className='userAvatar' src={!user.img || user.img === "" ? avatars[Math.floor(Math.random() * 5) + 1] : user.img } height="32" width="32" />
                 <span className='userName'>{user.userName}</span>
               </div>
-              <span className='activeUsers-rank'> {user.score} </span>
+              <span className='activeUsers-rank'> {userData.score ? userData.score : ''} </span>
             </div>
           </div>
         ))}
@@ -62,9 +62,15 @@ export default function ActiveUsersList() {
 }
 
 const Title = styled(Typography)`
-  font-family: monospace;
+  font-family: 'Josefin Slab';
   text-align: center;
   letter-spacing: 0.1rem;
   padding-top: 6px;
   font-weight: 700;
+  color: #f1f7ed;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  line-height: 1.6;
+  padding-top: 5px;
+  font-size: 1.25rem;
 `;
