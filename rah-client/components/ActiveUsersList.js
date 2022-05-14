@@ -15,7 +15,7 @@ export default function ActiveUsersList() {
   const userData = useRecoilValue(userState);
   const [usersList, setUsersList] = useState([]);
   const [globalUsersList, setGlobalUsersList] = useRecoilState(friendsState);
-  const avatars = ["/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon2.37800c5f.png", "/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon4.e31317e0.png icon4", "/_next/static/media/icon5.173d920f.png"]
+  const avatars = ["/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon2.37800c5f.png", "/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon4.e31317e0.png icon4.png", "/_next/static/media/icon5.173d920f.png"]
 
   useEffect(() => {
     socket.on('receive-lobby', (users) => {
@@ -49,7 +49,7 @@ export default function ActiveUsersList() {
           <div key={JSON.stringify(user)} className='activeUser-item'>
             <div id='activeUsersList-container'>
               <div className='activeUsers-username'>
-                <Image className='userAvatar' src={!user.img || user.img === "" ? avatars[Math.floor(Math.random() * 5) + 1] : user.img } height="32" width="32" />
+                <Image className='userAvatar' src={!user.img || user.img === "" ? avatars[Math.floor(Math.random() * 5) + 1] : user.img } height="35" width="35" />
                 <span className='userName'>{user.userName}</span>
               </div>
               <span className='activeUsers-rank'> {userData.score ? userData.score : ''} </span>
