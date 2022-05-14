@@ -4,40 +4,43 @@ import { shadows } from '@mui/system';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
-export default function GameInfo (props) {
+export default function GameInstructions (props) {
   const game = props.game
   const info = props.info
+
+
   return (
-    <StyledContainer maxWidth={false}>
+    <StyledContainer style={{backgroundColor: 'rgba(255, 255, 255, 0.9)'}}>
       <StyledCard>
         <h3>Instructions</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
-            mollitia, molestiae quas vel sint commodi repudiandae
-            consequuntur voluptatum laborum numquam blanditiis harum
-            quisquam eius sed odit fugiat iusto fuga praesentium optio,
-            eaque rerum! Provident similique accusantium nemo autem.
-            Veritatis obcaecati tenetur iure eius earum ut molestias
-            architecto voluptate aliquam nihil, eveniet aliquid culpa
-            officia aut! Impedit sit sunt quaerat, odit, tenetur error,
-            harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia.
-            Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
-            sapiente officiis modi at sunt excepturi expedita sint? Sed
-            quibusdam recusandae alias error harum maxime adipisci amet
-            laborum.</p>
+        <ol>
+          <li>Each player will be randomly assigned one of the following roles:</li>
+            <ul>
+              <li>Anubis</li>
+              <li>Doctor</li>
+              <li>Seer</li>
+              <li>Villager</li>
+            </ul>
+        </ol>
+
+
+
         <Button onClick={props.close}>X</Button>
       </StyledCard>
     </StyledContainer>
   )
 }
 
-const StyledContainer = styled(Container)`
+const StyledContainer = styled.div`
   align-items: center;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.9);
   display: flex;
-  height: min-content;
   justify-content: center;
   text-align: center;
+  height: 300px;
 `;
 
 const StyledCard = styled(Card)`

@@ -84,6 +84,7 @@ const StartButton = styled.button`
   height: 30px;
   text-align: center;
   margin: 3px;
+  margin-bottom: 8px;
   font-family: 'Josefin Slab';
   font-weight: 700;
   font-size: 1.1em;

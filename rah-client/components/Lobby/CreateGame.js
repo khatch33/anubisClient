@@ -28,7 +28,12 @@ export default function CreateGame({ handleChange }) {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+
+
     const url = `http://${process.env.REACT_APP_URL}/blueocean/api/v1/games`;
+
+    console.log(players, gameName);
+
     axios
       .post(
         url,

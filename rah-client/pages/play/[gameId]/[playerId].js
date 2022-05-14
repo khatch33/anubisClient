@@ -28,10 +28,13 @@ import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
 import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
+
 import { useRecoilValue } from 'recoil';
 const basePath = 'http://localhost:4030/blueocean/api/v1';
 
+
 export default function Game() {
+  const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
   const [players, setPlayers] = useState([]);
   const [owner, setOwner] = useState();
   const [announcement, setAnnouncement] = useState('somegr greauig yu ireuygr iuo');
@@ -47,6 +50,7 @@ export default function Game() {
   const router = useRouter();
   const { gameId, playerId } = router.query;
   var started = false;
+
   //const TestGame = TestGame.sampleGame
 
   useEffect(() => {
@@ -80,6 +84,7 @@ export default function Game() {
     // if (started === false) {
     //    started = true;
     // }
+
   }, [socket]);
   useEffect(() => {
     if (game) {
@@ -92,15 +97,17 @@ export default function Game() {
   useEffect(() => {
     axios({
       method: 'get',
+
       url: `http://${process.env.REACT_APP_URL}/blueocean/api/v1/games/single?`,
+
       params: { id: gameId },
     })
       .then((res) => {
         let data = res.data;
         setGame(data.game);
-      })
-      .catch((err) => err);
-    //setGameInfo(getGameInfo(game, playerId));
+
+        }).catch((err) => err);
+
   }, [gameId]);
 
   const closeDrawer = () => {
@@ -108,9 +115,11 @@ export default function Game() {
   };
 
   const startGame = () => {
+
     var player1 = { user_id: playerId, userName: user.userName };
     console.log('buitton', playerId, gameId);
     socket.emit('start-game', player1, gameId);
+
   };
   const switchPhase = () => {
     phase === 'night' ? setPhase('day') : setPhase('night');
@@ -133,6 +142,7 @@ export default function Game() {
       setCard(0);
     }
   };
+
   // socket.on(`receive-message-${gameId}`, (user, message) => {
 
   //   let messageObj = {userName: user.userName, text: message, user_id: user.user_id}
@@ -177,6 +187,7 @@ export default function Game() {
   //     setGame(data.game);
   //   }).catch((err) => err);
   // }, []);
+
   return (
     <>
       <Navbar />
@@ -186,7 +197,7 @@ export default function Game() {
           <PlayChat />
         </Container>
         {game ? (
-          <Box sx={{ display: 'inline-block', float: 'right', width: '75%' }}>
+          <Box sx={{ display: 'inline-block', float: 'right', width: '75%'}}>
             <Container maxWidth={false} id='gameBoard-container'>
               <Drawer open={open} className='gameInfoDrawer' variant='persistent' anchor='top'>
                 <div>
