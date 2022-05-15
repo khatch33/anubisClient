@@ -29,9 +29,9 @@ export default function GameInfo(props) {
       {props.game.owner ? (
         props.game.owner === props.playerId ? (
           <div style={{position: 'absolute', left: '35px', bottom: '0'}}>
-            <StartButton onClick={() => props.startGame()}>
+            {(props.game.phase === 'pregame') ? <StartButton onClick={() => props.startGame()}>
               START GAME
-            </StartButton>
+            </StartButton> : null}
           </div>
         ) : <div>The game will start shortly</div>
       ) : null}
@@ -41,6 +41,7 @@ export default function GameInfo(props) {
 }
 
 const InfoContainer = styled(Container)`
+
   width: 250px;
   height: 250px;
   border-radius: 5px;
@@ -53,6 +54,7 @@ const InfoContainer = styled(Container)`
   font-family: 'Josefin Slab';
   font-weight: 700;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  max-width: 250px !important;
 `;
 
 const Header = styled(Container)`
@@ -84,6 +86,7 @@ const StartButton = styled.button`
   height: 30px;
   text-align: center;
   margin: 3px;
+  margin-bottom: 8px;
   font-family: 'Josefin Slab';
   font-weight: 700;
   font-size: 1.1em;

@@ -5,6 +5,10 @@ import React, { useState, useEffect } from 'react';
 import ActiveUsersList from '../components/ActiveUsersList';
 import axios from 'axios';
 import activeUsers from '../pages/_sampleData/activeUsers';
+import GameInstructions from '../components/GameInstructions';
+import styled from 'styled-components';
+
+const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
 export default function Home() {
   const [error, setError] = useState(null);
@@ -17,9 +21,6 @@ export default function Home() {
       setIsLoaded(true);
       setActiveList(activeUsers);
     }
-    // catch block for API call
-    // setIsLoaded(true);
-    // setError(error);
   }, []);
 
   if (error) {
@@ -46,17 +47,51 @@ export default function Home() {
             </Container>
 
             <Container maxWidth={false} id='instructions-container'>
-              <div id='instructions-header'>HOW TO PLAY</div>
-              <div id='instructions-text'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae
-                quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis
-                harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum!
-                Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius
-                earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia
-                aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis
-                quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga? Ipsa laudantium
-                molestias eos sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
-                recusandae alias error harum maxime adipisci amet laborum.
+              <Header id='instructions-header'>HOW TO PLAY</Header>
+              <div id='instructions-text' style={{ fontSize: '0.85em', alignItems: 'center' }}>
+                <div>
+                  <ol>
+                    <li>
+                      {' '}
+                      Each player will be randomly assigned one of the following roles: Anubis,
+                      Seer, Doctor, Villager{' '}
+                    </li>
+                    <li>
+                      Each night, the players assigned the role of Anubis will vote to mummify one
+                      player.
+                    </li>
+                    <li>
+                      Each day, the non-mummified players can chat to attempt to determine which
+                      player is Anubis.
+                    </li>
+                    <li>
+                      Once the votes are tallied, the chosen player will be sacrified to the gods.
+                    </li>
+                    <li>The final remaining player wins.</li>
+                  </ol>
+                </div>
+                <div style={{ display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
+                  <RolesDiv>
+                    <span>
+                      <b>Doctor</b>
+                    </span>
+                    <div>
+                      Doctors have the special ability to reverse the mummification for one player
+                      should that player be chosen by Anubis for sacrifice. To heal a player, the
+                      Doctor must click the "Heal" button displayed on the player's card they wish
+                      to heal.
+                    </div>
+                  </RolesDiv>
+                  <RolesDiv>
+                    <div>
+                      <b>Seer</b>
+                    </div>
+                    <div>
+                      Seers can choose to reveal the identity of one player by clicking the "Reveal"
+                      button displayed on the player's card they wish to unveil.
+                    </div>
+                  </RolesDiv>
+                </div>
               </div>
             </Container>
           </Container>
@@ -65,3 +100,24 @@ export default function Home() {
     );
   }
 }
+
+const RolesDiv = styled.div`
+  width: 250px;
+  height: fit-content;
+`;
+
+const Header = styled.div`
+  background-color: #9a8249;
+  height: 35px;
+  font-family: 'Josefin Slab';
+  text-align: center;
+  color: #f1f7ed;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  line-height: 1.6;
+  padding-top: 2px;
+  font-size: 1.25rem;
+  position: relative;
+  top: -5px;
+  width: 100%;
+`;

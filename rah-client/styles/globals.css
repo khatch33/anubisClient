@@ -41,6 +41,8 @@ a {
   margin-top: 10px;
   border-radius: 5px;
   margin-left: 2%;
+  min-width: 170px;
+  max-width: 215px;
 }
 
 #activeUsers-container {
@@ -49,10 +51,11 @@ a {
   flex-shrink: 1;
   border: 1px solid gray;
   border-radius: 0 0 5px 5px;
-  width: fit-content;
-  height: 85vh;
+  /* width: fit-content; */
+  height: 80vh;
   overflow-y: scroll;
   margin: 0;
+  min-width: 213px;
   /* hides the scrollbar in IE, Firefox */
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -66,8 +69,16 @@ a {
   border-radius: 5px 5px 0 0;
   background-color: #9A8249;
   color: #F1F7ED;
-  width: 100%;
   height: 35px;
+  min-width: 170px;
+  max-width: 215px;
+  width: 212px;
+  font-family: 'Josefin Slab';
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  line-height: 1.6;
+  padding-top: 2px;
+  font-size: 1.25rem;
 }
 
 #activeUsersList-container {
@@ -83,7 +94,7 @@ a {
 }
 
 .activeUser-item {
-  width: fit-content;
+  width: 150px;
   margin: 15px;
 }
 
@@ -94,10 +105,10 @@ a {
 
 .userAvatar {
   border-radius: 999px;
-  height: 30px;
-  width: 30px;
+  height: 35px;
+  width: 35px;
   text-align: center;
-  background-color: #9a824991;
+  background-color: lightgray;
   padding-top: 5px;
   font-size: 0.9em;
 }
@@ -118,6 +129,7 @@ a {
   text-align: center;
   margin-bottom: 25px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  max-width: 750px;
 }
 
 #video-header {
@@ -138,11 +150,13 @@ a {
 
 #instructions-container {
   width: 65%;
+  font-size: sans-serif;
   background-color: #F1F7ED;
   border-radius: 5px;
   border: 1px solid gray;
   padding: 0;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  max-width: 750px;
 }
 
 #instructions-header, #video-header {
@@ -150,13 +164,13 @@ a {
   width: 100%;
   height: 35px;
   text-align: center;
-  font-family:"Roboto","Helvetica","Arial",sans-serif;
-  font-weight: 400;
+  font-family:'Josefin Slab';
+  font-weight: 700;
   color: #F1F7ED;
-  font-size: 1em;
+  font-size: 1.3em;
   line-height: 1.5;
   letter-spacing: 0.00938em;
-  padding-top: 7px;
+  padding-top: 5px;
 }
 
 #instructions-text {
@@ -382,9 +396,8 @@ a {
 
 #signup-title {
   color: #9ea29b;
-  width: fit-content;
   position: relative;
-  left: -10px;
+  left: -17px;
 }
 
 .avatar-container[selected = "true"] {

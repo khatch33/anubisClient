@@ -29,7 +29,7 @@ const columns = [
   },
   {
     field: 'playersNum',
-    headerName: 'PLAYERS',
+    headerName: 'MAX PLAYERS',
     type: 'number',
     width: 170,
     editable: false,
@@ -52,7 +52,7 @@ export default function GamesList(props) {
   const [showForm, setShowForm] = useState(false);
 
   const rows = props.games.map((game) => {
-    let players = 'players: ' + game.players.length.toString() + '/' + game.playerAllowed;
+    let players = 'players: ' + game.playerAllowed;
     return {
       id: game._id,
       creatorName: game.ownerName,
@@ -75,7 +75,7 @@ export default function GamesList(props) {
   };
 
   return (
-    <Container style={{ height: 350, minWidth: '500px', maxWidth: '675px' }}>
+    <Container style={{ height: 350, minWidth: '500px', maxWidth: '682px' }}>
       <TabsContainer
         tabindicatorprops={{
           style: { backgroundColor: '#9A8249', color: '#F1F7ED' },
@@ -89,7 +89,7 @@ export default function GamesList(props) {
 
       {value === 0 ? (
         <DataGrid
-          sx={{ border: 'none' }}
+          sx={{ border: 'none', width: '682px'}}
           density='compact'
           rows={rows}
           columns={columns}

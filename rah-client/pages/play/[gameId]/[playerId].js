@@ -13,9 +13,7 @@ import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios';
 import GameInfo from '../../../components/GameInfo';
-
 import TestGame from '../../../pages/_sampleData/sampleGame.js';
-
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
 import { useRouter } from 'next/router';
@@ -29,16 +27,19 @@ import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
 import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
 import { useRecoilValue } from 'recoil';
+
 const basePath = 'http://localhost:4030/blueocean/api/v1';
 
 export default function Game() {
+  const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
   const [players, setPlayers] = useState([]);
   const [owner, setOwner] = useState();
-  const [announcement, setAnnouncement] = useState('somegr greauig yu ireuygr iuo');
+  const [announcement, setAnnouncement] = useState([]);
   const [role, setRole] = useState('wolf');
   const [phase, setPhase] = useState('night');
   const [card, setCard] = useState(0);
   const [open, setOpen] = useState(false);
+  const [voted, setVoted] = useState(false);
   const [game, setGame] = useState();
   const [gameInfo, setGameInfo] = useState();
   const [messages, setMessages] = useState([]);
@@ -47,7 +48,11 @@ export default function Game() {
   const router = useRouter();
   const { gameId, playerId } = router.query;
   var started = false;
+
   //const TestGame = TestGame.sampleGame
+  const markAsVoted = () => {
+    setVoted(true);
+  };
 
   useEffect(() => {
     socket.on(`receive-${gameId}`, (user) => {
@@ -56,7 +61,7 @@ export default function Game() {
 
     socket.on(`game-send`, (game) => {
       setGame(game);
-
+      setVoted(false);
       setGameInfo(getGameInfo(game, playerId));
     });
     socket.on(`receive-message-${gameId}`, (user, message) => {
@@ -100,7 +105,6 @@ export default function Game() {
         setGame(data.game);
       })
       .catch((err) => err);
-    //setGameInfo(getGameInfo(game, playerId));
   }, [gameId]);
 
   const closeDrawer = () => {
@@ -116,23 +120,24 @@ export default function Game() {
     phase === 'night' ? setPhase('day') : setPhase('night');
   };
   const moveRight = () => {
-    if (card < game.players.length - 5) {
+    if (card < game.players.length - 2) {
       let current = card;
-      setCard(current + 5);
+      setCard(current + 2);
     } else {
       let current = card;
-      setCard(players.length - 5);
+      setCard(players.length - 2);
     }
   };
   const moveLeft = () => {
-    if (Card > 5) {
+    if (Card > 2) {
       let current = card;
-      setCard(current - 5);
+      setCard(current - 2);
     } else {
       let current = card;
       setCard(0);
     }
   };
+
   // socket.on(`receive-message-${gameId}`, (user, message) => {
 
   //   let messageObj = {userName: user.userName, text: message, user_id: user.user_id}
@@ -231,6 +236,8 @@ export default function Game() {
                               phase={gameInfo.phase}
                               role={gameInfo.role}
                               player={player}
+                              voted={voted}
+                              markAsVoted={markAsVoted}
                             />
                           );
                         }
@@ -249,7 +256,7 @@ export default function Game() {
           </Box>
         ) : (
           <StyledContainer maxWidth='sm'>
-            <h2>Error: No games found. Try again.</h2>
+            <p>Error: No games found. Try again.</p>
           </StyledContainer>
         )}
       </Container>

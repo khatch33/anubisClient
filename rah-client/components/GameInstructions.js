@@ -4,38 +4,50 @@ import { shadows } from '@mui/system';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
-export default function GameInfo (props) {
+export default function GameInstructions (props) {
   const game = props.game
   const info = props.info
+
+
   return (
-    <StyledContainer maxWidth={false}>
+    <StyledContainer>
       <StyledCard>
         <h3>Instructions</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
-            mollitia, molestiae quas vel sint commodi repudiandae
-            consequuntur voluptatum laborum numquam blanditiis harum
-            quisquam eius sed odit fugiat iusto fuga praesentium optio,
-            eaque rerum! Provident similique accusantium nemo autem.
-            Veritatis obcaecati tenetur iure eius earum ut molestias
-            architecto voluptate aliquam nihil, eveniet aliquid culpa
-            officia aut! Impedit sit sunt quaerat, odit, tenetur error,
-            harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia.
-            Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
-            sapiente officiis modi at sunt excepturi expedita sint? Sed
-            quibusdam recusandae alias error harum maxime adipisci amet
-            laborum.</p>
+        <div>
+          <ol>
+            <li>Each player will be randomly assigned one of the following roles: Anubis, Seer, Doctor, Villager </li>
+            <li>Each night, the players assigned the role of Anubis will vote to mummify one player.</li>
+            <li>Each day, the non-mummified players can chat to attempt to determine who is Anubis.</li>
+            <li>Once the votes are tallied, the chosen player will be sacrified to their gods.</li>
+            <li>The final remaining player wins.</li>
+          </ol>
+        </div>
+        <div style={{display: 'flex', textAlign: 'center'}}>
+
+        <RolesDiv>
+          <span>Doctor</span>
+          <div>Doctors have the special ability to reverse the mummification for one player should that player be chosen by Anubis for sacrifice. To heal a player, the Doctor must click the "Heal" button displayed on the player's card they wish to heal.</div>
+        </RolesDiv>
+
+        <RolesDiv>
+          <div>Seer</div>
+          <div>Seers can choose to reveal the identity of one player by clicking the "Reveal" button displayed on the player's card they wish to unveil.</div>
+        </RolesDiv>
+          </div>
         <Button onClick={props.close}>X</Button>
+
       </StyledCard>
     </StyledContainer>
   )
 }
 
-const StyledContainer = styled(Container)`
+const StyledContainer = styled.div`
   align-items: center;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.9);
   display: flex;
-  height: min-content;
   justify-content: center;
   text-align: center;
 `;
@@ -44,7 +56,7 @@ const StyledCard = styled(Card)`
   background-color: #F1F7ED;
   margin: 5px;
   padding: 5px;
-  width: 500px;
+  width: 100%;
 `;
 
 const GameInfoCard = styled(Card)`
@@ -66,4 +78,9 @@ const Button = styled.button`
   margin: 5px;
   position: relative;
   width: fit-content;
+`;
+
+const RolesDiv = styled.div`
+  width: 250px;
+  height: 250px;
 `;
