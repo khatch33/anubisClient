@@ -33,7 +33,7 @@ export default function GameInfo(props) {
               START GAME
             </StartButton> : null}
           </div>
-        ) : <div>The game will start shortly</div>
+        ) : <div style={{margin: '5px'}}>The game will start shortly</div>
       ) : null}
     </InfoContainer>
     </>
@@ -42,8 +42,8 @@ export default function GameInfo(props) {
 
 const InfoContainer = styled(Container)`
 
-  width: 250px;
-  height: 250px;
+  width: 250px !important;
+  height: 250px !important;
   border-radius: 5px;
   border: 1px solid gray;
   font-size: 0.9em;
@@ -95,6 +95,7 @@ const StartButton = styled.button`
 const InfoDiv = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 
 const TextDiv = styled.div`
