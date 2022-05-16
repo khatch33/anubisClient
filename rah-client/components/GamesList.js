@@ -75,21 +75,19 @@ export default function GamesList(props) {
   };
 
   return (
-    <Container style={{ height: 350, minWidth: '500px', maxWidth: '682px' }}>
+    <Container style={{ height: '350px', minWidth: '500px', maxWidth: '682px !important' }}>
       <TabsContainer
-        tabindicatorprops={{
-          style: { backgroundColor: '#9A8249', color: '#F1F7ED' },
-        }}
+        TabIndicatorProps={{ style: { background: '#9a8249' } }}
         value={value}
         onChange={handleChange}
         aria-label='tabs'>
-        <StyledTab label='Lobby' />
-        <StyledTab label='Create' />
+        <StyledTab disableRipple label='Lobby' />
+        <StyledTab disableRipple label='Create' />
       </TabsContainer>
 
       {value === 0 ? (
         <DataGrid
-          sx={{ border: 'none', width: '682px'}}
+          sx={{ border: 'none', width: '682px' }}
           density='compact'
           rows={rows}
           columns={columns}
@@ -107,5 +105,5 @@ const TabsContainer = styled(Tabs)`
 `;
 
 const StyledTab = styled(Tab)`
-  color: #9a8249;
+  color: #9a8249 !important;
 `;

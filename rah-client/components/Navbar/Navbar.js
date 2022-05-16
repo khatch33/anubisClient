@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -33,10 +33,11 @@ import { useRouter } from 'next/router';
 import uuid from 'react-uuid';
 import axios from 'axios';
 import { friendsState } from '../../_states/friendslist';
+import { SocketContext } from '../../socket/socket';
 const Navbar = () => {
   const [userData, setUserData] = useRecoilState(userState);
   const allUsers = useRecoilValue(friendsState);
-
+  const socket = useContext(SocketContext);
   const router = useRouter();
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('userToken'));
@@ -55,7 +56,8 @@ const Navbar = () => {
   const logoutFunc = () => {
     localStorage.removeItem('userToken');
     setLoggedIn(false);
-    setUserData({ userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}` });
+    // setUserData({ userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}` });
+    socket.close();
     router.push('/');
   };
 

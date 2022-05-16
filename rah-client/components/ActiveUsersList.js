@@ -23,7 +23,6 @@ export default function ActiveUsersList() {
   useEffect(() => {
     socket.on('receive-lobby', (users) => {
       setUsersList(users);
-      console.log(users, 'users');
       setGlobalUsersList(users);
     });
     socket.on('error', (err) => {
@@ -58,16 +57,14 @@ export default function ActiveUsersList() {
                     className='userAvatar'
                     src={
                       !user.img || user.img === ''
-                        ? avatars[Math.floor(Math.random() * 5) + 1]
+                        ? avatars[Math.floor(Math.random() * 5)]
                         : user.img
                     }
                     height={'33'}
                     width={'33'}
                   />
-
                   <span className='userName'>{user.userName}</span>
                 </div>
-                <span className='activeUsers-rank'> {userData.score ? userData.score : ''} </span>
               </div>
             </div>
           ))
@@ -88,5 +85,5 @@ const Title = styled(Typography)`
   letter-spacing: 0.2rem;
   line-height: 1.6;
   padding-top: 5px;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 `;

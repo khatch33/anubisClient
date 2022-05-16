@@ -47,12 +47,8 @@ export default function Lobby() {
     }
     socket.emit('get-games', games);
     socket.on('receive-games', (games) => {
-      console.log('game data is here', games);
       setGames(games);
     });
-    return () => {
-      //socket.disconnect()
-    };
   }, []);
 
   return (
@@ -86,10 +82,7 @@ export default function Lobby() {
               flexDirection: 'column',
               width: 'fit-content',
             }}>
-            <Container
-              maxWidth={false}
-              id='gameDisplay-container'
-              style={{ margin: '0', marginBottom: '15px' }}>
+            <Container maxWidth={false} id='gameDisplay-container' style={{ marginBottom: '15px' }}>
               {value === 0 ? (
                 <GamesList games={games} value={value} handleChange={handleChange} />
               ) : (

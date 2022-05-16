@@ -39,8 +39,6 @@ export default function SignupForm(props) {
     if (submitted) {
       router.push('/lobby');
     }
-    console.log(Icon4.src, 'icon4');
-    console.log(Icon5.src, 'icon4');
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -120,7 +118,7 @@ export default function SignupForm(props) {
           <Container id='images-container'>
             <span id='signup-title'>Choose an Avatar:</span>
 
-            <ImageContainer onClick={() => setImg(Icon1.src)} className='avatar-container'>
+            <ImageContainer onClick={(e) => setImg(Icon1.src)} className='avatar-container'>
               <StyledImage
                 style={{ paddingRight: '3px' }}
                 height='40'
@@ -140,7 +138,7 @@ export default function SignupForm(props) {
             <ImageContainer
               className='avatar-container'
               style={{ paddingTop: '5px', paddingLeft: '3px' }}
-              onClick={() => setImg(Icon3.src)}>
+              onClick={(e) => setImg(Icon3.src)}>
               <StyledImage src={Icon3.src} name={'Icon1'} height='35' width='35' />
             </ImageContainer>
 
