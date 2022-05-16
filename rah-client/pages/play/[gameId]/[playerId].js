@@ -13,7 +13,9 @@ import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios';
 import GameInfo from '../../../components/GameInfo';
+
 import TestGame from '../../../pages/_sampleData/sampleGame.js';
+
 import { SocketContext } from '../../../socket/socket';
 import { getGameInfo } from './funcs.js';
 import { useRouter } from 'next/router';
@@ -97,7 +99,9 @@ export default function Game() {
   useEffect(() => {
     axios({
       method: 'get',
+
       url: `http://${process.env.REACT_APP_URL}/blueocean/api/v1/games/single?`,
+
       params: { id: gameId },
     })
       .then((res) => {

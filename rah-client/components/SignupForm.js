@@ -54,7 +54,12 @@ export default function SignupForm(props) {
   const onSubmit = (data) => {
     data['img'] = img;
 
-    axios({ method: 'post', url: `${basePath}/users`, data: data })
+    console.log(data);
+    axios({
+      method: 'post',
+      url: `http://${process.env.REACT_APP_URL}/blueocean/api/v1/users`,
+      data: data,
+    })
       .then((res) => {
         if (res.status === 200) {
           setToken({
