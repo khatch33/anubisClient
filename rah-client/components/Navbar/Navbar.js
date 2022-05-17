@@ -56,8 +56,6 @@ const Navbar = () => {
   const logoutFunc = () => {
     localStorage.removeItem('userToken');
     setLoggedIn(false);
-    // setUserData({ userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}` });
-    socket.close();
     router.push('/');
   };
 
@@ -68,7 +66,7 @@ const Navbar = () => {
   //navbar page states based on if user is logged in
   const pagesIfLoggedIn = [
     ,
-    <StyledLinks>Ranking</StyledLinks>,
+    ,
     <StyledLinks onClick={backToLobby}>Lobby</StyledLinks>,
     <StyledLinks onClick={logoutFunc}>Logout</StyledLinks>,
   ];
@@ -133,8 +131,7 @@ const Navbar = () => {
         user_id: localUser.userId,
       })
         .then((res) => {
-          console.log(res);
-          setFriendsList(res.data.user.friends);
+          setFriendsList([{ username: 'Tony' }, { username: 'Lauren' }, { username: 'Cihad' }]);
         })
         .catch((err) => console.log('error friend response', err));
     }
@@ -238,13 +235,14 @@ const Navbar = () => {
     e.stopPropagation();
     handleOpen();
   };
-
   return (
     <>
       <AppBar position='static' style={{ backgroundColor: 'black' }}>
         <Container maxWidth='xl' style={{ backgroundColor: 'black' }}>
           <Toolbar style={{ backgroundColor: 'black' }}>
-            <Image height='60' width='65' src={LogoIcon} alt='' />
+            <Link href='/'>
+              <Image height='60' width='65' src={LogoIcon} alt='' />
+            </Link>
             <Typography
               variant='h6'
               noWrap
@@ -349,7 +347,7 @@ const Navbar = () => {
             </Box>
             <Box sx={{ flexGrow: 0 }}>
               <IconButton sx={{ p: 0 }}>
-                {loggedIn && <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />}
+                {loggedIn && <Avatar alt='Remy Sharp' src={userData.img} />}
               </IconButton>
               <Menu
                 sx={{ mt: '45px' }}
@@ -390,7 +388,7 @@ const Navbar = () => {
         <Modal
           open={signupModal}
           onClose={handleCloseSignupModal}
-          aria-labelledby='modal-modal-title'
+          aria-labelledby='modal-modal-signup'
           aria-describedby='modal-modal-description'>
           <SignupForm />
         </Modal>

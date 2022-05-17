@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactStrictMode: true,
   env: {
     REACT_APP_URL: process.env.REACT_APP_URL,
     REACT_APP_socket_END_POINT: process.env.REACT_APP_socket_END_POINT,

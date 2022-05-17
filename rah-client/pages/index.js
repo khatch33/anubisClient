@@ -1,25 +1,21 @@
 import LandingPage from '../components/LandingPage';
 import Container from '@mui/material/Container';
 import Navbar from '../components/Navbar/Navbar';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ActiveUsersList from '../components/ActiveUsersList';
 import axios from 'axios';
-import activeUsers from '../pages/_sampleData/activeUsers';
 import GameInstructions from '../components/GameInstructions';
 import styled from 'styled-components';
-
+import { SocketContext } from '../socket/socket';
 const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
 export default function Home() {
+  const socket = useContext(SocketContext);
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeList, setActiveList] = useState([]);
   useEffect(() => {
-    let mounted = true;
-    if (activeUsers) {
-      setIsLoaded(true);
-      setActiveList(activeUsers);
-    }
+    setIsLoaded(true);
   }, []);
 
   if (error) {
@@ -31,7 +27,7 @@ export default function Home() {
       <>
         <Navbar />
         <Container maxWidth={false} id='app-container'>
-          <ActiveUsersList users={activeUsers} />
+          {socket && <ActiveUsersList />}
 
           <Container maxWidth={false} disableGutters={true} id='video-instructions-container'>
             <Container maxWidth={false} disableGutters={true} id='video-container'>

@@ -18,41 +18,38 @@ export default function PlayChat() {
   const chatBoxOnChange = (e) => {
     setChat(e.target.value);
   };
-  const router = useRouter()
-  const {gameId, playerId} = router.query
+  const router = useRouter();
+  const { gameId, playerId } = router.query;
 
   const onFormSubmit = (e) => {
-    e.preventDefault()
-    console.log(user)
-    let user1 = {user_id: user.userId, userName: user.userName}
-    let message = chat
+    e.preventDefault();
+    let user1 = { user_id: user.userId, userName: user.userName };
+    let message = chat;
     socket.emit('send-message', user1, message, gameId);
     setChat('');
   };
 
   return (
-
     <Form onSubmit={onFormSubmit}>
-    <ChatInput
-      type='text'
-      placeholder='Send Message'
-      onChange={chatBoxOnChange}
-      value={chat}
-      id='chat-input'
-    />
-    <StyledButton
-      style={{color: "#9A8249" }}
-      id='submitChat-button'
-      endIcon={<SendIcon />}
-      type='submit'
-    />
+      <ChatInput
+        type='text'
+        placeholder='Send Message'
+        onChange={chatBoxOnChange}
+        value={chat}
+        id='chat-input'
+      />
+      <StyledButton
+        style={{ color: '#9A8249' }}
+        id='submitChat-button'
+        endIcon={<SendIcon />}
+        type='submit'
+      />
     </Form>
   );
 }
 
-
 const Form = styled.form`
-  background-color: #F1F7ED;
+  background-color: #f1f7ed;
   border: 1px solid gray;
   border-radius: 0 0 5px 5px;
   display: flex;

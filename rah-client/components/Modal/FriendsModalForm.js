@@ -27,7 +27,6 @@ export default function FriendsModalForm() {
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    console.log(message);
     setMessage('');
   };
   return (

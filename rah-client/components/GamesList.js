@@ -63,6 +63,7 @@ export default function GamesList(props) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+
   };
 
   const onRowClick = (event) => {
@@ -80,8 +81,8 @@ export default function GamesList(props) {
         value={value}
         onChange={handleChange}
         aria-label='tabs'>
-        <StyledTab disableRipple label='Lobby' />
-        <StyledTab disableRipple label='Create' />
+        <StyledTab label='Lobby' />
+        <StyledTab label='Create' />
       </TabsContainer>
 
       {value === 0 ? (

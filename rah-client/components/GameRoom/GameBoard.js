@@ -9,7 +9,6 @@ import Sprite1 from '../../public/sprite1.png';
 import Sprite2 from '../../public/sprite2.png';
 import Sprite3 from '../../public/sprite3.png';
 import Sprite4 from '../../public/sprite4.png';
-import Game from '../../pages/_sampleData/sampleGame.js';
 import { MapEmAcross, MapEmCircle, oneInMiddle } from './HelperFuncs.js';
 
 const sprites = [Sprite1.src, Sprite2.src, Sprite3.src, Sprite4.src];
@@ -35,7 +34,6 @@ export default function GameBoard(props) {
     } else {
       Arr = MapEmCircle(players, 70, 40, height, width);
     }
-    console.log(Arr);
     return Object.values(Arr).map((locale, i) => {
       return (
         <Tooltip title={players[i].player.userName}>

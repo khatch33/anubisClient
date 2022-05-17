@@ -13,18 +13,14 @@ import List from '@mui/material/List';
 import styled from 'styled-components';
 import axios from 'axios';
 import GameInfo from '../../../components/GameInfo';
-
-import TestGame from '../../../pages/_sampleData/sampleGame.js';
-
 import { SocketContext } from '../../../socket/socket';
-import { getGameInfo } from './funcs.js';
+import { getGameInfo } from '../../../components/GameRoom/funcs.js';
 import { useRouter } from 'next/router';
 import Alert from '@mui/material/Alert';
 import GameInstructions from '../../../components/GameInstructions.js';
 import PlayChat from '../../../components/GameRoom/PlayChatForm';
 import PlayChatRoom from '../../../components/GameRoom/PlayChatRoom';
 import PlayerCard from '../../../components/PlayerCard.js';
-import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
 import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
@@ -51,7 +47,6 @@ export default function Game() {
   const { gameId, playerId } = router.query;
   var started = false;
 
-  //const TestGame = TestGame.sampleGame
   const markAsVoted = () => {
     setVoted(true);
   };

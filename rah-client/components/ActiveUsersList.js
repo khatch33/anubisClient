@@ -7,6 +7,7 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import Typography from '@mui/material/Typography';
 import { friendsState } from '../_states/friendslist';
 import axios from 'axios';
+
 export default function ActiveUsersList() {
   const socket = useContext(SocketContext);
   const userData = useRecoilValue(userState);
@@ -22,9 +23,11 @@ export default function ActiveUsersList() {
   ];
 
   useEffect(() => {
+    const localUser = JSON.parse(localStorage.getItem('userToken'));
     socket.on('receive-lobby', (users) => {
+      console.log(users);
       setUsersList(users);
-      setGlobalUsersList(users);
+      // setGlobalUsersList(users);
     });
     socket.on('error', (err) => {
       console.error(err);
@@ -32,7 +35,7 @@ export default function ActiveUsersList() {
     return () => {
       socket.emit('join-room', userData, 'lobby');
     };
-  }, []);
+  }, [socket, usersList]);
 
   const friendAdd = () => {
     axios.put(`http://${process.env.REACT_APP_URL}/blueocean/api/v1/users/togglefriends`, {
@@ -56,11 +59,7 @@ export default function ActiveUsersList() {
                 <div className='activeUsers-username'>
                   <img
                     className='userAvatar'
-                    src={
-                      !user.img || user.img === ''
-                        ? avatars[Math.floor(Math.random() * 5)]
-                        : user.img
-                    }
+                    src={!user.img || user.img === '' ? avatars[0] : user.img}
                     height={'33'}
                     width={'33'}
                   />

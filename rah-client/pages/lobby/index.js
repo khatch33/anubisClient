@@ -9,7 +9,6 @@ import List from '@mui/material/List';
 import ChatForm from '../../components/Lobby/LobbyChatForm';
 import GameRow from '../../components/GameRow.js';
 import LobbyDisplay from '../../components/Lobby/LobbyDisplay';
-import { sampleGame } from '../_sampleData/sampleGame.js';
 import axios from 'axios';
 import LobbyChatRoom from '../../components/Lobby/LobbyChatRoom';
 import PropTypes from 'prop-types';
@@ -23,12 +22,13 @@ import { useRecoilState } from 'recoil';
 import { SocketContext } from '../../socket/socket';
 import GamesList from '../../components/GamesList.js';
 import { useRouter } from 'next/router';
+
 export default function Lobby() {
   const router = useRouter();
 
   const [value, setValue] = useState(0);
   const [user, setUser] = useRecoilState(userState);
-
+  const [usersList, setUsersList] = useState([]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -45,11 +45,32 @@ export default function Lobby() {
     } else {
       setUser(localUser);
     }
+  }, []);
+
+  useEffect(() => {
     socket.emit('get-games', games);
     socket.on('receive-games', (games) => {
       setGames(games);
     });
-  }, []);
+  }, [games, socket]);
+
+  // export async function getStaticProps = () => {
+  //   //executed during build process
+  //   //can fetch data from API
+  //   socket.on('receive-lobby', (users) => {
+  //     setUsersList(users)
+  //     // setGlobalUsersList(users);
+  //   });
+  //   socket.emit('get-games', games);
+  //   socket.on('receive-games', (games) => {
+  //     return {
+  //       props: {
+  //         games,
+  //         usersList,
+  //       }
+  //     }
+  //   });
+  // }
 
   return (
     <>
@@ -71,7 +92,7 @@ export default function Lobby() {
               left: '33px',
               width: '215px',
             }}>
-            <ActiveUsersList />
+            {socket && <ActiveUsersList usersList={usersList} />}
           </div>
 
           <Container
@@ -86,7 +107,7 @@ export default function Lobby() {
               {value === 0 ? (
                 <GamesList games={games} value={value} handleChange={handleChange} />
               ) : (
-                <CreateGame handleChange={gameCreated} />
+                <CreateGame appendGame={appendGame} />
               )}
             </Container>
 

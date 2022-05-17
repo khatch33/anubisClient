@@ -3,7 +3,13 @@ const uuid = require('react-uuid');
 
 const userState = atom({
   key: 'tokenState',
-  default: { userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}` },
+  default: {
+    userId: '',
+    userToken: '',
+    userName: `Guest_${uuid().slice(0, 5)}`,
+    img: '',
+    score: 0,
+  },
 });
 
 const userTokenState = selector({

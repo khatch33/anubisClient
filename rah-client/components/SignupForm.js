@@ -13,7 +13,6 @@ import Icon1 from '../public/icons2/icon1.png';
 import Icon2 from '../public/icons2/icon2.png';
 import Icon3 from '../public/icons2/icon3.png';
 import Icon4 from '../public/icons2/icon4.png';
-import Icon5 from '../public/icons2/icon5.png';
 import Image from 'next/Image';
 
 const style = {
@@ -43,7 +42,7 @@ export default function SignupForm(props) {
 
   const [submitted, setSubmitted] = useState(false);
   const [token, setToken] = useRecoilState(userState);
-  const [img, setImg] = useState('/_next/static/media/icon1.ca5cbabd.png');
+  const [img, setImg] = useState('');
 
   const {
     register,
@@ -53,7 +52,6 @@ export default function SignupForm(props) {
 
   const onSubmit = (data) => {
     data['img'] = img;
-
     console.log(data);
     axios({
       method: 'post',
@@ -66,6 +64,7 @@ export default function SignupForm(props) {
             userId: res.data.user._id,
             userToken: res.data.token,
             userName: res.data.user.userName,
+            img: res.data.user.img,
             score: 0,
           });
           setSubmitted(true);
@@ -75,6 +74,7 @@ export default function SignupForm(props) {
               userId: res.data.user._id,
               userToken: res.data.token,
               userName: res.data.user.userName,
+              img: res.data.user.img,
               score: 0,
             })
           );
@@ -147,7 +147,7 @@ export default function SignupForm(props) {
               <StyledImage src={Icon3.src} name={'Icon1'} height='35' width='35' />
             </ImageContainer>
 
-            <ImageContainer className='avatar-container' onClick={(e) => setImg(Icon3.src)}>
+            <ImageContainer className='avatar-container' onClick={(e) => setImg(Icon4.src)}>
               <StyledImage src={Icon4.src} height='37' width='33' />
             </ImageContainer>
           </Container>
