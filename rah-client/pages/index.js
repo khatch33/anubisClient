@@ -8,20 +8,12 @@ import activeUsers from '../pages/_sampleData/activeUsers';
 import GameInstructions from '../components/GameInstructions';
 import styled from 'styled-components';
 
-<<<<<<< HEAD
 const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
-=======
-
-const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
-
-
->>>>>>> 06dba2d2bf8cb355ef6196ca17364e000be18ca8
 export default function Home() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeList, setActiveList] = useState([]);
-
   useEffect(() => {
     let mounted = true;
     if (activeUsers) {
@@ -41,7 +33,6 @@ export default function Home() {
         <Container maxWidth={false} id='app-container'>
           <ActiveUsersList users={activeUsers} />
 
-<<<<<<< HEAD
           <Container maxWidth={false} disableGutters={true} id='video-instructions-container'>
             <Container maxWidth={false} disableGutters={true} id='video-container'>
               <div id='video-header'>WELCOME TO WRATH OF ANUBIS</div>
@@ -53,10 +44,9 @@ export default function Home() {
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                 allowFullScreen></iframe>
             </Container>
-
             <Container maxWidth={false} id='instructions-container'>
               <Header id='instructions-header'>HOW TO PLAY</Header>
-              <div id='instructions-text' style={{ fontSize: '0.85em', alignItems: 'center' }}>
+              <div id='instructions-text' style={{ fontSize: '0.85em' }}>
                 <div>
                   <ol>
                     <li>
@@ -69,20 +59,18 @@ export default function Home() {
                       player.
                     </li>
                     <li>
-                      Each day, the non-mummified players can chat to attempt to determine which
-                      player is Anubis.
+                      Each day, the non-mummified players can chat to attempt to determine who is
+                      Anubis.
                     </li>
                     <li>
-                      Once the votes are tallied, the chosen player will be sacrified to the gods.
+                      Once the votes are tallied, the chosen player will be sacrified to their gods.
                     </li>
                     <li>The final remaining player wins.</li>
                   </ol>
                 </div>
-                <div style={{ display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', textAlign: 'center' }}>
                   <RolesDiv>
-                    <span>
-                      <b>Doctor</b>
-                    </span>
+                    <span>Doctor</span>
                     <div>
                       Doctors have the special ability to reverse the mummification for one player
                       should that player be chosen by Anubis for sacrifice. To heal a player, the
@@ -91,61 +79,13 @@ export default function Home() {
                     </div>
                   </RolesDiv>
                   <RolesDiv>
-                    <div>
-                      <b>Seer</b>
-                    </div>
+                    <div>Seer</div>
                     <div>
                       Seers can choose to reveal the identity of one player by clicking the "Reveal"
                       button displayed on the player's card they wish to unveil.
                     </div>
                   </RolesDiv>
                 </div>
-=======
-
-          <Container
-            maxWidth={false}
-            disableGutters={true}
-            id="video-instructions-container"
-          >
-            <Container
-              maxWidth={false}
-              disableGutters={true}
-              id="video-container"
-            >
-              <div id="video-header">WELCOME TO WRATH OF ANUBIS</div>
-              <iframe
-                id="video-element"
-                src="https://www.youtube.com/embed/OysJ4nL4jS8"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </Container>
-
-            <Container maxWidth={false} id="instructions-container" >
-              <Header id="instructions-header">HOW TO PLAY</Header>
-              <div id="instructions-text" style={{fontSize: '0.85em'}}>
-              <div>
-                <ol>
-                  <li> Each player will be randomly assigned one of the following roles: Anubis, Seer, Doctor, Villager </li>
-                  <li>Each night, the players assigned the role of Anubis will vote to mummify one player.</li>
-                  <li>Each day, the non-mummified players can chat to attempt to determine who is Anubis.</li>
-                  <li>Once the votes are tallied, the chosen player will be sacrified to their gods.</li>
-                  <li>The final remaining player wins.</li>
-                </ol>
-              </div>
-              <div style={{display: 'flex', textAlign: 'center'}}>
-              <RolesDiv>
-                <span>Doctor</span>
-                <div>Doctors have the special ability to reverse the mummification for one player should that player be chosen by Anubis for sacrifice. To heal a player, the Doctor must click the "Heal" button displayed on the player's card they wish to heal.</div>
-              </RolesDiv>
-              <RolesDiv>
-                <div>Seer</div>
-                <div>Seers can choose to reveal the identity of one player by clicking the "Reveal" button displayed on the player's card they wish to unveil.</div>
-              </RolesDiv>
-              </div>
->>>>>>> 06dba2d2bf8cb355ef6196ca17364e000be18ca8
               </div>
             </Container>
           </Container>

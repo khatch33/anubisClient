@@ -1,53 +1,71 @@
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
 
-
 export default function GameInfo(props) {
   return (
     <>
-    <InfoContainer maxWidth={false} disableGutters={true}>
-      <Header>GAME INFO</Header>
-      <div>
-        <StartButton onClick={() => props.setOpen(!props.open)}>
-          INSTRUCTIONS
-        </StartButton>
-      </div>
+      <InfoContainer maxWidth={false} disableGutters={true}>
+        <Header>INFO</Header>
+        <div>
+          <StartButton onClick={() => props.setOpen(!props.open)}>INSTRUCTIONS</StartButton>
+        </div>
 
-      <TextDiv>
-         {props.game.phase === 'pregame' ? <><span>PHASE: </span><span>PRE-GAME</span></> : <><span>PHASE: </span> <span>{props.game.phase}</span></> }
-      </TextDiv>
-      {props.info ? (
-        <InfoDiv>
-          <TextDiv><span>YOUR ROLE:</span> <span>{props.info.role}</span></TextDiv>
-          <TextDiv><span>VILLAGERS:</span> <span>{props.info.playersLeft}</span></TextDiv>
-          <TextDiv><span>ANUBIS:</span> <span>{props.info.wolfsLeft}</span></TextDiv>
-          <TextDiv><span>DOCTORS:</span> <span>{props.info.doctorsLeft}</span></TextDiv>
-          <TextDiv> <span>SEERS:</span> <span>{props.info.seersLeft}</span> </TextDiv>
-        </InfoDiv>
-      ) : null}
+        <TextDiv>
+          {props.game.phase === 'pregame' ? (
+            <>
+              <span>PHASE: </span>
+              <span>PRE-GAME</span>
+            </>
+          ) : (
+            <>
+              <span>PHASE: </span> <span>{props.game.phase}</span>
+            </>
+          )}
+        </TextDiv>
+        {props.info ? (
+          <InfoDiv>
+            <TextDiv>
+              <span>YOUR ROLE:</span> <span>{props.info.role}</span>
+            </TextDiv>
+            <TextDiv>
+              <span>VILLAGERS:</span> <span>{props.info.playersLeft}</span>
+            </TextDiv>
+            <TextDiv>
+              <span>ANUBIS:</span> <span>{props.info.wolfsLeft}</span>
+            </TextDiv>
+            <TextDiv>
+              <span>DOCTORS:</span> <span>{props.info.doctorsLeft}</span>
+            </TextDiv>
+            <TextDiv>
+              {' '}
+              <span>SEERS:</span> <span>{props.info.seersLeft}</span>{' '}
+            </TextDiv>
+          </InfoDiv>
+        ) : null}
 
-      {props.game.owner ? (
-        props.game.owner === props.playerId ? (
-          <div style={{position: 'absolute', left: '35px', bottom: '0'}}>
-            {(props.game.phase === 'pregame') ? <StartButton onClick={() => props.startGame()}>
-              START GAME
-            </StartButton> : null}
-          </div>
-        ) : <div style={{margin: '5px'}}>The game will start shortly</div>
-      ) : null}
-    </InfoContainer>
+        {props.game.owner ? (
+          props.game.owner === props.playerId ? (
+            <div style={{ position: 'absolute', left: '35px', bottom: '0' }}>
+              {props.game.phase === 'pregame' ? (
+                <StartButton onClick={() => props.startGame()}>START GAME</StartButton>
+              ) : null}
+            </div>
+          ) : (
+            <div style={{ margin: '5px' }}>The game will start shortly</div>
+          )
+        ) : null}
+      </InfoContainer>
     </>
   );
 }
 
 const InfoContainer = styled(Container)`
-
   width: 250px !important;
   height: 250px !important;
   border-radius: 5px;
   border: 1px solid gray;
   font-size: 0.9em;
-  background-color: #F1F7ED;
+  background-color: #f1f7ed;
   text-align: center;
   position: relative;
   top: -20px;
@@ -95,7 +113,6 @@ const StartButton = styled.button`
 const InfoDiv = styled.div`
   display: flex;
   flex-direction: column;
-
 `;
 
 const TextDiv = styled.div`

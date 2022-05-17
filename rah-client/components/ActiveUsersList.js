@@ -6,6 +6,7 @@ import { userState } from '../_states/tokenState';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import Typography from '@mui/material/Typography';
 import { friendsState } from '../_states/friendslist';
+import axios from 'axios';
 export default function ActiveUsersList() {
   const socket = useContext(SocketContext);
   const userData = useRecoilValue(userState);

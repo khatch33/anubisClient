@@ -4,6 +4,7 @@ import Image from 'next/Image';
 import { useEffect, useState } from 'react';
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
+import Tooltip from '@mui/material/Tooltip';
 import Sprite1 from '../../public/sprite1.png';
 import Sprite2 from '../../public/sprite2.png';
 import Sprite3 from '../../public/sprite3.png';
@@ -65,10 +66,8 @@ export default function GameBoard(props) {
 
 const Person = styled.span`
   position: absolute;
-
   width: ${sprite.width};
   height: ${sprite.height};
-
   border-radius: 15px;
   left: ${(props) => props.left};
   top: ${(props) => props.top};

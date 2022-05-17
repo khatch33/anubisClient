@@ -5,7 +5,6 @@ import { userState } from '../_states/tokenState';
 import { useRouter } from 'next/router';
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
-
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CreateGame from './Lobby/CreateGame';
@@ -77,7 +76,7 @@ export default function GamesList(props) {
   return (
     <Container style={{ height: '350px', minWidth: '500px', maxWidth: '682px !important' }}>
       <TabsContainer
-        TabIndicatorProps={{ style: { background: '#9a8249' } }}
+        TabIndicatorProps={{ style: { background: 'black' } }}
         value={value}
         onChange={handleChange}
         aria-label='tabs'>

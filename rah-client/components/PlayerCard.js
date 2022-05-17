@@ -17,7 +17,7 @@ export default function PlayerCard(props) {
   const player = props.player;
   const username = player.player.userName;
   const alive = player.status;
-  const clicked = false;
+  const [revealed, setRevealed] = useState(false);
   const phase = props.phase;
   const role = props.role;
   const socket = useContext(SocketContext);
@@ -37,7 +37,7 @@ export default function PlayerCard(props) {
     //reveal role to user
   };
   const renderActionButton = () => {
-    if (!clicked) {
+    if (!voted) {
       if (phase === 'night') {
         if (role === 'villager') {
           return;

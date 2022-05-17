@@ -28,8 +28,8 @@ import { sampleGame } from '../../../pages/_sampleData/sampleGame.js';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid';
 import { userState } from '../../../_states/tokenState';
 import GameBoard from '../../../components/GameRoom/GameBoard';
-import { useRecoilValue } from 'recoil';
 
+import { useRecoilValue } from 'recoil';
 const basePath = 'http://localhost:4030/blueocean/api/v1';
 
 export default function Game() {
@@ -99,9 +99,7 @@ export default function Game() {
   useEffect(() => {
     axios({
       method: 'get',
-
-      url: `http://${process.env.REACT_APP_URL}/blueocean/api/v1/games/single?`,
-
+      url: `http://${basePath}/games/single?`,
       params: { id: gameId },
     })
       .then((res) => {
@@ -186,6 +184,7 @@ export default function Game() {
   //     setGame(data.game);
   //   }).catch((err) => err);
   // }, []);
+
   return (
     <>
       <Navbar />
