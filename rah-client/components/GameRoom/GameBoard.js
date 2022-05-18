@@ -17,8 +17,9 @@ const sprite = {height: '60px', width: '30px'}
 export default function GameBoard(props) {
   const [height, setHeight] = useState()
   const [width, setWidth] = useState()
-  const players = props.game.players
+  const players = props.game.players.filter((player) => player.status === true)
   const game = props.game
+  console.log(game)
 
 
   useEffect(() => {
@@ -32,12 +33,12 @@ export default function GameBoard(props) {
 
       Arr = MapEmAcross(players, 70, 40, height, width)
     } else if (phase === 'day3') {
-      let userName = game.playerVoted
+      let userName = game.playerVoted.userName
       Arr = oneInMiddle(players, 70, 40,  height, width, userName)
     } else {
       Arr = MapEmCircle(players, 70, 40,  height, width)
     }
-    console.log(Arr)
+    //console.log(Arr)
     return Object.values(Arr).map((locale, i) => {
       return <Tooltip title={players[i].player.userName}><Person left={locale.left} top={locale.top}><Image src={sprites[i % 4]} alt="" height="70" width="40"/></Person></Tooltip>
     })

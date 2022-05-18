@@ -57,6 +57,8 @@ export default function Game() {
     setVoted(true)
   }
 
+
+
   useEffect(() => {
     socket.on(`receive-${gameId}`, (user) => {
       console.log(user);
@@ -64,7 +66,7 @@ export default function Game() {
 
     socket.on(`game-send`, (game) => {
       setGame(game);
-
+      setVoted(false)
       setGameInfo(getGameInfo(game, playerId));
     });
     socket.on(`receive-message-${gameId}`, (user, message) => {
@@ -110,7 +112,7 @@ export default function Game() {
 
         }).catch((err) => err);
 
-  }, [gameId]);
+  }, []);
 
   const closeDrawer = () => {
     setOpen(false);

@@ -67,7 +67,7 @@ export default function PlayerCard(props) {
       <IconDiv>
         {alive? null : <StyledDiv><Image alt='' height="55" width="55" src={deadIcon}/> <br/> <span>{`${username} was taken by Anubis`} </span></StyledDiv>}
       </IconDiv>
-      {revealed ? <h4>{role}</h4>: null}
+      {revealed ? <h4>{player.role}</h4>: null}
       <ButtonDiv>
         {!voted && alive ? renderActionButton() : null}
       </ButtonDiv>
