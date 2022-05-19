@@ -1,6 +1,8 @@
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
+import Popover from '@mui/material/Popover'
 import Image from 'next/Image';
+import Typography from '@mui/material/Typography';
 import { useEffect, useState, useContext } from 'react';
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
@@ -18,6 +20,24 @@ const sprite = { height: '60px', width: '30px' };
 export default function GameBoard(props) {
   const [height, setHeight] = useState();
   const [width, setWidth] = useState();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [popName, setPopName] = useState()
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    console.log(event.currentTarget.id)
+    setPopName()
+  };
+  const getSpriteIndex = (userName) => {
+    if (userName.slice(0, 3) === 'bot') {
+      return parseInt(userName.slice(3)) % 4
+    } else {
+      return userName.length % 4
+    }
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const router = useRouter();
   const { gameId, playerId } = router.query;
   const user = props.user;
@@ -31,6 +51,10 @@ export default function GameBoard(props) {
     let cand = {player: game.playerVoted}
     socket.emit('player-vote', user1, cand, gameId);
   };
+
+  useEffect(() => {
+    setTrialVote(true)
+  }, [game.currentRound])
 
   useEffect(() => {
     setHeight(document.getElementById('bgimg').clientHeight);
@@ -52,8 +76,8 @@ export default function GameBoard(props) {
       // /console.log(Arr)
       return (
         <Tooltip title={locale.userName}>
-          <Person left={locale.left} top={locale.top}>
-            <Image src={sprites[i % 4]} alt='' height='75' width='60' />
+          <Person id={locale.userName} onClick={handleClick} left={locale.left} top={locale.top}>
+            <Image src={sprites[getSpriteIndex(locale.userName)]} alt='' height='75' width='60' />
           </Person>
         </Tooltip>
       );
@@ -70,7 +94,7 @@ export default function GameBoard(props) {
   //   );
   // });
   // };
-
+  const open = Boolean(anchorEl);
   return (
     <OuterContainer maxWidth={false} disableGutters={true}>
       <Banner>
@@ -83,7 +107,26 @@ export default function GameBoard(props) {
       <ImgContainer maxWidth={false} disableGutters={true}>
         <Img src={BoardImg} alt='' id='bgimg' height='450' width='850' />
         {props.game ? renderItems(game) : null}
-        {(props.game.phase === 'day3' && props.info.status)? <Phase3 onClick={vote}>VOTE TO SACRIFICE {game.playerVoted.userName}</Phase3> : <></>}
+        <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        {anchorEl ? <h3>{anchorEl.id} Vote History:</h3> : null}
+        {anchorEl ? Object.keys(game.players1[anchorEl.id].voteHistory).map((key, ind, array) => {
+          //return <h5>{key}</h5>
+          if (game.players1[anchorEl.id].voteHistory[key] !== null) {
+            console.log(array[key])
+            return <h5>Round {key}: voted to eliminate {game.players1[anchorEl.id].voteHistory[key].onTrial}</h5>
+          }
+        }) : null}
+      </Popover>
+        {(props.game.phase === 'day3' && trialVote && props.info.status)? <Phase3 onClick={vote}>VOTE TO SACRIFICE {game.playerVoted.userName}</Phase3> : <></>}
+
       </ImgContainer>
     </OuterContainer>
   );
@@ -138,6 +181,11 @@ const Announcement = styled.marquee`
   font-weight: 700;
   color: white;
 `;
+const VoteHistory = styled.span`
+  position: absolute;
+  left: 500px;
+  top: 50px;
+  `;
 
 const Phase3 = styled.button`
   border: none;

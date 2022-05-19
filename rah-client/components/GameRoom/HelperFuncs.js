@@ -4,23 +4,25 @@
 //OutputArray = array of arrays, output array[i] = [leftStr, rightStr]
 
 //gb = gameboard
-exports.MapEmAcross = (playersArr, spH, spW, gbH, gbW, overRide) => {
+exports.MapEmAcross = (playersArr, spH, spW, gbH, gbW) => {
   var length = playersArr.length
   //var length = 20
-
+  var rows = 1
+  if (playersArr.length > 10) {
+    rows = 3
+  }
   var halfwayTopPercentage = (50 - (spH / gbH) * 100).toString() + '%';
   var halfwayMaxLeftPercentage = 100 - (spW / gbW) * 100;
   //console.log('pa', playersArr)
   var halfWayInterval = halfwayMaxLeftPercentage / (length - 1);
   var map = {};
-  for (let i = 0; i < length; i++) {
-    // console.log(i)
-    if (overRide) {
-      map[i] = { left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage };
-    } else {
+  for (let i = 0; i < playersArr.length; i++) {
+        if (rows === 3) {
+          halfwayTopPercentage = ((((i % 3) + 1) * 25) - (spH / gbH) * 100).toString() + '%';
+        }
       //map[i] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage}
-      map[playersArr[i].player.user_id] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage, userName: playersArr[i].player.userName}
-    }
+        map[playersArr[i].player.user_id] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage, userName: playersArr[i].player.userName}
+
   }
   return map;
 };
@@ -53,7 +55,7 @@ exports.MapEmCircle = function (playersArr, spH, spW, gbH, gbW, left) {
     //console.log(interval)
     let angle = Math.PI * 2 * ((interval * i) / 360);
     //console.log(angle)
-    let x = (Math.cos(angle) * radius + midpoint[0]).toFixed(2) + 'px';
+    let x = (Math.cos(angle) * radius * wDif / hDif + midpoint[0]).toFixed(2) + 'px';
     let y = (Math.sin(angle) * radius + midpoint[1]).toFixed(2) + 'px';
     //map[playersArr[i].player._id] = {left: x, top: y}
     map[playersArr[i].player.user_id] = {left: x, top: y, userName: playersArr[i].player.userName}
@@ -70,12 +72,12 @@ exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerName) => {
   var wDif = gbW - spW
   var length = playersArr.length
   var middy = getMidpoint(hDif, wDif, spW)
-
+  //middy[0] = radius
   var radius = Math.min(hDif / 2, wDif / 2)
   let interval = 360 / length
   for (let i = 0; i < length; i++) {
     if (playerName) {
-      console.log('here i am ', playerName)
+      //console.log('here i am ', playerName)
          if (playersArr[i].player.userName === playerName) {
           //let circleArr = playersArr.splice(i, 1)
           let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length))

@@ -84,11 +84,12 @@ export default function PlayerCard(props) {
         {alive ? null : (
           <StyledDiv>
             <Image alt='' height='55' width='55' src={deadIcon} /> <br />{' '}
-            <span>{`${username} was taken by Anubis`} </span>
+            <span>{`${username} the ${player.role} was taken by Anubis`} </span><br />
           </StyledDiv>
         )}
       </IconDiv>
       {revealed && alive ? <Role>Role: {player.role}</Role> : null}
+      {(player.role === 'wolf' && role ==='wolf' && alive) ? <Role> Fellow Anubis</Role> : null}
       <ButtonDiv>{!voted && alive &&status ? renderActionButton() : null}</ButtonDiv>
     </Card>
   );
@@ -147,7 +148,7 @@ const StyledDiv = styled.div`
 
 const Role = styled.span`
   font-family: 'Josefin Slab';
-  height: fit-content;
+  height: 30px;
   text-align: center;
   font-weight: 700;
   font-size: 1.1em;

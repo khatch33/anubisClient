@@ -57,6 +57,7 @@ export default function Game() {
     });
 
     socket.on(`game-send`, (game) => {
+      console.log(game, game.phase)
       setGame(game);
       setVoted(false);
       setGameInfo(getGameInfo(game, playerId));
@@ -69,7 +70,8 @@ export default function Game() {
         setMessages([...messages, messageObj]);
       }
     });
-  });
+    return () => socket.disconnect()
+  }, []);
 
   useEffect(() => {
     socket.emit('join-room', { user_id: playerId, userName: user.userName }, gameId);
@@ -83,16 +85,21 @@ export default function Game() {
   }, [card]);
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: `http://${basePath}/games/single?`,
-      params: { id: gameId },
-    })
-      .then((res) => {
-        let data = res.data;
-        setGame(data.game);
+    if (gameId) {
+
+
+      axios({
+        method: 'get',
+        url: `http://${basePath}/games/single?`,
+        params: { id: gameId },
       })
-      .catch((err) => err);
+        .then((res) => {
+          let data = res.data;
+          setGame(data.game);
+          setGameInfo(getGameInfo(data.game, playerId));
+        }).catch((err) => err);
+    }
+
   }, [gameId]);
 
   const closeDrawer = () => {
