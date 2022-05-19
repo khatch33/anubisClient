@@ -57,8 +57,6 @@ export default function Game() {
     setVoted(true)
   }
 
-
-
   useEffect(() => {
     socket.on(`receive-${gameId}`, (user) => {
       console.log(user);

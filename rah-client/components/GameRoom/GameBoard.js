@@ -17,10 +17,14 @@ const sprite = {height: '60px', width: '30px'}
 export default function GameBoard(props) {
   const [height, setHeight] = useState()
   const [width, setWidth] = useState()
+  const user = props.user
   const players = props.game.players.filter((player) => player.status === true)
-  const game = props.game
+  //const game = props.game
   console.log(game)
-
+  // const voteToSacrifice = () => {
+  //   let user1 = {user_id: user.userId, userName: user.userName}
+  //   socket.emit('player-vote', game.playerVoted.userName, player, gameId)
+  // }
 
   useEffect(() => {
     setHeight(document.getElementById('bgimg').clientHeight);
@@ -31,16 +35,15 @@ export default function GameBoard(props) {
     var Arr;
     if (phase === 'day2') {
 
-      Arr = MapEmAcross(players, 70, 40, height, width)
+      Arr = MapEmAcross(players, 75, 60, height, width)
     } else if (phase === 'day3') {
       let userName = game.playerVoted.userName
-      Arr = oneInMiddle(players, 70, 40,  height, width, userName)
+      Arr = oneInMiddle(players, 75, 60,  height, width, userName)
     } else {
-      Arr = MapEmCircle(players, 70, 40,  height, width)
+      Arr = MapEmCircle(players, 75, 60,  height, width)
     }
-    //console.log(Arr)
     return Object.values(Arr).map((locale, i) => {
-      return <Tooltip title={players[i].player.userName}><Person left={locale.left} top={locale.top}><Image src={sprites[i % 4]} alt="" height="70" width="40"/></Person></Tooltip>
+      return <Tooltip title={i}><Person left={locale.left} top={locale.top}><Image src={sprites[i % 4]} alt="" height="75" width="60"/></Person></Tooltip>
     })
   }
 
@@ -57,6 +60,7 @@ export default function GameBoard(props) {
       <ImgContainer maxWidth={false} disableGutters={true}>
         <Img src={BoardImg} alt='' id='bgimg' height='450' width='850' />
         {props.game ? renderItems(game) : null}
+        {props.game.phase === 'day3' ? <Phase3>VOTE TO SACRIFICE</Phase3> : <></> }
       </ImgContainer>
     </OuterContainer>
   );
@@ -65,8 +69,6 @@ export default function GameBoard(props) {
 const Person = styled.span`
   position: absolute;
 
-  width: ${sprite.width};
-  height: ${sprite.height};
 
   border-radius: 15px;
   left: ${(props) => props.left};
@@ -114,4 +116,18 @@ const Announcement = styled.marquee`
   font-family: 'Josefin Slab';
   font-weight: 700;
   color: white;
+`;
+
+const Phase3 = styled.button`
+  border: none;
+  background-color: #9a824991;
+  cursor: pointer;
+  height: 30px;
+  border-radius: 9px;
+  padding: 7px;
+  width: fit-content;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  font-family: 'Josefin Slab';
+  font-weight: 700;
+  font-size: 1.1em;
 `;
