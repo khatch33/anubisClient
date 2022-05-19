@@ -162,12 +162,14 @@ const Navbar = () => {
   const filteredByOnline = (friends, online) => {
     let obj = {};
     for (let i = 0; i < friends.length; i++) {
-      let friendName = friends[i].username;
-      obj[friendName] = friends[i];
-      obj[friendName].loggedIn = false;
+      const friend = { ...friends[i] };
+      let friendName = friend.userName;
+      friend.loggedIn = false;
+      obj[friendName] = friend;
+      console.log(obj);
     }
     for (let i = 0; i < online.length; i++) {
-      let onlineName = online[i].username;
+      let onlineName = online[i].userName;
       if (obj[onlineName]) {
         obj[onlineName].loggedIn = true;
       }
@@ -225,7 +227,7 @@ const Navbar = () => {
                     </IconButton>
                   )}
                 </ListItemIcon>
-                <ListItemText primary={friend.username} />
+                <ListItemText primary={friend.userName} />
               </ListItem>
               <Divider light />
             </div>
