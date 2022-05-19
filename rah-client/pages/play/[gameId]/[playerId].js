@@ -48,8 +48,8 @@ export default function Game() {
   var started = false;
 
   const markAsVoted = () => {
-    setVoted(true);
-  };
+    setVoted(true)
+  }
 
   useEffect(() => {
     socket.on(`receive-${gameId}`, (user) => {

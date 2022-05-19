@@ -50,21 +50,14 @@ export default function ActiveUsersList() {
     <div id='activeUsers-outerContainer'>
       <Title id='activeUsers-header'>ONLINE PLAYERS</Title>
       <Container disableGutters={true} maxWidth={false} id='activeUsers-container'>
-        {!usersList.length ? (
-          <div style={{ textAlign: 'center', marginTop: '5px' }}>No active users</div>
-        ) : (
-          usersList.map((user) => (
-            <div key={JSON.stringify(user)} className='activeUser-item'>
-              <div id='activeUsersList-container'>
-                <div className='activeUsers-username'>
-                  <img
-                    className='userAvatar'
-                    src={!user.img || user.img === '' ? avatars[0] : user.img}
-                    height={'33'}
-                    width={'33'}
-                  />
-                  <span className='userName'>{user.userName}</span>
-                </div>
+        {!usersList.length ? <div style={{textAlign: 'center', marginTop: '5px'}}>No active users</div> : usersList.map((user, i) => (
+          <div key={JSON.stringify(user)} className='activeUser-item'>
+            <div id='activeUsersList-container'>
+              <div className='activeUsers-username'>
+              <img className='userAvatar' src={!user.img || user.img === "" ? avatars[i % 5] : user.img } height={"33"} width={"33"} />
+                {/* <img className='userAvatar' src={!user.img || user.img === "" ? avatars[Math.floor(Math.random() * 5) + 1] : user.img } height={"33"} width={"33"} /> */}
+
+                <span className='userName'>{user.userName}</span>
               </div>
             </div>
           ))

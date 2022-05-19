@@ -4,44 +4,26 @@ import styled from 'styled-components';
 export default function GameInfo(props) {
   return (
     <>
-      <InfoContainer maxWidth={false} disableGutters={true}>
-        <Header>INFO</Header>
-        <div>
-          <StartButton onClick={() => props.setOpen(!props.open)}>INSTRUCTIONS</StartButton>
-        </div>
+    <InfoContainer maxWidth={false} disableGutters={true}>
+      <Header><div style={{minWidth: '170px'}}>GAME INFO</div></Header>
+      <div>
+        <StartButton onClick={() => props.setOpen(!props.open)}>
+          INSTRUCTIONS
+        </StartButton>
+      </div>
 
-        <TextDiv>
-          {props.game.phase === 'pregame' ? (
-            <>
-              <span>PHASE: </span>
-              <span>PRE-GAME</span>
-            </>
-          ) : (
-            <>
-              <span>PHASE: </span> <span>{props.game.phase}</span>
-            </>
-          )}
-        </TextDiv>
-        {props.info ? (
-          <InfoDiv>
-            <TextDiv>
-              <span>YOUR ROLE:</span> <span>{props.info.role}</span>
-            </TextDiv>
-            <TextDiv>
-              <span>VILLAGERS:</span> <span>{props.info.playersLeft}</span>
-            </TextDiv>
-            <TextDiv>
-              <span>ANUBIS:</span> <span>{props.info.wolfsLeft}</span>
-            </TextDiv>
-            <TextDiv>
-              <span>DOCTORS:</span> <span>{props.info.doctorsLeft}</span>
-            </TextDiv>
-            <TextDiv>
-              {' '}
-              <span>SEERS:</span> <span>{props.info.seersLeft}</span>{' '}
-            </TextDiv>
-          </InfoDiv>
-        ) : null}
+      <TextDiv>
+         {props.game.phase === 'pregame' ? <><span>PHASE: </span><span>PRE-GAME</span></> : <><span>PHASE: </span> <span>{props.game.phase}</span></> }
+      </TextDiv>
+      {props.info ? (
+        <InfoDiv>
+          <TextDiv><span>YOUR ROLE:</span> <span>{props.info.role}</span></TextDiv>
+          <TextDiv><span>PLAYERS LEFT:</span> <span>{props.info.playersLeft}</span></TextDiv>
+          <TextDiv><span>ANUBIS LEFT:</span> <span>{props.info.wolfsLeft}</span></TextDiv>
+          <TextDiv><span>DOCTORS LEFT:</span> <span>{props.info.doctorsLeft}</span></TextDiv>
+          <TextDiv> <span>SEERS LEFT:</span> <span>{props.info.seersLeft}</span> </TextDiv>
+        </InfoDiv>
+      ) : null}
 
         {props.game.owner ? (
           props.game.owner === props.playerId ? (
@@ -91,7 +73,7 @@ const Header = styled(Container)`
   font-size: 1.25rem;
   position: relative;
   top: -5px;
-  width: 100%;
+  min-width: 170px;
 `;
 
 const StartButton = styled.button`

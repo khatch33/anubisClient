@@ -12,6 +12,7 @@ import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import { userState } from '../_states/tokenState';
 import { SocketContext } from '../socket/socket';
+const avatars = ["/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon2.37800c5f.png", "/_next/static/media/icon3.9872b9c5.png", "/_next/static/media/icon4.e31317e0.png", "/_next/static/media/icon5.173d920f.png"];
 
 export default function PlayerCard(props) {
   const player = props.player;
@@ -51,10 +52,14 @@ export default function PlayerCard(props) {
       } else if (phase === 'day2' || phase === 'day3') {
         return <Button onClick={() => vote()}>ACCUSE</Button>;
       }
-    } else {
-      return <h4>voted</h4>;
+    } else if (phase === 'day2')  {
+      return <Button onClick={() => vote()}>ACCUSE</Button>
     }
-  };
+  } else {
+    return <Role>Voted</Role>
+  }
+
+  }
   return (
     <Card
       key={'pc' + username}
@@ -62,7 +67,7 @@ export default function PlayerCard(props) {
       id='player-card'
       sx={{ boxShadow: 3 }}>
       <UserDiv>
-        <img className='userAvatar' src={`${player.img}`} alt='' />
+        <img className="userAvatar" src={player.img ? player.img : "/_next/static/media/icon3.9872b9c5.png" } alt="" height="35" width="35"/>
         <UsernameSpan key={'pc' + username}>{username}</UsernameSpan>
       </UserDiv>
 
@@ -74,8 +79,10 @@ export default function PlayerCard(props) {
           </StyledDiv>
         )}
       </IconDiv>
-      {revealed ? <h4>{player.role}</h4> : null}
-      <ButtonDiv>{!voted && alive ? renderActionButton() : null}</ButtonDiv>
+      {(revealed && alive) ? <Role>Role: {player.role}</Role>: null}
+      <ButtonDiv>
+        {!voted && alive ? renderActionButton() : null}
+      </ButtonDiv>
     </Card>
   );
 }
@@ -98,8 +105,9 @@ const UserDiv = styled.div`
   display: flex;
   align-items: center;
   margin: 5px;
-  height: 55px;
+  height: 30px;
   font-size: 0.9em;
+  padding-top: 5px;
 `;
 
 const IconDiv = styled.div`
@@ -128,4 +136,13 @@ const StyledDiv = styled.div`
   height: 150px;
   width: 150px;
   font-size: 0.85em;
+`;
+
+
+const Role = styled.span`
+  font-family: 'Josefin Slab';
+  height: fit-content;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1em;
 `;

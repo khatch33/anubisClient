@@ -15,7 +15,7 @@ export default function GameInstructions (props) {
   return (
     <StyledContainer>
       <StyledCard>
-        <h3>Instructions</h3>
+      <h3 style={{textAlign: 'center'}}>Instructions</h3>
         <div>
           <ol>
             <li>Each player will be randomly assigned one of the following roles: Anubis, Seer, Doctor, Villager </li>
@@ -25,15 +25,14 @@ export default function GameInstructions (props) {
             <li>The final remaining player wins.</li>
           </ol>
         </div>
-        <div style={{display: 'flex', textAlign: 'center'}}>
-
+        <div style={{display: 'flex', justifyContent: 'center'}}>
         <RolesDiv>
-          <span>Doctor</span>
+          <div style={{textAlign: 'center'}}>Doctor</div>
           <div>Doctors have the special ability to reverse the mummification for one player should that player be chosen by Anubis for sacrifice. To heal a player, the Doctor must click the "Heal" button displayed on the player's card they wish to heal.</div>
         </RolesDiv>
 
         <RolesDiv>
-          <div>Seer</div>
+          <div style={{textAlign: 'center'}}>Seer</div>
           <div>Seers can choose to reveal the identity of one player by clicking the "Reveal" button displayed on the player's card they wish to unveil.</div>
         </RolesDiv>
           </div>
@@ -49,18 +48,18 @@ const StyledContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.9);
   display: flex;
   justify-content: center;
-  text-align: center;
+  /* text-align: center; */
+  width: 100%;
 `;
 
 const StyledCard = styled(Card)`
   background-color: #F1F7ED;
   margin: 5px;
   padding: 5px;
-  width: 100%;
+  width: 50%;
 `;
 
 const GameInfoCard = styled(Card)`
-
   height: fit-content;
   margin: 5px;
   padding: 5px;
@@ -83,4 +82,5 @@ const Button = styled.button`
 const RolesDiv = styled.div`
   width: 250px;
   height: 250px;
+  margin: 10px;
 `;
