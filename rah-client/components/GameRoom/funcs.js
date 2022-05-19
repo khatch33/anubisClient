@@ -21,6 +21,7 @@ exports.getGameInfo = (game, userId) => {
     if (dets.player) {
       if (dets.player.user_id === userId) {
         gameInfo.role = dets.role;
+        gameInfo.status = dets.status
       }
     }
     //}

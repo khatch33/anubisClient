@@ -18,6 +18,7 @@ export default function GameInfo(props) {
       {props.info ? (
         <InfoDiv>
           <TextDiv><span>YOUR ROLE:</span> <span>{props.info.role}</span></TextDiv>
+          <TextDiv><span>STATUS:</span> <span>{props.info.status ? 'alive' : 'dead'}</span></TextDiv>
           <TextDiv><span>PLAYERS LEFT:</span> <span>{props.info.playersLeft}</span></TextDiv>
           <TextDiv><span>ANUBIS LEFT:</span> <span>{props.info.wolfsLeft}</span></TextDiv>
           <TextDiv><span>DOCTORS LEFT:</span> <span>{props.info.doctorsLeft}</span></TextDiv>

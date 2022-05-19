@@ -1,11 +1,13 @@
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
 import Image from 'next/Image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import BoardImg from '../../public/gameboard.jpg';
 import Card from '@mui/material/Card';
 import Tooltip from '@mui/material/Tooltip';
 import Sprite1 from '../../public/sprite1.png';
+import { useRouter } from 'next/router';
+import { SocketContext } from '../../socket/socket';
 import Sprite2 from '../../public/sprite2.png';
 import Sprite3 from '../../public/sprite3.png';
 import Sprite4 from '../../public/sprite4.png';
@@ -16,13 +18,19 @@ const sprite = { height: '60px', width: '30px' };
 export default function GameBoard(props) {
   const [height, setHeight] = useState();
   const [width, setWidth] = useState();
+  const router = useRouter();
+  const { gameId, playerId } = router.query;
   const user = props.user;
+  const socket = useContext(SocketContext);
   const players = props.game.players.filter((player) => player.status === true);
   const game = props.game;
-  // const voteToSacrifice = () => {
-  //   let user1 = {user_id: user.userId, userName: user.userName}
-  //   socket.emit('player-vote', game.playerVoted.userName, player, gameId)
-  // }
+  const [trialVote, setTrialVote] = useState();
+  const vote = (candidate) => {
+    let user1 = { user_id: user.userId, userName: user.userName };
+    setTrialVote(false)
+    let cand = {player: game.playerVoted}
+    socket.emit('player-vote', user1, cand, gameId);
+  };
 
   useEffect(() => {
     setHeight(document.getElementById('bgimg').clientHeight);
@@ -34,14 +42,16 @@ export default function GameBoard(props) {
     if (phase === 'day2') {
       Arr = MapEmAcross(players, 75, 60, height, width);
     } else if (phase === 'day3') {
+      //setTrialVote(true)
       let userName = game.playerVoted.userName;
       Arr = oneInMiddle(players, 75, 60, height, width, userName);
     } else {
       Arr = MapEmCircle(players, 75, 60, height, width);
     }
     return Object.values(Arr).map((locale, i) => {
+      // /console.log(Arr)
       return (
-        <Tooltip title={i}>
+        <Tooltip title={locale.userName}>
           <Person left={locale.left} top={locale.top}>
             <Image src={sprites[i % 4]} alt='' height='75' width='60' />
           </Person>
@@ -73,7 +83,7 @@ export default function GameBoard(props) {
       <ImgContainer maxWidth={false} disableGutters={true}>
         <Img src={BoardImg} alt='' id='bgimg' height='450' width='850' />
         {props.game ? renderItems(game) : null}
-        {props.game.phase === 'day3' ? <Phase3>VOTE TO SACRIFICE</Phase3> : <></>}
+        {(props.game.phase === 'day3' && props.info.status)? <Phase3 onClick={vote}>VOTE TO SACRIFICE {game.playerVoted.userName}</Phase3> : <></>}
       </ImgContainer>
     </OuterContainer>
   );

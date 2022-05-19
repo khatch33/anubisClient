@@ -131,13 +131,13 @@ const Navbar = () => {
 
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('userToken'));
-    console.log('localstorage user', localUser);
+    //console.log('localstorage user', localUser);
     if (localUser) {
       setUserData(localUser);
     }
   }, []);
 
-  console.log('recoilstate', userData);
+  //console.log('recoilstate', userData);
 
   //use effect for getting friend list
   // useEffect(() => {
@@ -160,13 +160,15 @@ const Navbar = () => {
   // }, []);
 
   const filteredByOnline = (friends, online) => {
+    if (typeof friends === 'undefined') return []
     let obj = {};
+    //console.log('hereee', friends, online)
     for (let i = 0; i < friends.length; i++) {
       const friend = { ...friends[i] };
       let friendName = friend.userName;
       friend.loggedIn = false;
       obj[friendName] = friend;
-      console.log(obj);
+      //console.log(obj);
     }
     for (let i = 0; i < online.length; i++) {
       let onlineName = online[i].userName;

@@ -151,6 +151,7 @@ export default function Game() {
                 startGame={startGame}
                 playerId={playerId}
                 game={game}
+                user={user}
               />
             </Container>
             <Container maxWidth={false} id='playerCards-container'>
@@ -179,6 +180,7 @@ export default function Game() {
                               key={player.player.userName}
                               phase={gameInfo.phase}
                               role={gameInfo.role}
+                              status={gameInfo.status}
                               player={player}
                               voted={voted}
                               markAsVoted={markAsVoted}

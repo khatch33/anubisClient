@@ -19,7 +19,7 @@ exports.MapEmAcross = (playersArr, spH, spW, gbH, gbW, overRide) => {
       map[i] = { left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage };
     } else {
       //map[i] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage}
-      map[playersArr[i].player.user_id] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage}
+      map[playersArr[i].player.user_id] = {left: (halfWayInterval * i).toFixed(2) + '%', top: halfwayTopPercentage, userName: playersArr[i].player.userName}
     }
   }
   return map;
@@ -56,7 +56,7 @@ exports.MapEmCircle = function (playersArr, spH, spW, gbH, gbW, left) {
     let x = (Math.cos(angle) * radius + midpoint[0]).toFixed(2) + 'px';
     let y = (Math.sin(angle) * radius + midpoint[1]).toFixed(2) + 'px';
     //map[playersArr[i].player._id] = {left: x, top: y}
-    map[playersArr[i].player.user_id] = {left: x, top: y}
+    map[playersArr[i].player.user_id] = {left: x, top: y, userName: playersArr[i].player.userName}
     //map[i] = {left: x, top: y}
   }
   //console.log(midpoint, midpoint[0], midpoint[1], radius)
@@ -72,7 +72,6 @@ exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerName) => {
   var middy = getMidpoint(hDif, wDif, spW)
 
   var radius = Math.min(hDif / 2, wDif / 2)
-  middy[0]=radius
   let interval = 360 / length
   for (let i = 0; i < length; i++) {
     if (playerName) {
@@ -80,8 +79,8 @@ exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerName) => {
          if (playersArr[i].player.userName === playerName) {
           //let circleArr = playersArr.splice(i, 1)
           let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length))
-          map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW, true)
-          map[playerName] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px'}
+          map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW)
+          map[playerName] = {left: middy[0].toString() + 'px', top: middy[1].toString() + 'px', userName: playerName}
           //break
          }
     }

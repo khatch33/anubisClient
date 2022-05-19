@@ -24,6 +24,7 @@ export default function PlayerCard(props) {
   const player = props.player;
   const username = player.player.userName;
   const alive = player.status;
+  const status = props.status
   const [revealed, setRevealed] = useState(false);
   const phase = props.phase;
   const role = props.role;
@@ -88,7 +89,7 @@ export default function PlayerCard(props) {
         )}
       </IconDiv>
       {revealed && alive ? <Role>Role: {player.role}</Role> : null}
-      <ButtonDiv>{!voted && alive ? renderActionButton() : null}</ButtonDiv>
+      <ButtonDiv>{!voted && alive &&status ? renderActionButton() : null}</ButtonDiv>
     </Card>
   );
 }
