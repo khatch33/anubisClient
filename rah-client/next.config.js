@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactStrictMode: true,
   env: {
     REACT_APP_URL: process.env.REACT_APP_URL,
     REACT_APP_socket_END_POINT: process.env.REACT_APP_socket_END_POINT,
@@ -10,13 +9,10 @@ const nextConfig = {
 
 const intercept = require('intercept-stdout');
 
-
 // safely ignore recoil warning messages in dev (triggered by HMR)
 function interceptStdout(text) {
-
   if (text.includes('Duplicate atom key')) {
     return '';
-
   }
   return text;
 }

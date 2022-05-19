@@ -13,7 +13,6 @@ import Icon1 from '../public/icons2/icon1.png';
 import Icon2 from '../public/icons2/icon2.png';
 import Icon3 from '../public/icons2/icon3.png';
 import Icon4 from '../public/icons2/icon4.png';
-import Icon5 from '../public/icons2/icon5.png';
 import Image from 'next/Image';
 
 const style = {
@@ -30,9 +29,6 @@ const style = {
   textAlign: 'center',
 };
 
-const basePath = `http://${process.env.REACT_APP_URL}/blueocean/api/v1`;
-
-
 export default function SignupForm(props) {
   const router = useRouter();
 
@@ -44,7 +40,7 @@ export default function SignupForm(props) {
 
   const [submitted, setSubmitted] = useState(false);
   const [token, setToken] = useRecoilState(userState);
-  const [img, setImg] = useState('/_next/static/media/icon1.ca5cbabd.png');
+  const [img, setImg] = useState('');
 
   const {
     register,
@@ -55,14 +51,18 @@ export default function SignupForm(props) {
   const onSubmit = (data) => {
     data['img'] = img;
 
-
-    axios({ method: "post", url:`${basePath}/users`, data: data })
+    axios({
+      method: 'post',
+      url: `http://${process.env.REACT_APP_URL}/blueocean/api/v1/users`,
+      data: data,
+    })
       .then((res) => {
         if (res.status === 200) {
           setToken({
             userId: res.data.user._id,
             userToken: res.data.token,
             userName: res.data.user.userName,
+            img: res.data.user.img,
             score: 0,
           });
           setSubmitted(true);
@@ -72,6 +72,7 @@ export default function SignupForm(props) {
               userId: res.data.user._id,
               userToken: res.data.token,
               userName: res.data.user.userName,
+              img: res.data.user.img,
               score: 0,
             })
           );
@@ -130,8 +131,10 @@ export default function SignupForm(props) {
               />
             </ImageContainer>
 
-            <ImageContainer name={'2'} className='avatar-container' onClick={(e) => setImg(Icon2.src)}>
-
+            <ImageContainer
+              name={'2'}
+              className='avatar-container'
+              onClick={(e) => setImg(Icon2.src)}>
               <StyledImage name={'2'} src={Icon2.src} height='37' width='35' />
             </ImageContainer>
 
@@ -142,7 +145,7 @@ export default function SignupForm(props) {
               <StyledImage src={Icon3.src} name={'Icon1'} height='35' width='35' />
             </ImageContainer>
 
-            <ImageContainer className='avatar-container' onClick={(e) => setImg(Icon3.src)}>
+            <ImageContainer className='avatar-container' onClick={(e) => setImg(Icon4.src)}>
               <StyledImage src={Icon4.src} height='37' width='33' />
             </ImageContainer>
           </Container>
@@ -172,7 +175,6 @@ const StyledImage = styled.img`
   border-radius: 99px;
   height: 100%;
   width: 100%;
-
 `;
 
 const ImageContainer = styled.div`
@@ -184,6 +186,6 @@ const ImageContainer = styled.div`
   margin: 3px 5px 3px 5px;
   text-align: center;
   &:hover {
-    border: 1px solid #9A8249;
+    border: 1px solid #9a8249;
   }
 `;

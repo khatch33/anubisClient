@@ -1,28 +1,21 @@
-import LandingPage from "../components/LandingPage";
-import Container from "@mui/material/Container";
-import Navbar from "../components/Navbar/Navbar";
-import React, { useState, useEffect } from "react";
-import ActiveUsersList from "../components/ActiveUsersList";
-import axios from "axios";
-import activeUsers from "../pages/_sampleData/activeUsers";
-import GameInstructions from "../components/GameInstructions";
+import LandingPage from '../components/LandingPage';
+import Container from '@mui/material/Container';
+import Navbar from '../components/Navbar/Navbar';
+import React, { useState, useEffect, useContext } from 'react';
+import ActiveUsersList from '../components/ActiveUsersList';
+import axios from 'axios';
+import GameInstructions from '../components/GameInstructions';
 import styled from 'styled-components';
-
-
+import { SocketContext } from '../socket/socket';
 const basePath = `${process.env.REACT_APP_URL}/blueocean/api/v1`;
 
-
 export default function Home() {
+  const socket = useContext(SocketContext);
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeList, setActiveList] = useState([]);
-
   useEffect(() => {
-    let mounted = true;
-    if (activeUsers) {
-      setIsLoaded(true);
-      setActiveList(activeUsers);
-    }
+    setIsLoaded(true);
   }, []);
 
   if (error) {
@@ -33,53 +26,62 @@ export default function Home() {
     return (
       <>
         <Navbar />
-        <Container maxWidth={false} id="app-container">
-          <ActiveUsersList users={activeUsers} />
+        <Container maxWidth={false} id='app-container'>
+          {socket && <ActiveUsersList />}
 
-
-          <Container
-            maxWidth={false}
-            disableGutters={true}
-            id="video-instructions-container"
-          >
-            <Container
-              maxWidth={false}
-              disableGutters={true}
-              id="video-container"
-            >
-              <div id="video-header">WELCOME TO WRATH OF ANUBIS</div>
+          <Container maxWidth={false} disableGutters={true} id='video-instructions-container'>
+            <Container maxWidth={false} disableGutters={true} id='video-container'>
+              <div id='video-header'>WELCOME TO WRATH OF ANUBIS</div>
               <iframe
-                id="video-element"
-                src="https://www.youtube.com/embed/OysJ4nL4jS8"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+                id='video-element'
+                src='https://www.youtube.com/embed/OysJ4nL4jS8'
+                title='YouTube video player'
+                frameBorder='0'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                allowFullScreen></iframe>
             </Container>
-
-            <Container maxWidth={false} id="instructions-container">
-              <Header id="instructions-header">HOW TO PLAY</Header>
-              <div id="instructions-text" style={{fontSize: '0.85em', alignItems: 'center'}}>
-              <div>
-                <ol>
-                  <li> Each player will be randomly assigned one of the following roles: Anubis, Seer, Doctor, Villager </li>
-                  <li>Each night, the players assigned the role of Anubis will vote to mummify one player.</li>
-                  <li>Each day, the non-mummified players can chat to attempt to determine which player is Anubis.</li>
-                  <li>Once the votes are tallied, the chosen player will be sacrified to the gods.</li>
-                  <li>The final remaining player wins.</li>
-                </ol>
-              </div>
-              <div style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>
-              <RolesDiv>
-                <span><b>Doctor</b></span>
-                <div>Doctors have the special ability to reverse the mummification for one player should that player be chosen by Anubis for sacrifice. To heal a player, the Doctor must click the "Heal" button displayed on the player's card they wish to heal.</div>
-              </RolesDiv>
-              <RolesDiv>
-                <div><b>Seer</b></div>
-                <div>Seers can choose to reveal the identity of one player by clicking the "Reveal" button displayed on the player's card they wish to unveil.</div>
-              </RolesDiv>
-              </div>
+            <Container maxWidth={false} id='instructions-container'>
+              <Header id='instructions-header'>HOW TO PLAY</Header>
+              <div id='instructions-text' style={{ fontSize: '0.85em' }}>
+                <div>
+                  <ol>
+                    <li>
+                      {' '}
+                      Each player will be randomly assigned one of the following roles: Anubis,
+                      Seer, Doctor, Villager{' '}
+                    </li>
+                    <li>
+                      Each night, the players assigned the role of Anubis will vote to mummify one
+                      player.
+                    </li>
+                    <li>
+                      Each day, the non-mummified players can chat to attempt to determine who is
+                      Anubis.
+                    </li>
+                    <li>
+                      Once the votes are tallied, the chosen player will be sacrified to their gods.
+                    </li>
+                    <li>The final remaining player wins.</li>
+                  </ol>
+                </div>
+                <div style={{ display: 'flex', textAlign: 'center' }}>
+                  <RolesDiv>
+                    <span>Doctor</span>
+                    <div>
+                      Doctors have the special ability to reverse the mummification for one player
+                      should that player be chosen by Anubis for sacrifice. To heal a player, the
+                      Doctor must click the "Heal" button displayed on the player's card they wish
+                      to heal.
+                    </div>
+                  </RolesDiv>
+                  <RolesDiv>
+                    <div>Seer</div>
+                    <div>
+                      Seers can choose to reveal the identity of one player by clicking the "Reveal"
+                      button displayed on the player's card they wish to unveil.
+                    </div>
+                  </RolesDiv>
+                </div>
               </div>
             </Container>
           </Container>

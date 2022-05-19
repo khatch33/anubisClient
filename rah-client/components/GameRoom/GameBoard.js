@@ -9,18 +9,15 @@ import Sprite1 from '../../public/sprite1.png';
 import Sprite2 from '../../public/sprite2.png';
 import Sprite3 from '../../public/sprite3.png';
 import Sprite4 from '../../public/sprite4.png';
-import Game from '../../pages/_sampleData/sampleGame.js'
-import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
+import { MapEmAcross, MapEmCircle, oneInMiddle } from './HelperFuncs.js';
 
 const sprites = [Sprite1.src, Sprite2.src, Sprite3.src, Sprite4.src];
-const sprite = {height: '60px', width: '30px'}
+const sprite = { height: '60px', width: '30px' };
 export default function GameBoard(props) {
-  const [height, setHeight] = useState()
-  const [width, setWidth] = useState()
-  const players = props.game.players.filter((player) => player.status === true)
-  const game = props.game
-  console.log(game)
-
+  const [height, setHeight] = useState();
+  const [width, setWidth] = useState();
+  const players = props.game.players.filter((player) => player.status === true);
+  const game = props.game;
 
   useEffect(() => {
     setHeight(document.getElementById('bgimg').clientHeight);
@@ -30,20 +27,24 @@ export default function GameBoard(props) {
     var phase = game.phase || 'night';
     var Arr;
     if (phase === 'day2') {
-
-      Arr = MapEmAcross(players, 70, 40, height, width)
+      Arr = MapEmAcross(players, 70, 40, height, width);
     } else if (phase === 'day3') {
-      let userName = game.playerVoted.userName
-      Arr = oneInMiddle(players, 70, 40,  height, width, userName)
+      let userName = game.playerVoted.userName;
+      Arr = oneInMiddle(players, 70, 40, height, width, userName);
     } else {
-      Arr = MapEmCircle(players, 70, 40,  height, width)
+      Arr = MapEmCircle(players, 70, 40, height, width);
     }
-    //console.log(Arr)
-    return Object.values(Arr).map((locale, i) => {
-      return <Tooltip title={players[i].player.userName}><Person left={locale.left} top={locale.top}><Image src={sprites[i % 4]} alt="" height="70" width="40"/></Person></Tooltip>
-    })
-  }
 
+    return Object.values(Arr).map((locale, i) => {
+      return (
+        <Tooltip title={players[i].player.userName}>
+          <Person left={locale.left} top={locale.top}>
+            <Image src={sprites[i % 4]} alt='' height='70' width='40' />
+          </Person>
+        </Tooltip>
+      );
+    });
+  };
 
   return (
     <OuterContainer maxWidth={false} disableGutters={true}>
@@ -64,10 +65,8 @@ export default function GameBoard(props) {
 
 const Person = styled.span`
   position: absolute;
-
   width: ${sprite.width};
   height: ${sprite.height};
-
   border-radius: 15px;
   left: ${(props) => props.left};
   top: ${(props) => props.top};
