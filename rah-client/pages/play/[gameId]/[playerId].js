@@ -48,8 +48,8 @@ export default function Game() {
   var started = false;
 
   const markAsVoted = () => {
-    setVoted(true)
-  }
+    setVoted(true);
+  };
 
   useEffect(() => {
     socket.on(`receive-${gameId}`, (user) => {
@@ -72,10 +72,8 @@ export default function Game() {
   });
 
   useEffect(() => {
-    return () => {
-      socket.emit('join-room', { user_id: playerId, userName: user.userName }, gameId);
-    };
-  }, [socket]);
+    socket.emit('join-room', { user_id: playerId, userName: user.userName }, gameId);
+  }, [user.userToken]);
   useEffect(() => {
     if (game) {
       const container = document.querySelector('.playerCardContainer');
