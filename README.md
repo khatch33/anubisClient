@@ -4,4 +4,4 @@
 
 *isitworking*
 
-![Alt Text](Part1.gif)
+![Alt Text](./assets/Part1.gif)
