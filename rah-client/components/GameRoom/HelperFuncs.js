@@ -70,12 +70,11 @@ exports.oneInMiddle = (playersArr, spH, spW, gbH, gbW, playerName) => {
   for (let i = 0; i < length; i++) {
     if (playerName) {
       if (playersArr[i].player.userName === playerName) {
+        //let circleArr = playersArr.splice(i, 1)
         let circleArr = playersArr.slice(0, i).concat(playersArr.slice(i + 1, playersArr.length));
         map = exports.MapEmCircle(circleArr, spH, spW, gbH, gbW);
-        map[playersArr[i].player.userName] = {
-          left: middy[0].toString() + 'px',
-          top: middy[1].toString() + 'px',
-        };
+        map[playerName] = { left: middy[0].toString() + 'px', top: middy[1].toString() + 'px' };
+        //break
       }
     }
   }

@@ -23,19 +23,19 @@ export default function ActiveUsersList() {
   ];
 
   useEffect(() => {
-    const localUser = JSON.parse(localStorage.getItem('userToken'));
     socket.on('receive-lobby', (users) => {
       console.log(users);
       setUsersList(users);
-      // setGlobalUsersList(users);
+      setGlobalUsersList(users);
     });
     socket.on('error', (err) => {
       console.error(err);
     });
-    return () => {
-      socket.emit('join-room', userData, 'lobby');
-    };
-  }, [socket, usersList]);
+  });
+
+  useEffect(() => {
+    socket.emit('join-room', userData, 'lobby');
+  }, [userData.userToken]);
 
   const friendAdd = () => {
     axios.put(`http://${process.env.REACT_APP_URL}/blueocean/api/v1/users/togglefriends`, {

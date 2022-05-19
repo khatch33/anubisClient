@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import { userState } from '../_states/tokenState';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
+import { friendsState } from '../_states/friendslist';
 
 const style = {
   position: 'absolute',
@@ -45,6 +46,7 @@ export default function LoginForm() {
             userToken: res.data.token,
             userName: res.data.user.userName,
             img: res.data.user.img,
+            friends: res.data.user.friends,
           });
           localStorage.setItem(
             'userToken',
@@ -53,6 +55,7 @@ export default function LoginForm() {
               userToken: res.data.token,
               userName: res.data.user.userName,
               img: res.data.user.img,
+              friends: res.data.user.friends,
             })
           );
           router.push('/lobby');

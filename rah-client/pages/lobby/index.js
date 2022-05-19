@@ -36,7 +36,7 @@ export default function Lobby() {
   const socket = useContext(SocketContext);
 
   const [games, setGames] = useState([]);
-
+  console.log(games);
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('userToken'));
     //gate-keep
@@ -49,28 +49,16 @@ export default function Lobby() {
 
   useEffect(() => {
     socket.emit('get-games', games);
+  }, [socket]);
+
+  useEffect(() => {
     socket.on('receive-games', (games) => {
       setGames(games);
     });
-  }, [games, socket]);
-
-  // export async function getStaticProps = () => {
-  //   //executed during build process
-  //   //can fetch data from API
-  //   socket.on('receive-lobby', (users) => {
-  //     setUsersList(users)
-  //     // setGlobalUsersList(users);
-  //   });
-  //   socket.emit('get-games', games);
-  //   socket.on('receive-games', (games) => {
-  //     return {
-  //       props: {
-  //         games,
-  //         usersList,
-  //       }
-  //     }
-  //   });
-  // }
+    socket.on('update-games-list', (game) => {
+      setGames([...games, game]);
+    });
+  });
 
   return (
     <>

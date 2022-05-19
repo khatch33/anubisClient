@@ -36,7 +36,8 @@ import { friendsState } from '../../_states/friendslist';
 import { SocketContext } from '../../socket/socket';
 const Navbar = () => {
   const [userData, setUserData] = useRecoilState(userState);
-  const allUsers = useRecoilValue(friendsState);
+  const allUsers = useRecoilValue(userState);
+  const onlinePlayers = useRecoilValue(friendsState);
   const socket = useContext(SocketContext);
   const router = useRouter();
   useEffect(() => {
@@ -53,8 +54,17 @@ const Navbar = () => {
   const signupClicked = () => {
     handleSignupModal();
   };
+
   const logoutFunc = () => {
     localStorage.removeItem('userToken');
+    setUserData({
+      userId: '',
+      userToken: '',
+      userName: `Guest_${uuid().slice(0, 5)}`,
+      img: '',
+      score: 0,
+      friends: [],
+    });
     setLoggedIn(false);
     router.push('/');
   };
@@ -117,25 +127,36 @@ const Navbar = () => {
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };
-  //use effect for getting friend list
+
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('userToken'));
+    console.log('localstorage user', localUser);
     if (localUser) {
-      const url = `http://${process.env.REACT_APP_URL}/blueocean/api/v1/users/friend`;
-      axios({
-        method: 'GET',
-        url,
-        headers: {
-          Authorization: `Bearer ${localUser.userToken}`,
-        },
-        user_id: localUser.userId,
-      })
-        .then((res) => {
-          setFriendsList([{ username: 'Tony' }, { username: 'Lauren' }, { username: 'Cihad' }]);
-        })
-        .catch((err) => console.log('error friend response', err));
+      setUserData(localUser);
     }
   }, []);
+
+  console.log('recoilstate', userData);
+
+  //use effect for getting friend list
+  // useEffect(() => {
+  //   const localUser = JSON.parse(localStorage.getItem('userToken'));
+  //   if (localUser) {
+  //     const url = `http://${process.env.REACT_APP_URL}/blueocean/api/v1/users/friend`;
+  //     axios({
+  //       method: 'GET',
+  //       url,
+  //       headers: {
+  //         Authorization: `Bearer ${localUser.userToken}`,
+  //       },
+  //       user_id: localUser.userId,
+  //     })
+  //       .then((res) => {
+  //         setFriendsList([res.data.user.friends]);
+  //       })
+  //       .catch((err) => console.log('error friend response', err));
+  //   }
+  // }, []);
 
   const filteredByOnline = (friends, online) => {
     let obj = {};
@@ -186,7 +207,7 @@ const Navbar = () => {
       {!loading && (
         <List>
           {/* array of friends for specific user */}
-          {filteredByOnline(friendsList, allUsers).map((friend) => (
+          {filteredByOnline(allUsers.friends, onlinePlayers).map((friend) => (
             <div key={uuidv4()}>
               <ListItem>
                 <ListItemIcon>

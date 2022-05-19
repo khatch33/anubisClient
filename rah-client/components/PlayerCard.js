@@ -74,7 +74,7 @@ export default function PlayerCard(props) {
           </StyledDiv>
         )}
       </IconDiv>
-      {revealed ? <h4>{role}</h4> : null}
+      {revealed ? <h4>{player.role}</h4> : null}
       <ButtonDiv>{!voted && alive ? renderActionButton() : null}</ButtonDiv>
     </Card>
   );

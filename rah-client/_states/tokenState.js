@@ -9,6 +9,7 @@ const userState = atom({
     userName: `Guest_${uuid().slice(0, 5)}`,
     img: '',
     score: 0,
+    friends: []
   },
 });
 
