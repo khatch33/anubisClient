@@ -40,6 +40,7 @@ const Navbar = () => {
   const onlinePlayers = useRecoilValue(friendsState);
   const socket = useContext(SocketContext);
   const router = useRouter();
+
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('userToken'));
     if (userData.userToken || localUser) {
