@@ -48,11 +48,13 @@ export default function Lobby() {
   }, []);
 
   useEffect(() => {
+    console.log('get games')
     socket.emit('get-games', games);
   }, [socket]);
 
   useEffect(() => {
     socket.on('receive-games', (games) => {
+      console.log('receive games')
       setGames(games);
     });
     socket.on('update-games-list', (game) => {

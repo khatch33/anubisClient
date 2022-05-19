@@ -70,7 +70,7 @@ export default function Game() {
         setMessages([...messages, messageObj]);
       }
     });
-    return () => socket.disconnect()
+    // return () => socket.disconnect()
   }, []);
 
   useEffect(() => {
