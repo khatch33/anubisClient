@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import { userState } from '../_states/tokenState';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
+import { friendsState } from '../_states/friendslist';
 
 const style = {
   position: 'absolute',
@@ -36,12 +37,6 @@ export default function LoginForm() {
   const [submitted, setSubmitted] = useState(false);
   const [token, setToken] = useRecoilState(userState);
 
-  useEffect(() => {
-    if (submitted) {
-      router.push('/lobby');
-    }
-  });
-
   const onSubmit = (data) => {
     axios({ method: 'POST', url: `http://${basePath}/users/login`, data: data })
       .then((res) => {
@@ -50,6 +45,8 @@ export default function LoginForm() {
             userId: res.data.user._id,
             userToken: res.data.token,
             userName: res.data.user.userName,
+            img: res.data.user.img,
+            friends: res.data.user.friends,
           });
           localStorage.setItem(
             'userToken',
@@ -57,9 +54,11 @@ export default function LoginForm() {
               userId: res.data.user._id,
               userToken: res.data.token,
               userName: res.data.user.userName,
+              img: res.data.user.img,
+              friends: res.data.user.friends,
             })
           );
-          setSubmitted(true);
+          router.push('/lobby');
         }
       })
       .catch((err) => console.error(err));

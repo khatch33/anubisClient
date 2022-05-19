@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { activeUsers } from '../pages/_sampleData/activeUsers';
 import Container from '@mui/material/Container';
 import ActiveUsersList from '../components/ActiveUsersList';
 

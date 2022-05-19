@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -33,10 +33,12 @@ import { useRouter } from 'next/router';
 import uuid from 'react-uuid';
 import axios from 'axios';
 import { friendsState } from '../../_states/friendslist';
+import { SocketContext } from '../../socket/socket';
 const Navbar = () => {
   const [userData, setUserData] = useRecoilState(userState);
-  const allUsers = useRecoilValue(friendsState);
-
+  const allUsers = useRecoilValue(userState);
+  const onlinePlayers = useRecoilValue(friendsState);
+  const socket = useContext(SocketContext);
   const router = useRouter();
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('userToken'));
@@ -52,10 +54,18 @@ const Navbar = () => {
   const signupClicked = () => {
     handleSignupModal();
   };
+
   const logoutFunc = () => {
     localStorage.removeItem('userToken');
+    setUserData({
+      userId: '',
+      userToken: '',
+      userName: `Guest_${uuid().slice(0, 5)}`,
+      img: '',
+      score: 0,
+      friends: [],
+    });
     setLoggedIn(false);
-    setUserData({ userId: '', userToken: '', userName: `Guest_${uuid().slice(0, 5)}` });
     router.push('/');
   };
 
@@ -66,7 +76,7 @@ const Navbar = () => {
   //navbar page states based on if user is logged in
   const pagesIfLoggedIn = [
     ,
-    <StyledLinks>Ranking</StyledLinks>,
+    ,
     <StyledLinks onClick={backToLobby}>Lobby</StyledLinks>,
     <StyledLinks onClick={logoutFunc}>Logout</StyledLinks>,
   ];
@@ -117,26 +127,36 @@ const Navbar = () => {
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ ...state, [anchor]: open });
   };
-  //use effect for getting friend list
+
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('userToken'));
+    console.log('localstorage user', localUser);
     if (localUser) {
-      const url = `http://${process.env.REACT_APP_URL}/blueocean/api/v1/users/friend`;
-      axios({
-        method: 'GET',
-        url,
-        headers: {
-          Authorization: `Bearer ${localUser.userToken}`,
-        },
-        user_id: localUser.userId,
-      })
-        .then((res) => {
-          console.log(res);
-          setFriendsList(res.data.user.friends);
-        })
-        .catch((err) => console.log('error friend response', err));
+      setUserData(localUser);
     }
   }, []);
+
+  console.log('recoilstate', userData);
+
+  //use effect for getting friend list
+  // useEffect(() => {
+  //   const localUser = JSON.parse(localStorage.getItem('userToken'));
+  //   if (localUser) {
+  //     const url = `http://${process.env.REACT_APP_URL}/blueocean/api/v1/users/friend`;
+  //     axios({
+  //       method: 'GET',
+  //       url,
+  //       headers: {
+  //         Authorization: `Bearer ${localUser.userToken}`,
+  //       },
+  //       user_id: localUser.userId,
+  //     })
+  //       .then((res) => {
+  //         setFriendsList([res.data.user.friends]);
+  //       })
+  //       .catch((err) => console.log('error friend response', err));
+  //   }
+  // }, []);
 
   const filteredByOnline = (friends, online) => {
     let obj = {};
@@ -187,7 +207,7 @@ const Navbar = () => {
       {!loading && (
         <List>
           {/* array of friends for specific user */}
-          {filteredByOnline(friendsList, allUsers).map((friend) => (
+          {filteredByOnline(allUsers.friends, onlinePlayers).map((friend) => (
             <div key={uuidv4()}>
               <ListItem>
                 <ListItemIcon>
@@ -236,13 +256,14 @@ const Navbar = () => {
     e.stopPropagation();
     handleOpen();
   };
-
   return (
     <>
       <AppBar position='static' style={{ backgroundColor: 'black' }}>
         <Container maxWidth='xl' style={{ backgroundColor: 'black' }}>
           <Toolbar style={{ backgroundColor: 'black' }}>
-            <Image height='60' width='65' src={LogoIcon} alt='' />
+            <Link href='/'>
+              <Image height='60' width='65' src={LogoIcon} alt='' />
+            </Link>
             <Typography
               variant='h6'
               noWrap
@@ -250,9 +271,8 @@ const Navbar = () => {
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
-                fontFamily: 'Josefin Slab',
+                fontFamily: 'monospace',
                 fontWeight: 700,
-                fontSize: '1.4em',
                 letterSpacing: '.2rem',
                 color: '#d4af37',
                 textDecoration: 'none',
@@ -314,7 +334,7 @@ const Navbar = () => {
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'Josefin Slab',
+                fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '.3rem',
                 color: '#d4af37',
@@ -348,7 +368,7 @@ const Navbar = () => {
             </Box>
             <Box sx={{ flexGrow: 0 }}>
               <IconButton sx={{ p: 0 }}>
-                {loggedIn && <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />}
+                {loggedIn && <Avatar alt='Remy Sharp' src={userData.img} />}
               </IconButton>
               <Menu
                 sx={{ mt: '45px' }}
@@ -389,7 +409,7 @@ const Navbar = () => {
         <Modal
           open={signupModal}
           onClose={handleCloseSignupModal}
-          aria-labelledby='modal-modal-title'
+          aria-labelledby='modal-modal-signup'
           aria-describedby='modal-modal-description'>
           <SignupForm />
         </Modal>

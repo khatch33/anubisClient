@@ -5,7 +5,6 @@ import { userState } from '../_states/tokenState';
 import { useRouter } from 'next/router';
 import Container from '@mui/material/Container';
 import styled from 'styled-components';
-
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CreateGame from './Lobby/CreateGame';
@@ -64,6 +63,7 @@ export default function GamesList(props) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+
   };
 
   const onRowClick = (event) => {
@@ -74,23 +74,20 @@ export default function GamesList(props) {
     setValue(0);
   };
 
-
   return (
     <Container style={{ height: '350px', minWidth: '500px', maxWidth: '682px !important' }}>
       <TabsContainer
-        TabIndicatorProps={{
-          style: { backgroundColor: '#9A8249 !important', color: '#F1F7ED !important' },
-        }}
+        TabIndicatorProps={{ style: { background: 'black' } }}
         value={value}
         onChange={handleChange}
         aria-label='tabs'>
-        <StyledTab label='Lobby'/>
-        <StyledTab label='Create'/>
+        <StyledTab label='Lobby' />
+        <StyledTab label='Create' />
       </TabsContainer>
 
       {value === 0 ? (
         <DataGrid
-          sx={{ border: 'none', width: '682px'}}
+          sx={{ border: 'none', width: '682px' }}
           density='compact'
           rows={rows}
           columns={columns}
@@ -108,5 +105,5 @@ const TabsContainer = styled(Tabs)`
 `;
 
 const StyledTab = styled(Tab)`
-  color: #9a8249;
+  color: #9a8249 !important;
 `;

@@ -9,11 +9,10 @@ import Sprite1 from '../../public/sprite1.png';
 import Sprite2 from '../../public/sprite2.png';
 import Sprite3 from '../../public/sprite3.png';
 import Sprite4 from '../../public/sprite4.png';
-import Game from '../../pages/_sampleData/sampleGame.js'
-import {MapEmAcross, MapEmCircle, oneInMiddle} from './HelperFuncs.js';
+import { MapEmAcross, MapEmCircle, oneInMiddle } from './HelperFuncs.js';
 
 const sprites = [Sprite1.src, Sprite2.src, Sprite3.src, Sprite4.src];
-const sprite = {height: '60px', width: '30px'}
+const sprite = { height: '60px', width: '30px' };
 export default function GameBoard(props) {
   const [height, setHeight] = useState()
   const [width, setWidth] = useState()
@@ -47,6 +46,16 @@ export default function GameBoard(props) {
     })
   }
 
+    return Object.values(Arr).map((locale, i) => {
+      return (
+        <Tooltip title={players[i].player.userName}>
+          <Person left={locale.left} top={locale.top}>
+            <Image src={sprites[i % 4]} alt='' height='70' width='40' />
+          </Person>
+        </Tooltip>
+      );
+    });
+  };
 
   return (
     <OuterContainer maxWidth={false} disableGutters={true}>
@@ -68,8 +77,6 @@ export default function GameBoard(props) {
 
 const Person = styled.span`
   position: absolute;
-
-
   border-radius: 15px;
   left: ${(props) => props.left};
   top: ${(props) => props.top};
